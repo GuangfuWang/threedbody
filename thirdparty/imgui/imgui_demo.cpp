@@ -280,7 +280,7 @@ void ImGui::ShowDemoWindow(bool *p_open) {
     IM_ASSERT(ImGui::GetCurrentContext() != NULL && "Missing dear imgui context. Refer to examples app!");
 
     // Examples Apps (accessible from the "Examples" menu)
-    static bool show_app_main_menu_bar = true;
+    static bool show_app_main_menu_bar = false;
     static bool show_app_documents = false;
 
     static bool show_app_console = true;
@@ -292,8 +292,8 @@ void ImGui::ShowDemoWindow(bool *p_open) {
     static bool show_app_constrained_resize = false;
     static bool show_app_simple_overlay = false;
     static bool show_app_fullscreen = false;
-    static bool show_app_window_titles = true;
-    static bool show_app_custom_rendering = true;
+    static bool show_app_window_titles = false;
+    static bool show_app_custom_rendering = false;
 
     if (show_app_main_menu_bar) ShowExampleAppMainMenuBar();
     if (show_app_documents) ShowExampleAppDocuments(&show_app_documents);

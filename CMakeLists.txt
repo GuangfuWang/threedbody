@@ -30,3 +30,6 @@ target_deps_include(${MINGW_INCLUDE_DIR})
 
 include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Target_link.cmake)
 target_deps_link()
+
+include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Packing.cmake)
+Packing()
