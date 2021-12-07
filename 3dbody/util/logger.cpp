@@ -1,21 +1,29 @@
 #include "logger.h"
 
+#include <spdlog/spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog/sinks/basic_file_sink.h>
+
 namespace gf {
-#ifdef GF_WIN
-    const std::string Log::info_prefix = "[INFO ]: ";
-    const std::string Log::warn_prefix = "[WARN ]: ";
-    const std::string Log::error_prefix = "[ERROR]: ";
-    const std::string Log::fatal_prefix = "[FATAL]: ";
-    const std::string Log::debug_prefix = "[DEBUG]: ";
-    Log::Channel Log::c = Log::Channel::Console;
-    std::string Log::output_file = "./logOutput/log.txt";
-#elif defined(GF_LINUX)
-    const std::string Log::info_prefix = "\033[0m[INFO ]: ";
-    const std::string Log::warn_prefix = "\033[35m[WARN ]: ";
-    const std::string Log::error_prefix = "\033[33m[ERROR]: ";
-    const std::string Log::fatal_prefix = "\033[31m[FATAL]: ";
-    const std::string Log::debug_prefix = "\033[0m[DEBUG]: ";
-    Log::Channel Log::c = Log::Channel::Console;
-    std::string Log::output_file = "./logOutput/log.txt";
-#endif
+Ref<spdlog::logger> log::s_CoreLogger;
+Ref<spdlog::logger> log::s_ClientLogger;
+
+void log::Init()
+{
+  std::vector<spdlog::sink_ptr> logSinks;
+  logSinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+  logSinks.emplace_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("GF.log", true));
+
+  logSinks[0]->set_pattern("%^[%T] %n: %v%$");
+  logSinks[1]->set_pattern("[%T] [%l] %n: %v");
+
+  s_CoreLogger = std::make_shared<spdlog::logger>("GF", begin(logSinks), end(logSinks));
+  spdlog::register_logger(s_CoreLogger);
+  s_CoreLogger->set_level(spdlog::level::trace);
+  s_CoreLogger->flush_on(spdlog::level::trace);
+
+  s_ClientLogger = std::make_shared<spdlog::logger>("APP", begin(logSinks), end(logSinks));
+  spdlog::register_logger(s_ClientLogger);
+  s_ClientLogger->set_level(spdlog::level::trace);
+  s_ClientLogger->flush_on(spdlog::level::trace);
+}
 }

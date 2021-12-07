@@ -57,7 +57,7 @@ int main(int, char **) {
     parent_path /= "resources";
     parent_path /= "icons";
     parent_path /= "window_icons";
-    parent_path /= "icon.png";
+    parent_path /= "icon_1.png";
     std::string icon_1 = parent_path.string();
 
     int comp;

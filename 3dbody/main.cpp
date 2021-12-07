@@ -12,7 +12,6 @@
 
 #include <stb_image.h>
 
-//#include "include/layout/view_window.h"
 
 static void glfw_error_callback (int error, const char *description)
 {
@@ -124,24 +123,6 @@ static void terminate_imgui_and_glfw (GLFWwindow *window)
   glfw_terminate (window);
 }
 
-static void CreateMainViewWindow ()
-{
-  float x_ratio = 0.8f;
-  float y_ratio = 0.75f;
-  ImVec2 size_main_view_window = ImGui::GetWindowSize ();
-  size_main_view_window.x *= x_ratio;
-  size_main_view_window.y *= y_ratio;
-  {
-    ImGui::BeginChild ("left pane", size_main_view_window, true);
-    for (int i = 0; i < 100; i++)
-      {
-        // FIXME: Good candidate to use ImGuiSelectableFlags_SelectOnNav
-        char label[128];
-        sprintf (label, "MyObject %d", i);
-      }
-    ImGui::EndChild ();
-  }
-}
 
 int main (int, char **)
 {
@@ -227,18 +208,6 @@ int main (int, char **)
 
       const ImVec2 base_pos = viewport->Pos;
       // Using "##" to display same title but have unique identifier.
-
-//      ImGui::SetNextWindowPos (ImVec2 (base_pos.x , base_pos.y + 0), ImGuiCond_FirstUseEver);
-//      ImGui::Begin ("Same title as another window");
-//      ImGui::Text ("This is window 1. My title is the same as window 2, but my identifier is unique.");
-//      ImGui::End ();
-
-//      ImGui::BeginGroup();
-//      ImGui::Text("Hello from another window!");
-//      ImGui::Text("Hello from another window!");
-//      ImGui::Text("Hello from another window!");
-//      ImGui::EndGroup();
-//      ImGui::GetForegroundDrawList()->AddRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax(), IM_COL32(255, 255, 255, 255));
 
 
 
