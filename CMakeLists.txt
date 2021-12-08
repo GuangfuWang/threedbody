@@ -14,6 +14,7 @@ set(MINGW_INCLUDE_DIR "")
 include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Judge_mingw_patch.cmake)
 mingw_patch(MINGW_INCLUDE_DIR)
 
+include(${PROJECT_SOURCE_DIR}/3dbody/CMake/GrabAllSrcFiles.cmake)
 include(${PROJECT_SOURCE_DIR}/thirdparty/imgui/IMGUI.cmake)
 include(${PROJECT_SOURCE_DIR}/thirdparty/GLEW/glew.cmake)
 include(${PROJECT_SOURCE_DIR}/thirdparty/stb_image/stb_image.cmake)
@@ -24,7 +25,7 @@ include(${PROJECT_SOURCE_DIR}/3dbody/util/util.cmake)
 
 
 include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Target_define.cmake)
-exe_target_define(3dbody/main.cpp ${ImGui_src} ${glew_src} ${stb_image_src} ${util_src} ${spdlog_src})
+exe_target_define(${OWN_SRC} ${ImGui_src} ${glew_src} ${stb_image_src} ${util_src} ${spdlog_src})
 
 include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Target_include.cmake)
 target_deps_include(${MINGW_INCLUDE_DIR})

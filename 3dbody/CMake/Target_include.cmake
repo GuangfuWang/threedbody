@@ -32,6 +32,10 @@ macro(target_deps_include MINGW_INCLUDE_DIR)
 
     target_include_directories(${PROJECT_NAME}
             PUBLIC
+            ${PROJECT_SOURCE_DIR}/3dbody)
+
+    target_include_directories(${PROJECT_NAME}
+            PUBLIC
             ${PROJECT_SOURCE_DIR}/thirdparty/Assimp)
 
     target_include_directories(${PROJECT_NAME}
@@ -51,6 +55,8 @@ macro(target_deps_include MINGW_INCLUDE_DIR)
     target_include_directories(${PROJECT_NAME}
             PUBLIC
             ${PROJECT_SOURCE_DIR}/thirdparty/spdlog/spdlog)
+
+
 
 
 endmacro()
