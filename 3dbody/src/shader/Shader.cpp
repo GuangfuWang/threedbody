@@ -1,4 +1,4 @@
-#include "include/shader/shader.h"
+#include "include/shader/Shader.h"
 
 namespace gf{
 
@@ -21,7 +21,7 @@ unsigned int Shader::get_compiled_shader(unsigned int shader_type, const std::st
     GLchar* strInfoLog = new GLchar[length + 1];
     glGetShaderInfoLog(shader_id, length, &length, strInfoLog);
 
-    fprintf(stderr, "Compile error in shader: %s\n", strInfoLog);
+    fprintf(stderr, "Compile error in Shader: %s\n", strInfoLog);
     delete[] strInfoLog;
   }
 

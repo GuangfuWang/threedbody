@@ -225,15 +225,15 @@ namespace Assimp {
         /** Merges two or more meshes
          *
          *  The meshes should have equal vertex formats. Only components
-         *  that are provided by ALL meshes will be present in the output mesh.
+         *  that are provided by ALL meshes will be present in the output Mesh.
          *  An exception is made for VColors - they are set to black. The
          *  meshes should have the same material indices, too. The output
-         *  material index is always the material index of the first mesh.
+         *  material index is always the material index of the first Mesh.
          *
-         *  @param dest Destination mesh. Must be empty.
+         *  @param dest Destination Mesh. Must be empty.
          *  @param flags Currently no parameters
-         *  @param begin First mesh to be processed
-         *  @param end Points to the mesh after the last mesh to be processed
+         *  @param begin First Mesh to be processed
+         *  @param end Points to the Mesh after the last Mesh to be processed
          */
         static void MergeMeshes(aiMesh **dest, unsigned int flags,
                                 std::vector<aiMesh *>::const_iterator begin,
@@ -244,8 +244,8 @@ namespace Assimp {
          *
          *  @param out Mesh to receive the output bone list
          *  @param flags Currently no parameters
-         *  @param begin First mesh to be processed
-         *  @param end Points to the mesh after the last mesh to be processed
+         *  @param begin First Mesh to be processed
+         *  @param end Points to the Mesh after the last Mesh to be processed
          */
         static void MergeBones(aiMesh *out, std::vector<aiMesh *>::const_iterator it,
                                std::vector<aiMesh *>::const_iterator end);
@@ -266,11 +266,11 @@ namespace Assimp {
                                    std::vector<aiMaterial *>::const_iterator end);
 
         // -------------------------------------------------------------------
-        /** Builds a list of uniquely named bones in a mesh list
+        /** Builds a list of uniquely named bones in a Mesh list
          *
          *  @param asBones Receives the output list
-         *  @param it First mesh to be processed
-         *  @param end Last mesh to be processed
+         *  @param it First Mesh to be processed
+         *  @param end Last Mesh to be processed
          */
         static void BuildUniqueBoneList(std::list<BoneWithHash> &asBones,
                                         std::vector<aiMesh *>::const_iterator it,
@@ -287,10 +287,10 @@ namespace Assimp {
                                     unsigned int len);
 
         // -------------------------------------------------------------------
-        /** Add an offset to all mesh indices in a node graph
+        /** Add an offset to all Mesh indices in a node graph
          *
          *  @param Current node. This function is called recursively.
-         *  @param offset Offset to be added to all mesh indices
+         *  @param offset Offset to be added to all Mesh indices
          */
         static void OffsetNodeMeshIndices(aiNode *node, unsigned int offset);
 
@@ -336,10 +336,10 @@ namespace Assimp {
 
 
         // -------------------------------------------------------------------
-        /** Get a deep copy of a mesh
+        /** Get a deep copy of a Mesh
          *
-         *  @param dest Receives a pointer to the destination mesh
-         *  @param src Source mesh - remains unmodified.
+         *  @param dest Receives a pointer to the destination Mesh
+         *  @param src Source Mesh - remains unmodified.
          */
         static void Copy(aiMesh **dest, const aiMesh *src);
 

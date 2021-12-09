@@ -120,7 +120,7 @@ struct ASSIMP_API aiNode {
     unsigned int mNumMeshes;
 
     /** The meshes of this node. Each entry is an index into the
-      * mesh list of the #aiScene.
+      * Mesh list of the #aiScene.
       */
     unsigned int *mMeshes;
 
@@ -181,7 +181,7 @@ struct ASSIMP_API aiNode {
 /**
  * Specifies that the scene data structure that was imported is not complete.
  * This flag bypasses some internal validations and allows the import
- * of animation skeletons, material libraries or camera animation paths
+ * of animation skeletons, material libraries or Camera animation paths
  * using Assimp. Most applications won't support such data.
  */
 #define AI_SCENE_FLAGS_INCOMPLETE   0x1
@@ -304,14 +304,14 @@ struct aiScene {
     */
     C_STRUCT aiTexture **mTextures;
 
-    /** The number of light sources in the scene. Light sources
+    /** The number of Light sources in the scene. Light sources
     * are fully optional, in most cases this attribute will be 0
         */
     unsigned int mNumLights;
 
-    /** The array of light sources.
+    /** The array of Light sources.
     *
-    * All light sources imported from the given file are
+    * All Light sources imported from the given file are
     * listed here. The array is mNumLights in size.
     */
     C_STRUCT aiLight **mLights;
@@ -324,8 +324,8 @@ struct aiScene {
     /** The array of cameras.
     *
     * All cameras imported from the given file are listed here.
-    * The array is mNumCameras in size. The first camera in the
-    * array (if existing) is the default camera view into
+    * The array is mNumCameras in size. The first Camera in the
+    * array (if existing) is the default Camera view into
     * the scene.
     */
     C_STRUCT aiCamera **mCameras;

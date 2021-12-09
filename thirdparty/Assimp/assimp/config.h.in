@@ -120,7 +120,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 // ---------------------------------------------------------------------------
-/** @brief Maximum bone count per mesh for the SplitbyBoneCount step.
+/** @brief Maximum bone count per Mesh for the SplitbyBoneCount step.
  *
  * Meshes are split until the maximum number of bones is reached. The default
  * value is AI_SBBC_DEFAULT_MAX_BONES, which may be altered at
@@ -298,10 +298,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     "PP_OG_EXCLUDE_LIST"
 
 // ---------------------------------------------------------------------------
-/** @brief  Set the maximum number of triangles in a mesh.
+/** @brief  Set the maximum number of triangles in a Mesh.
  *
  * This is used by the "SplitLargeMeshes" PostProcess-Step to determine
- * whether a mesh must be split or not.
+ * whether a Mesh must be split or not.
  * @note The default value is AI_SLM_DEFAULT_MAX_TRIANGLES
  * Property type: integer.
  */
@@ -314,10 +314,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 // ---------------------------------------------------------------------------
-/** @brief  Set the maximum number of vertices in a mesh.
+/** @brief  Set the maximum number of vertices in a Mesh.
  *
  * This is used by the "SplitLargeMeshes" PostProcess-Step to determine
- * whether a mesh must be split or not.
+ * whether a Mesh must be split or not.
  * @note The default value is AI_SLM_DEFAULT_MAX_VERTICES
  * Property type: integer.
  */
@@ -428,7 +428,7 @@ enum aiComponent
     /** Removes all embedded textures (aiScene::mTextures) */
     aiComponent_TEXTURES = 0x80,
 
-    /** Removes all light sources (aiScene::mLights).
+    /** Removes all Light sources (aiScene::mLights).
      * The corresponding scenegraph nodes are NOT removed.
      * use the #aiProcess_OptimizeGraph step to do this */
     aiComponent_LIGHTS = 0x100,
@@ -460,13 +460,13 @@ enum aiComponent
 #define aiComponent_TEXCOORDSn(n) (1u << (n+25u))
 
 // ---------------------------------------------------------------------------
-/** @brief Input parameter to the #aiProcess_RemoveComponent step:
+/** @brief MouseInput parameter to the #aiProcess_RemoveComponent step:
  *  Specifies the parts of the data structure to be removed.
  *
  * See the documentation to this step for further details. The property
  * is expected to be an integer, a bitwise combination of the
  * #aiComponent flags defined above in this header. The default
- * value is 0. Important: if no valid mesh is remaining after the
+ * value is 0. Important: if no valid Mesh is remaining after the
  * step has been executed (e.g you thought it was funny to specify ALL
  * of the flags defined above) the import FAILS. Mainly because there is
  * no data to work on anymore ...
@@ -475,7 +475,7 @@ enum aiComponent
     "PP_RVC_FLAGS"
 
 // ---------------------------------------------------------------------------
-/** @brief Input parameter to the #aiProcess_SortByPType step:
+/** @brief MouseInput parameter to the #aiProcess_SortByPType step:
  *  Specifies which primitive types are removed by the step.
  *
  *  This is a bitwise combination of the aiPrimitiveType flags.
@@ -487,7 +487,7 @@ enum aiComponent
     "PP_SBP_REMOVE"
 
 // ---------------------------------------------------------------------------
-/** @brief Input parameter to the #aiProcess_FindInvalidData step:
+/** @brief MouseInput parameter to the #aiProcess_FindInvalidData step:
  *  Specifies the floating-point accuracy for animation values. The step
  *  checks for animation tracks where all frame values are absolutely equal
  *  and removes them. This tweakable controls the epsilon for floating-point
@@ -499,7 +499,7 @@ enum aiComponent
     "PP_FID_ANIM_ACCURACY"
 
 // ---------------------------------------------------------------------------
-/** @brief Input parameter to the #aiProcess_FindInvalidData step:
+/** @brief MouseInput parameter to the #aiProcess_FindInvalidData step:
  *  Set to true to ignore texture coordinates. This may be useful if you have
  *  to assign different kind of textures like one for the summer or one for the winter.
  */
@@ -519,7 +519,7 @@ enum aiComponent
 #define AI_UVTRAFO_ALL (AI_UVTRAFO_SCALING | AI_UVTRAFO_ROTATION | AI_UVTRAFO_TRANSLATION)
 
 // ---------------------------------------------------------------------------
-/** @brief Input parameter to the #aiProcess_TransformUVCoords step:
+/** @brief MouseInput parameter to the #aiProcess_TransformUVCoords step:
  *  Specifies which UV transformations are evaluated.
  *
  *  This is a bitwise combination of the AI_UVTRAFO_XXX flags (integer
@@ -598,7 +598,7 @@ enum aiComponent
     "IMPORT_FBX_READ_CAMERAS"
 
 // ---------------------------------------------------------------------------
-/** @brief Set whether the fbx importer will read light sources.
+/** @brief Set whether the fbx importer will read Light sources.
  *
  * The default value is true (1)
  * Property type: bool
@@ -779,17 +779,17 @@ enum aiComponent
     "IMPORT_MD3_SKIN_NAME"
 
 // ---------------------------------------------------------------------------
-/** @brief  Specify the Quake 3 shader file to be used for a particular
+/** @brief  Specify the Quake 3 Shader file to be used for a particular
  *  MD3 file. This can also be a search path.
  *
  * By default Assimp's behaviour is as follows: If a MD3 file
  * <tt>any_path/models/any_q3_subdir/model_name/file_name.md3</tt> is
- * loaded, the library tries to locate the corresponding shader file in
- * <tt>any_path/scripts/model_name.shader</tt>. This property overrides this
- * behaviour. It can either specify a full path to the shader to be loaded
+ * loaded, the library tries to locate the corresponding Shader file in
+ * <tt>any_path/scripts/model_name.Shader</tt>. This property overrides this
+ * behaviour. It can either specify a full path to the Shader to be loaded
  * or alternatively the path (relative or absolute) to the directory where
  * the shaders for all MD3s to be loaded reside. Assimp attempts to open
- * <tt>IMPORT_MD3_SHADER_SRC/model_name.shader</tt> first, <tt>IMPORT_MD3_SHADER_SRC/file_name.shader</tt>
+ * <tt>IMPORT_MD3_SHADER_SRC/model_name.Shader</tt> first, <tt>IMPORT_MD3_SHADER_SRC/file_name.Shader</tt>
  * is the fallback file. Note that IMPORT_MD3_SHADER_SRC should have a terminal (back)slash.
  * Property type: String. Default value: n/a.
  */
@@ -861,7 +861,7 @@ enum aiComponent
  *
  * Ogre meshes reference with material names, this does not tell Assimp the file
  * where it is located in. Assimp will try to find the source file in the following
- * order: <material-name>.material, <mesh-filename-base>.material and
+ * order: <material-name>.material, <Mesh-filename-base>.material and
  * lastly the material name defined by this config property.
  * <br>
  * Property type: String. Default value: Scene.material.
@@ -873,11 +873,11 @@ enum aiComponent
 /** @brief Ogre Importer detect the texture usage from its filename.
  *
  * Ogre material texture units do not define texture type, the textures usage
- * depends on the used shader or Ogre's fixed pipeline. If this config property
+ * depends on the used Shader or Ogre's fixed pipeline. If this config property
  * is true Assimp will try to detect the type from the textures filename postfix:
  * _n, _nrm, _nrml, _normal, _normals and _normalmap for normal map, _s, _spec,
  * _specular and _specularmap for specular map, _l, _light, _lightmap, _occ
- * and _occlusion for light map, _disp and _displacement for displacement map.
+ * and _occlusion for Light map, _disp and _displacement for displacement map.
  * The matching is case insensitive. Post fix is taken between the last
  * underscore and the last period.
  * Default behavior is to detect type from lower cased texture unit name by

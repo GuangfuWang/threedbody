@@ -3,8 +3,8 @@
 
 #include "pch.hpp"
 
-#include "render_base.h"
-#include "include/mesh/vertex_holder.h"
+#include "RenderBase.h"
+#include "include/mesh/VertexHolder.h"
 
 namespace gf
 {

@@ -237,9 +237,9 @@ namespace Assimp {
          *  The output scene must meet the following requirements:<br>
          * <ul>
          * <li>At least a root node must be there, even if its only purpose
-         *     is to reference one mesh.</li>
+         *     is to reference one Mesh.</li>
          * <li>aiMesh::mPrimitiveTypes may be 0. The types of primitives
-         *   in the mesh are determined automatically in this case.</li>
+         *   in the Mesh are determined automatically in this case.</li>
          * <li>the vertex data is stored in a pseudo-indexed "verbose" format.
          *   In fact this means that every vertex that is referenced by
          *   a face is unique. Or the other way round: a vertex index may
@@ -260,7 +260,7 @@ namespace Assimp {
          *   texture. </li>
          * </ul>
          * If the AI_SCENE_FLAGS_INCOMPLETE-Flag is <b>not</b> set:<ul>
-         * <li> at least one mesh must be there</li>
+         * <li> at least one Mesh must be there</li>
          * <li> there may be no meshes with 0 vertices or faces</li>
          * </ul>
          * This won't be checked (except by the validation step): Assimp will
@@ -304,7 +304,7 @@ namespace Assimp {
 
         // -------------------------------------------------------------------
         /** @brief Check whether a file has a specific file extension
-         *  @param pFile Input file
+         *  @param pFile MouseInput file
          *  @param ext0 Extension to check for. Lowercase characters only, no dot!
          *  @param ext1 Optional second extension
          *  @param ext2 Optional third extension
@@ -318,7 +318,7 @@ namespace Assimp {
 
         // -------------------------------------------------------------------
         /** @brief Extract file extension from a string
-         *  @param pFile Input file
+         *  @param pFile MouseInput file
          *  @return Extension without trailing dot, all lowercase
          */
         static std::string GetExtension(
@@ -326,7 +326,7 @@ namespace Assimp {
 
         // -------------------------------------------------------------------
         /** @brief Check whether a file starts with one or more magic tokens
-         *  @param pFile Input file
+         *  @param pFile MouseInput file
          *  @param pIOHandler IO system to be used
          *  @param magic n magic tokens
          *  @params num Size of magic

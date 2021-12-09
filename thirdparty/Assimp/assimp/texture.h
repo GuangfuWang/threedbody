@@ -189,7 +189,7 @@ struct aiTexture {
 
     //! For compressed textures (mHeight == 0): compare the
     //! format hint against a given string.
-    //! @param s Input string. 3 characters are maximally processed.
+    //! @param s MouseInput string. 3 characters are maximally processed.
     //!        Example values: "jpg", "png"
     //! @return true if the given string matches the format hint
     bool CheckFormat(const char *s) const {

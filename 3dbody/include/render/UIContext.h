@@ -1,7 +1,7 @@
 #ifndef INC_3DBODY_UI_CONTEXT_H
 #define INC_3DBODY_UI_CONTEXT_H
 
-#include "render_base.h"
+#include "RenderBase.h"
 
 namespace gf
 {
@@ -10,7 +10,7 @@ namespace gf
 
   public:
 
-    bool init(GFWindow* window) override;
+    bool init(BaseWindow* window) override;
 
     void pre_render() override;
 

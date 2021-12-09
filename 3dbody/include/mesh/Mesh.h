@@ -1,13 +1,13 @@
 #ifndef INC_3DBODY_3DBODY_INCLUDE_MESH_MESH_H_
 #define INC_3DBODY_3DBODY_INCLUDE_MESH_MESH_H_
 
-#include "include/scene/scene_camera.h"
-#include "include/mesh/vertex_holder.h"
-#include "include/render/render_base.h"
+#include "include/scene/SceneCamera.h"
+#include "include/mesh/VertexHolder.h"
+#include "include/render/RenderBase.h"
 
 namespace gf {
 
-class Mesh : public Element {
+class Mesh : public EventHandleBase {
 
  public:
 

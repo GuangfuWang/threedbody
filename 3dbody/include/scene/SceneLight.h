@@ -5,12 +5,12 @@
 #ifndef INC_3DBODY_SCENE_LIGHT_H
 #define INC_3DBODY_SCENE_LIGHT_H
 
-#include "include/scene/scene_camera.h"
-#include "include/shader/shader.h"
+#include "include/scene/SceneCamera.h"
+#include "include/shader/Shader.h"
 
 namespace gf {
 
-class Light : public Element {
+class Light : public EventHandleBase {
  public:
 
   Light() {

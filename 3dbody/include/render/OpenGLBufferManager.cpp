@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "opengl_buffer_manager.h"
+#include "OpenGLBufferManager.h"
 
 namespace gf
 {

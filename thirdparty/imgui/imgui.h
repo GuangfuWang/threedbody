@@ -140,7 +140,7 @@ Index of this file:
 struct ImDrawChannel;               // Temporary storage to output draw commands out of order, used by ImDrawListSplitter and ImDrawList::ChannelsSplit()
 struct ImDrawCmd;                   // A single draw command within a parent ImDrawList (generally maps to 1 GPU draw call, unless it is a callback)
 struct ImDrawData;                  // All draw command lists required to render the frame + pos/size coordinates to use for the projection matrix.
-struct ImDrawList;                  // A single draw command list (generally one per window, conceptually you may see this as a dynamic "mesh" builder)
+struct ImDrawList;                  // A single draw command list (generally one per window, conceptually you may see this as a dynamic "Mesh" builder)
 struct ImDrawListSharedData;        // Data shared among multiple draw lists (typically owned by parent ImGui context, but you may create one yourself)
 struct ImDrawListSplitter;          // Helper to split a draw list into different layers which can be drawn into out of order, then flattened back.
 struct ImDrawVert;                  // A single vertex (pos + uv + col = 20 bytes by default. Override layout with IMGUI_OVERRIDE_DRAWVERT_STRUCT_LAYOUT)
@@ -577,7 +577,7 @@ IMGUI_API bool          VSliderFloat(const char* label, const ImVec2& size, floa
 IMGUI_API bool          VSliderInt(const char* label, const ImVec2& size, int* v, int v_min, int v_max, const char* format = "%d", ImGuiSliderFlags flags = 0);
 IMGUI_API bool          VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType data_type, void* p_data, const void* p_min, const void* p_max, const char* format = NULL, ImGuiSliderFlags flags = 0);
 
-// Widgets: Input with Keyboard
+// Widgets: MouseInput with Keyboard
 // - If you want to use InputText() with std::string or any custom dynamic string type, see misc/cpp/imgui_stdlib.h and comments in imgui_demo.cpp.
 // - Most of the ImGuiInputTextFlags flags are only useful for InputText() and not for InputFloatX, InputIntX, InputDouble etc.
 IMGUI_API bool          InputText(const char* label, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL);
@@ -1244,7 +1244,7 @@ enum ImGuiTableFlags_
 // Flags for ImGui::TableSetupColumn()
 enum ImGuiTableColumnFlags_
 {
-  // Input configuration flags
+  // MouseInput configuration flags
   ImGuiTableColumnFlags_None                  = 0,
   ImGuiTableColumnFlags_Disabled              = 1 << 0,   // Overriding/master disable flag: hide column, won't show in context menu (unlike calling TableSetColumnEnabled() which manipulates the user accessible state)
   ImGuiTableColumnFlags_DefaultHide           = 1 << 1,   // Default as a hidden/disabled column.
@@ -1662,8 +1662,8 @@ enum ImGuiColorEditFlags_
   ImGuiColorEditFlags_Float           = 1 << 24,  // [DataType]   // ColorEdit, ColorPicker, ColorButton: _display_ values formatted as 0.0f..1.0f floats instead of 0..255 integers. No round-trip of value via integers.
   ImGuiColorEditFlags_PickerHueBar    = 1 << 25,  // [Picker]     // ColorPicker: bar for Hue, rectangle for Sat/Value.
   ImGuiColorEditFlags_PickerHueWheel  = 1 << 26,  // [Picker]     // ColorPicker: wheel for Hue, triangle for Sat/Value.
-  ImGuiColorEditFlags_InputRGB        = 1 << 27,  // [Input]      // ColorEdit, ColorPicker: input and output data in RGB format.
-  ImGuiColorEditFlags_InputHSV        = 1 << 28,  // [Input]      // ColorEdit, ColorPicker: input and output data in HSV format.
+  ImGuiColorEditFlags_InputRGB        = 1 << 27,  // [MouseInput]      // ColorEdit, ColorPicker: input and output data in RGB format.
+  ImGuiColorEditFlags_InputHSV        = 1 << 28,  // [MouseInput]      // ColorEdit, ColorPicker: input and output data in HSV format.
 
   // Defaults Options. You can set application defaults using SetColorEditOptions(). The intent is that you probably don't want to
   // override them in most of your calls. Let the user choose via the option menu and/or call SetColorEditOptions() once during startup.
@@ -1961,7 +1961,7 @@ struct ImGuiIO
   void*       ClipboardUserData;
 
   //------------------------------------------------------------------
-  // Input - Fill before calling NewFrame()
+  // MouseInput - Fill before calling NewFrame()
   //------------------------------------------------------------------
 
   ImVec2      MousePos;                       // Mouse position, in pixels. Set to ImVec2(-FLT_MAX, -FLT_MAX) if mouse is unavailable (on another screen, etc.)
@@ -2385,7 +2385,7 @@ typedef void (*ImDrawCallback)(const ImDrawList* parent_list, const ImDrawCmd* c
 // Special Draw callback value to request renderer backend to reset the graphics/render state.
 // The renderer backend needs to handle this special value, otherwise it will crash trying to call a function at this address.
 // This is useful for example if you submitted callbacks which you know have altered the render state and you want it to be restored.
-// It is not done by default because they are many perfectly useful way of altering render state for imgui contents (e.g. changing shader/blending settings before an Image call).
+// It is not done by default because they are many perfectly useful way of altering render state for imgui contents (e.g. changing Shader/blending settings before an Image call).
 #define ImDrawCallback_ResetRenderState     (ImDrawCallback)(-1)
 
 // Typically, 1 command = 1 GPU draw call (unless command is a callback)
@@ -2705,12 +2705,12 @@ struct ImFontGlyphRangesBuilder
 // See ImFontAtlas::AddCustomRectXXX functions.
 struct ImFontAtlasCustomRect
 {
-  unsigned short  Width, Height;  // Input    // Desired rectangle dimension
+  unsigned short  Width, Height;  // MouseInput    // Desired rectangle dimension
   unsigned short  X, Y;           // Output   // Packed position in Atlas
-  unsigned int    GlyphID;        // Input    // For custom font glyphs only (ID < 0x110000)
-  float           GlyphAdvanceX;  // Input    // For custom font glyphs only: glyph xadvance
-  ImVec2          GlyphOffset;    // Input    // For custom font glyphs only: glyph display offset
-  ImFont*         Font;           // Input    // For custom font glyphs only: target font
+  unsigned int    GlyphID;        // MouseInput    // For custom font glyphs only (ID < 0x110000)
+  float           GlyphAdvanceX;  // MouseInput    // For custom font glyphs only: glyph xadvance
+  ImVec2          GlyphOffset;    // MouseInput    // For custom font glyphs only: glyph display offset
+  ImFont*         Font;           // MouseInput    // For custom font glyphs only: target font
   ImFontAtlasCustomRect()         { Width = Height = 0; X = Y = 0xFFFF; GlyphID = 0; GlyphAdvanceX = 0.0f; GlyphOffset = ImVec2(0, 0); Font = NULL; }
   bool IsPacked() const           { return X != 0xFFFF; }
 };
@@ -3009,7 +3009,7 @@ struct ImGuiViewport
 struct ImGuiPlatformIO
 {
   //------------------------------------------------------------------
-  // Input - Backend interface/functions + Monitor List
+  // MouseInput - Backend interface/functions + Monitor List
   //------------------------------------------------------------------
 
   // (Optional) Platform functions (e.g. Win32, GLFW, SDL2)
@@ -3043,7 +3043,7 @@ struct ImGuiPlatformIO
   void    (*Platform_SwapBuffers)(ImGuiViewport* vp, void* render_arg);   // . . . R .  // (Optional) Call Present/SwapBuffers (platform side! This is often unused!). 'render_arg' is the value passed to RenderPlatformWindowsDefault().
   float   (*Platform_GetWindowDpiScale)(ImGuiViewport* vp);               // N . . . .  // (Optional) [BETA] FIXME-DPI: DPI handling: Return DPI scale for this viewport. 1.0f = 96 DPI.
   void    (*Platform_OnChangedViewport)(ImGuiViewport* vp);               // . F . . .  // (Optional) [BETA] FIXME-DPI: DPI handling: Called during Begin() every time the viewport we are outputting into changes, so backend has a chance to swap fonts to adjust style.
-  void    (*Platform_SetImeInputPos)(ImGuiViewport* vp, ImVec2 pos);      // . F . . .  // (Optional) Set IME (Input Method Editor, e.g. for Asian languages) input position, so text preview appears over the imgui input box. FIXME: The call timing of this is inconsistent because we want to support without multi-viewports.
+  void    (*Platform_SetImeInputPos)(ImGuiViewport* vp, ImVec2 pos);      // . F . . .  // (Optional) Set IME (MouseInput Method Editor, e.g. for Asian languages) input position, so text preview appears over the imgui input box. FIXME: The call timing of this is inconsistent because we want to support without multi-viewports.
   int     (*Platform_CreateVkSurface)(ImGuiViewport* vp, ImU64 vk_inst, const void* vk_allocators, ImU64* out_vk_surface); // (Optional) For a Vulkan Renderer to call into Platform code (since the surface creation needs to tie them both).
 
   // (Optional) Renderer functions (e.g. DirectX, OpenGL, Vulkan)

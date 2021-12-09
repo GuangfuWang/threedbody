@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---------------------------------------------------------------------------
 */
 
-/** @file light.h
+/** @file Light.h
  *  @brief Defines the aiLight data structure
  */
 
@@ -56,36 +56,36 @@ extern "C" {
 #endif
 
 // ---------------------------------------------------------------------------
-/** Enumerates all supported types of light sources.
+/** Enumerates all supported types of Light sources.
  */
 enum aiLightSourceType {
     aiLightSource_UNDEFINED = 0x0,
 
-    //! A directional light source has a well-defined direction
+    //! A directional Light source has a well-defined direction
     //! but is infinitely far away. That's quite a good
-    //! approximation for sun light.
+    //! approximation for sun Light.
     aiLightSource_DIRECTIONAL = 0x1,
 
-    //! A point light source has a well-defined position
-    //! in space but no direction - it emits light in all
-    //! directions. A normal bulb is a point light.
+    //! A point Light source has a well-defined position
+    //! in space but no direction - it emits Light in all
+    //! directions. A normal bulb is a point Light.
     aiLightSource_POINT = 0x2,
 
-    //! A spot light source emits light in a specific
+    //! A spot Light source emits Light in a specific
     //! angle. It has a position and a direction it is pointing to.
-    //! A good example for a spot light is a light spot in
+    //! A good example for a spot Light is a Light spot in
     //! sport arenas.
     aiLightSource_SPOT = 0x3,
 
-    //! The generic light level of the world, including the bounces
-    //! of all other light sources.
-    //! Typically, there's at most one ambient light in a scene.
-    //! This light type doesn't have a valid position, direction, or
+    //! The generic Light level of the world, including the bounces
+    //! of all other Light sources.
+    //! Typically, there's at most one ambient Light in a scene.
+    //! This Light type doesn't have a valid position, direction, or
     //! other properties, just a color.
     aiLightSource_AMBIENT = 0x4,
 
-    //! An area light is a rectangle with predefined size that uniformly
-    //! emits light from one of its sides. The position is center of the
+    //! An area Light is a rectangle with predefined size that uniformly
+    //! emits Light from one of its sides. The position is center of the
     //! rectangle and direction is its normal vector.
     aiLightSource_AREA = 0x5,
 
@@ -98,60 +98,60 @@ enum aiLightSourceType {
 };
 
 // ---------------------------------------------------------------------------
-/** Helper structure to describe a light source.
+/** Helper structure to describe a Light source.
  *
- *  Assimp supports multiple sorts of light sources, including
+ *  Assimp supports multiple sorts of Light sources, including
  *  directional, point and spot lights. All of them are defined with just
  *  a single structure and distinguished by their parameters.
  *  Note - some file formats (such as 3DS, ASE) export a "target point" -
- *  the point a spot light is looking at (it can even be animated). Assimp
+ *  the point a spot Light is looking at (it can even be animated). Assimp
  *  writes the target point as a subnode of a spotlights's main node,
  *  called "<spotName>.Target". However, this is just additional information
  *  then, the transformation tracks of the main node make the
- *  spot light already point in the right direction.
+ *  spot Light already point in the right direction.
 */
 struct aiLight {
-    /** The name of the light source.
+    /** The name of the Light source.
      *
      *  There must be a node in the scenegraph with the same name.
-     *  This node specifies the position of the light in the scene
+     *  This node specifies the position of the Light in the scene
      *  hierarchy and can be animated.
      */
     C_STRUCT aiString mName;
 
-    /** The type of the light source.
+    /** The type of the Light source.
      *
      * aiLightSource_UNDEFINED is not a valid value for this member.
      */
     C_ENUM aiLightSourceType mType;
 
-    /** Position of the light source in space. Relative to the
-     *  transformation of the node corresponding to the light.
+    /** Position of the Light source in space. Relative to the
+     *  transformation of the node corresponding to the Light.
      *
      *  The position is undefined for directional lights.
      */
     C_STRUCT aiVector3D mPosition;
 
-    /** Direction of the light source in space. Relative to the
-     *  transformation of the node corresponding to the light.
+    /** Direction of the Light source in space. Relative to the
+     *  transformation of the node corresponding to the Light.
      *
      *  The direction is undefined for point lights. The vector
      *  may be normalized, but it needn't.
      */
     C_STRUCT aiVector3D mDirection;
 
-    /** Up direction of the light source in space. Relative to the
-     *  transformation of the node corresponding to the light.
+    /** Up direction of the Light source in space. Relative to the
+     *  transformation of the node corresponding to the Light.
      *
      *  The direction is undefined for point lights. The vector
      *  may be normalized, but it needn't.
      */
     C_STRUCT aiVector3D mUp;
 
-    /** Constant light attenuation factor.
+    /** Constant Light attenuation factor.
      *
-     *  The intensity of the light source at a given distance 'd' from
-     *  the light's position is
+     *  The intensity of the Light source at a given distance 'd' from
+     *  the Light's position is
      *  @code
      *  Atten = 1/( att0 + att1 * d + att2 * d*d)
      *  @endcode
@@ -160,10 +160,10 @@ struct aiLight {
      */
     float mAttenuationConstant;
 
-    /** Linear light attenuation factor.
+    /** Linear Light attenuation factor.
      *
-     *  The intensity of the light source at a given distance 'd' from
-     *  the light's position is
+     *  The intensity of the Light source at a given distance 'd' from
+     *  the Light's position is
      *  @code
      *  Atten = 1/( att0 + att1 * d + att2 * d*d)
      *  @endcode
@@ -172,10 +172,10 @@ struct aiLight {
      */
     float mAttenuationLinear;
 
-    /** Quadratic light attenuation factor.
+    /** Quadratic Light attenuation factor.
      *
-     *  The intensity of the light source at a given distance 'd' from
-     *  the light's position is
+     *  The intensity of the Light source at a given distance 'd' from
+     *  the Light's position is
      *  @code
      *  Atten = 1/( att0 + att1 * d + att2 * d*d)
      *  @endcode
@@ -184,25 +184,25 @@ struct aiLight {
      */
     float mAttenuationQuadratic;
 
-    /** Diffuse color of the light source
+    /** Diffuse color of the Light source
      *
-     *  The diffuse light color is multiplied with the diffuse
+     *  The diffuse Light color is multiplied with the diffuse
      *  material color to obtain the final color that contributes
      *  to the diffuse shading term.
      */
     C_STRUCT aiColor3D mColorDiffuse;
 
-    /** Specular color of the light source
+    /** Specular color of the Light source
      *
-     *  The specular light color is multiplied with the specular
+     *  The specular Light color is multiplied with the specular
      *  material color to obtain the final color that contributes
      *  to the specular shading term.
      */
     C_STRUCT aiColor3D mColorSpecular;
 
-    /** Ambient color of the light source
+    /** Ambient color of the Light source
      *
-     *  The ambient light color is multiplied with the ambient
+     *  The ambient Light color is multiplied with the ambient
      *  material color to obtain the final color that contributes
      *  to the ambient shading term. Most renderers will ignore
      *  this value it, is just a remaining of the fixed-function pipeline
@@ -210,27 +210,27 @@ struct aiLight {
      */
     C_STRUCT aiColor3D mColorAmbient;
 
-    /** Inner angle of a spot light's light cone.
+    /** Inner angle of a spot Light's Light cone.
      *
-     *  The spot light has maximum influence on objects inside this
+     *  The spot Light has maximum influence on objects inside this
      *  angle. The angle is given in radians. It is 2PI for point
      *  lights and undefined for directional lights.
      */
     float mAngleInnerCone;
 
-    /** Outer angle of a spot light's light cone.
+    /** Outer angle of a spot Light's Light cone.
      *
-     *  The spot light does not affect objects outside this angle.
+     *  The spot Light does not affect objects outside this angle.
      *  The angle is given in radians. It is 2PI for point lights and
      *  undefined for directional lights. The outer angle must be
      *  greater than or equal to the inner angle.
      *  It is assumed that the application uses a smooth
      *  interpolation between the inner and the outer cone of the
-     *  spot light.
+     *  spot Light.
      */
     float mAngleOuterCone;
 
-    /** Size of area light source. */
+    /** Size of area Light source. */
     C_STRUCT aiVector2D mSize;
 
 #ifdef __cplusplus

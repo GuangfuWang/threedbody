@@ -1,10 +1,10 @@
 
-#ifndef INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENE_VIEW_H_
-#define INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENE_VIEW_H_
+#ifndef INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENEVIEW_H_
+#define INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENEVIEW_H_
 
-#include "include/render/opengl_buffer_manager.h"
-#include "include/scene/scene_light.h"
-#include "include/mesh/mesh.h"
+#include "include/render/OpenGLBufferManager.h"
+#include "include/scene/SceneLight.h"
+#include "include/mesh/Mesh.h"
 
 namespace gf{
 
@@ -47,7 +47,7 @@ class SceneView
 
   std::shared_ptr<Mesh> get_mesh() { return mMesh; }
 
-  void on_mouse_move(double x, double y, EInputButton button);
+  void on_mouse_move(double x, double y, MOUSE_INPUT_CODE button);
 
   void on_mouse_wheel(double delta);
 
@@ -66,4 +66,4 @@ class SceneView
 };
 }
 
-#endif //INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENE_VIEW_H_
+#endif //INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENEVIEW_H_

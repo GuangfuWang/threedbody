@@ -6,7 +6,7 @@
 #include "imgui.h"
 #include "util/imgui_file_browser.h"
 #include "util/ConfigMap.h"
-#include "include/scene/scene_view.h"
+#include "SceneView.h"
 
 #include <list>
 
@@ -21,7 +21,7 @@ class Property_Panel
     mCurrentFile = "< ... >";
 
     mFileDialog.SetTitle("Open 3d model");
-    mFileDialog.SetFileFilters({".fbx",".obj",".ply"});
+    mFileDialog.SetFileFilters(ConfigMap::getInstance()->input_format_);
   }
 
   void render(SceneView* mScene);

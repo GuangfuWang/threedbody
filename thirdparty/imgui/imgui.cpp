@@ -294,7 +294,7 @@ CODE
        // TODO: Setup render state: alpha-blending enabled, no face culling, no depth testing, scissor enabled
        // TODO: Setup viewport covering draw_data->DisplayPos to draw_data->DisplayPos + draw_data->DisplaySize
        // TODO: Setup orthographic projection matrix cover draw_data->DisplayPos to draw_data->DisplayPos + draw_data->DisplaySize
-       // TODO: Setup shader: vertex { float2 pos, float2 uv, u32 color }, fragment shader sample color from 1 texture, multiply by vertex color.
+       // TODO: Setup Shader: vertex { float2 pos, float2 uv, u32 color }, fragment Shader sample color from 1 texture, multiply by vertex color.
        for (int n = 0; n < draw_data->CmdListsCount; n++)
        {
           const ImDrawList* cmd_list = draw_data->CmdLists[n];
@@ -1160,7 +1160,7 @@ ImGuiIO::ImGuiIO()
   SetClipboardTextFn = SetClipboardTextFn_DefaultImpl;
   ClipboardUserData = NULL;
 
-  // Input (NB: we already have memset zero the entire structure!)
+  // MouseInput (NB: we already have memset zero the entire structure!)
   MousePos = ImVec2(-FLT_MAX, -FLT_MAX);
   MousePosPrev = ImVec2(-FLT_MAX, -FLT_MAX);
   MouseDragThreshold = 6.0f;
@@ -3347,7 +3347,7 @@ bool ImGui::IsItemHovered(ImGuiHoveredFlags flags)
 
     // Test if we are hovering the right window (our window could be behind another window)
     // [2021/03/02] Reworked / reverted the revert, finally. Note we want e.g. BeginGroup/ItemAdd/EndGroup to work as well. (#3851)
-    // [2017/10/16] Reverted commit 344d48be3 and testing RootWindow instead. I believe it is correct to NOT test for RootWindow but this leaves us unable
+    // [2017/10/16] Reverted commit 344d48be3 and testing ThreeDBodyWindow instead. I believe it is correct to NOT test for ThreeDBodyWindow but this leaves us unable
     // to use IsItemHovered() after EndChild() itself. Until a solution is found I believe reverting to the test from 2017/09/27 is safe since this was
     // the test that has been running for a long while.
     if (g.HoveredWindow != window && (status_flags & ImGuiItemStatusFlags_HoveredWindow) == 0)
@@ -4275,7 +4275,7 @@ void ImGui::NewFrame()
 
   g.MouseCursor = ImGuiMouseCursor_Arrow;
   g.WantCaptureMouseNextFrame = g.WantCaptureKeyboardNextFrame = g.WantTextInputNextFrame = -1;
-  g.PlatformImePos = ImVec2(1.0f, 1.0f); // OS Input Method Editor showing on top-left of our window by default
+  g.PlatformImePos = ImVec2(1.0f, 1.0f); // OS MouseInput Method Editor showing on top-left of our window by default
   g.PlatformImePosViewport = NULL;
 
   // Mouse wheel scrolling, scale
@@ -4651,7 +4651,7 @@ static void ImGui::RenderDimmedBackgroundBehindWindow(ImGuiWindow* window, ImU32
   {
     ImDrawList* draw_list = FindFrontMostVisibleChildWindow(window->RootWindowDockTree)->DrawList;
     draw_list->PushClipRect(viewport_rect.Min, viewport_rect.Max, false);
-    //if (window->RootWindowDockTree != window->RootWindow)
+    //if (window->RootWindowDockTree != window->ThreeDBodyWindow)
     RenderRectFilledWithHole(draw_list, window->RootWindowDockTree->Rect(), window->RootWindow->Rect(), col, 0.0f);// window->RootWindowDockTree->WindowRounding);
     draw_list->PopClipRect();
   }
@@ -4724,7 +4724,7 @@ void ImGui::EndFrame()
 
   ErrorCheckEndFrameSanityChecks();
 
-  // Notify OS when our Input Method Editor cursor has moved (e.g. CJK inputs using Microsoft IME)
+  // Notify OS when our MouseInput Method Editor cursor has moved (e.g. CJK inputs using Microsoft IME)
   if (g.PlatformIO.Platform_SetImeInputPos && (g.PlatformImeLastPos.x == FLT_MAX || ImLengthSqr(g.PlatformImePos - g.PlatformImeLastPos) > 0.0001f))
     if (g.PlatformImePosViewport && g.PlatformImePosViewport->PlatformWindowCreated)
     {
@@ -4794,7 +4794,7 @@ void ImGui::EndFrame()
   // Unlock font atlas
   g.IO.Fonts->Locked = false;
 
-  // Clear Input data for next frame
+  // Clear MouseInput data for next frame
   g.IO.MouseWheel = g.IO.MouseWheelH = 0.0f;
   g.IO.InputQueueCharacters.resize(0);
   g.IO.KeyModsPrev = g.IO.KeyMods; // doing it here is better than in NewFrame() as we'll tolerate backend writing to KeyMods. If we want to firmly disallow it we should detect it.
@@ -6327,7 +6327,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
     window->PopupId = popup_ref.PopupId;
   }
 
-  // Update ->RootWindow and others pointers (before any possible call to FocusWindow)
+  // Update ->ThreeDBodyWindow and others pointers (before any possible call to FocusWindow)
   if (first_begin_of_the_frame)
   {
     UpdateWindowParentAndRootLinks(window, flags, parent_window);
@@ -17016,7 +17016,7 @@ void ImGui::ShowMetricsWindow(bool* p_open)
     drawlist_count += g.Viewports[viewport_i]->DrawDataBuilder.GetDrawListCount();
   if (TreeNode("DrawLists", "DrawLists (%d)", drawlist_count))
   {
-    Checkbox("Show ImDrawCmd mesh when hovering", &cfg->ShowDrawCmdMesh);
+    Checkbox("Show ImDrawCmd Mesh when hovering", &cfg->ShowDrawCmdMesh);
     Checkbox("Show ImDrawCmd bounding boxes when hovering", &cfg->ShowDrawCmdBoundingBoxes);
     for (int viewport_i = 0; viewport_i < g.Viewports.Size; viewport_i++)
     {
@@ -17530,7 +17530,7 @@ void ImGui::DebugNodeDrawList(ImGuiWindow* window, ImGuiViewportP* viewport, con
   TreePop();
 }
 
-// [DEBUG] Display mesh/aabb of a ImDrawCmd
+// [DEBUG] Display Mesh/aabb of a ImDrawCmd
 void ImGui::DebugNodeDrawCmdShowMeshAndBoundingBox(ImDrawList* out_draw_list, const ImDrawList* draw_list, const ImDrawCmd* draw_cmd, bool show_mesh, bool show_aabb)
 {
   IM_ASSERT(show_mesh || show_aabb);
@@ -17549,7 +17549,7 @@ void ImGui::DebugNodeDrawCmdShowMeshAndBoundingBox(ImDrawList* out_draw_list, co
     for (int n = 0; n < 3; n++, idx_n++)
       vtxs_rect.Add((triangle[n] = vtx_buffer[idx_buffer ? idx_buffer[idx_n] : idx_n].pos));
     if (show_mesh)
-      out_draw_list->AddPolyline(triangle, 3, IM_COL32(255, 255, 0, 255), ImDrawFlags_Closed, 1.0f); // In yellow: mesh triangles
+      out_draw_list->AddPolyline(triangle, 3, IM_COL32(255, 255, 0, 255), ImDrawFlags_Closed, 1.0f); // In yellow: Mesh triangles
   }
   // Draw bounding boxes
   if (show_aabb)
@@ -17594,7 +17594,7 @@ void ImGui::DebugNodeFont(ImFont* font)
   for (int config_i = 0; config_i < font->ConfigDataCount; config_i++)
     if (font->ConfigData)
       if (const ImFontConfig* cfg = &font->ConfigData[config_i])
-        BulletText("Input %d: \'%s\', Oversample: (%d,%d), PixelSnapH: %d, Offset: (%.1f,%.1f)",
+        BulletText("MouseInput %d: \'%s\', Oversample: (%d,%d), PixelSnapH: %d, Offset: (%.1f,%.1f)",
                    config_i, cfg->Name, cfg->OversampleH, cfg->OversampleV, cfg->PixelSnapH, cfg->GlyphOffset.x, cfg->GlyphOffset.y);
 
   // Display all glyphs of the fonts in separate pages of 256 characters
@@ -17797,7 +17797,7 @@ void ImGui::DebugNodeWindow(ImGuiWindow* window, const char* label)
   if (window->DockNode || window->DockNodeAsHost)
     DebugNodeDockNode(window->DockNodeAsHost ? window->DockNodeAsHost : window->DockNode, window->DockNodeAsHost ? "DockNodeAsHost" : "DockNode");
 
-  if (window->RootWindow != window)       { DebugNodeWindow(window->RootWindow, "RootWindow"); }
+  if (window->RootWindow != window)       { DebugNodeWindow(window->RootWindow, "ThreeDBodyWindow"); }
   if (window->RootWindowDockTree != window->RootWindow) { DebugNodeWindow(window->RootWindowDockTree, "RootWindowDockTree"); }
   if (window->ParentWindow != NULL)       { DebugNodeWindow(window->ParentWindow, "ParentWindow"); }
   if (window->DC.ChildWindows.Size > 0)   { DebugNodeWindowsList(&window->DC.ChildWindows, "ChildWindows"); }

@@ -119,7 +119,7 @@ namespace Assimp {
         Vertex() {}
 
         // ----------------------------------------------------------------------------
-        /** Extract a particular vertex from a mesh and interleave all components */
+        /** Extract a particular vertex from a Mesh and interleave all components */
         explicit Vertex(const aiMesh *msh, unsigned int idx) {
             ai_assert(idx < msh->mNumVertices);
             position = msh->mVertices[idx];
@@ -143,7 +143,7 @@ namespace Assimp {
         }
 
         // ----------------------------------------------------------------------------
-        /** Extract a particular vertex from a anim mesh and interleave all components */
+        /** Extract a particular vertex from a anim Mesh and interleave all components */
         explicit Vertex(const aiAnimMesh *msh, unsigned int idx) {
             ai_assert(idx < msh->mNumVertices);
             position = msh->mVertices[idx];

@@ -84,7 +84,7 @@ union _IEEEDouble {
 
 // ---------------------------------------------------------------------------
 /** Check whether a given float is qNaN.
- *  @param in Input value */
+ *  @param in MouseInput value */
 AI_FORCE_INLINE bool is_qnan(float in) {
     // the straightforward solution does not work:
     //   return (in != in);
@@ -101,7 +101,7 @@ AI_FORCE_INLINE bool is_qnan(float in) {
 
 // ---------------------------------------------------------------------------
 /** Check whether a given double is qNaN.
- *  @param in Input value */
+ *  @param in MouseInput value */
 AI_FORCE_INLINE bool is_qnan(double in) {
     // the straightforward solution does not work:
     //   return (in != in);
@@ -120,7 +120,7 @@ AI_FORCE_INLINE bool is_qnan(double in) {
 /** @brief check whether a float is either NaN or (+/-) INF.
  *
  *  Denorms return false, they're treated like normal values.
- *  @param in Input value */
+ *  @param in MouseInput value */
 AI_FORCE_INLINE bool is_special_float(float in) {
     _IEEESingle temp;
     memcpy(&temp, &in, sizeof(float));
@@ -131,7 +131,7 @@ AI_FORCE_INLINE bool is_special_float(float in) {
 /** @brief check whether a double is either NaN or (+/-) INF.
  *
  *  Denorms return false, they're treated like normal values.
- *  @param in Input value */
+ *  @param in MouseInput value */
 AI_FORCE_INLINE bool is_special_float(double in) {
     _IEEESingle temp;
     memcpy(&temp, &in, sizeof(float));
@@ -140,7 +140,7 @@ AI_FORCE_INLINE bool is_special_float(double in) {
 
 // ---------------------------------------------------------------------------
 /** Check whether a float is NOT qNaN.
- *  @param in Input value */
+ *  @param in MouseInput value */
 template<class TReal>
 AI_FORCE_INLINE bool is_not_qnan(TReal in) {
     return !is_qnan(in);

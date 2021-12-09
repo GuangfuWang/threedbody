@@ -70,7 +70,7 @@ enum aiPostProcessSteps {
     // -------------------------------------------------------------------------
     /** <hr>Calculates the tangents and bitangents for the imported meshes.
      *
-     * Does nothing if a mesh does not have normals. You might want this post
+     * Does nothing if a Mesh does not have normals. You might want this post
      * processing step to be executed if you plan to use tangent space calculations
      * such as normal mapping  applied to the meshes. There's an importer property,
      * <tt>#AI_CONFIG_PP_CT_MAX_SMOOTHING_ANGLE</tt>, which allows you to specify
@@ -83,7 +83,7 @@ enum aiPostProcessSteps {
     /** <hr>Identifies and joins identical vertex data sets within all
      *  imported meshes.
      *
-     * After this step is run, each mesh contains unique vertices,
+     * After this step is run, each Mesh contains unique vertices,
      * so a vertex may be used by multiple faces. You usually want
      * to use this post processing step. If your application deals with
      * indexed geometry, this step is compulsory or you'll just waste rendering
@@ -111,7 +111,7 @@ enum aiPostProcessSteps {
     // -------------------------------------------------------------------------
     /** <hr>Triangulates all faces of all meshes.
      *
-     * By default the imported mesh data might contain faces with more than 3
+     * By default the imported Mesh data might contain faces with more than 3
      * indices. For rendering you'll usually want all faces to be triangles.
      * This post processing step splits up faces with more than 3 indices into
      * triangles. Line and point primitives are *not* modified! If you want
@@ -126,7 +126,7 @@ enum aiPostProcessSteps {
 
     // -------------------------------------------------------------------------
     /** <hr>Removes some parts of the data structure (animations, materials,
-     *  light sources, cameras, textures, vertex components).
+     *  Light sources, cameras, textures, vertex components).
      *
      * The  components to be removed are specified in a separate
      * importer property, <tt>#AI_CONFIG_PP_RVC_FLAGS</tt>. This is quite useful
@@ -165,7 +165,7 @@ enum aiPostProcessSteps {
     aiProcess_GenNormals = 0x20,
 
     // -------------------------------------------------------------------------
-    /** <hr>Generates smooth normals for all vertices in the mesh.
+    /** <hr>Generates smooth normals for all vertices in the Mesh.
     *
     * This is ignored if normals are already there at the time this flag
     * is evaluated. Model importers try to load them from the source file, so
@@ -188,7 +188,7 @@ enum aiPostProcessSteps {
     * which can be maximally processed in a single draw-call is limited
     * by the video driver/hardware. The maximum vertex buffer is usually limited
     * too. Both requirements can be met with this step: you may specify both a
-    * triangle and vertex limit for a single mesh.
+    * triangle and vertex limit for a single Mesh.
     *
     * The split limits can (and should!) be set through the
     * <tt>#AI_CONFIG_PP_SLM_VERTEX_LIMIT</tt> and <tt>#AI_CONFIG_PP_SLM_TRIANGLE_LIMIT</tt>
@@ -205,13 +205,13 @@ enum aiPostProcessSteps {
     * the local transformation matrices of their nodes.
     *
     * The output scene still contains nodes, however there is only a
-    * root node with children, each one referencing only one mesh,
-    * and each mesh referencing one material. For rendering, you can
+    * root node with children, each one referencing only one Mesh,
+    * and each Mesh referencing one material. For rendering, you can
     * simply render all meshes in order - you don't need to pay
     * attention to local transformations and the node hierarchy.
     * Animations are removed during this step.
     * This step is intended for applications without a scenegraph.
-    * The step CAN cause some problems: if e.g. a mesh of the asset
+    * The step CAN cause some problems: if e.g. a Mesh of the asset
     * contains normals and another, using the same material index, does not,
     * they will be brought together, but the first meshes's part of
     * the normal list is zeroed. However, these artifacts are rare.
@@ -416,14 +416,14 @@ enum aiPostProcessSteps {
      * transformations, so you will probably want to specify this step.
      *
      * @note UV transformations are usually implemented in real-time apps by
-     * transforming texture coordinates at vertex shader stage with a 3x3
+     * transforming texture coordinates at vertex Shader stage with a 3x3
      * (homogenous) transformation matrix.
     */
     aiProcess_TransformUVCoords = 0x80000,
 
     // -------------------------------------------------------------------------
     /** <hr>This step searches for duplicate meshes and replaces them
-     *  with references to the first mesh.
+     *  with references to the first Mesh.
      *
      *  This step takes a while, so don't use it if speed is a concern.
      *  Its main purpose is to workaround the fact that many export
@@ -513,7 +513,7 @@ enum aiPostProcessSteps {
 
     // -------------------------------------------------------------------------
     /** <hr>This step splits meshes with many bones into sub-meshes so that each
-     * sub-mesh has fewer or as many bones as a given limit.
+     * sub-Mesh has fewer or as many bones as a given limit.
     */
     aiProcess_SplitByBoneCount = 0x2000000,
 

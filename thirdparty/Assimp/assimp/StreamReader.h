@@ -80,7 +80,7 @@ namespace Assimp {
          *
          *  The StreamReader holds a permanent strong reference to the
          *  stream, which is released upon destruction.
-         *  @param stream Input stream. The stream is not restarted if
+         *  @param stream MouseInput stream. The stream is not restarted if
          *    its file pointer is not at 0. Instead, the stream reader
          *    reads from the current position to the end of the stream.
          *  @param le If @c RuntimeSwitch is true: specifies whether the

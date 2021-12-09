@@ -7,38 +7,13 @@
 #include <glm/gtx/quaternion.hpp>
 #include <GLFW/glfw3.h>
 
-#include "include/shader/shader.h"
+#include "include/shader/Shader.h"
+#include "include/event_handling/EventBase.h"
+#include "include/event_handling/MouseEvent.h"
 
 namespace gf {
 
-enum class EInputButton {
-  Left = 0,
-  Right = 1,
-  Middle = 2,
-  None = 9
-};
-
-class Input {
- public:
-  static EInputButton GetPressedButton(GLFWwindow *window) {
-    if (glfwGetMouseButton(window, 0) == GLFW_PRESS)
-      return EInputButton::Left;
-    else if (glfwGetMouseButton(window, 1) == GLFW_PRESS)
-      return EInputButton::Right;
-    else if (glfwGetMouseButton(window, 2) == GLFW_PRESS)
-      return EInputButton::Middle;
-
-    return EInputButton::None;
-
-  }
-};
-
-class Element {
- public:
-  virtual void update(Shader *shader) = 0;
-};
-
-class Camera : public Element {
+class Camera : public EventHandleBase {
  public:
 
   Camera(const glm::vec3 &position, float fov, float aspect, float near, float far) {
@@ -110,10 +85,10 @@ class Camera : public Element {
     update_view_matrix();
   }
 
-  void on_mouse_move(double x, double y, EInputButton button) {
+  void on_mouse_move(double x, double y, MOUSE_INPUT_CODE button) {
     glm::vec2 pos2d{x, y};
 
-    if (button == EInputButton::Right) {
+    if (button == MOUSE_INPUT_CODE::RIGHT) {
       glm::vec2 delta = (pos2d - mCurrentPos2d) * 0.004f;
 
       float sign = get_up().y < 0 ? -1.0f : 1.0f;
@@ -121,7 +96,7 @@ class Camera : public Element {
       mPitch += delta.y * cRotationSpeed;
 
       update_view_matrix();
-    } else if (button == EInputButton::Middle) {
+    } else if (button == MOUSE_INPUT_CODE::MIDDLE) {
       // TODO: Adjust pan speed for distance
       glm::vec2 delta = (pos2d - mCurrentPos2d) * 0.003f;
 

@@ -1,11 +1,11 @@
 #include "pch.hpp"
-#include "include/mesh/mesh.h"
+#include "include/mesh/Mesh.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
-#include "include/render/opengl_buffer_manager.h"
+#include "include/render/OpenGLBufferManager.h"
 
 namespace gf
 {

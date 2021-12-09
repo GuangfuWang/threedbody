@@ -149,14 +149,14 @@ struct aiQuatKey {
 };
 
 // ---------------------------------------------------------------------------
-/** Binds a anim-mesh to a specific point in time. */
+/** Binds a anim-Mesh to a specific point in time. */
 struct aiMeshKey {
     /** The time of this key */
     double mTime;
 
     /** Index into the aiMesh::mAnimMeshes array of the
-     *  mesh corresponding to the #aiMeshAnim hosting this
-     *  key frame. The referenced anim mesh is evaluated
+     *  Mesh corresponding to the #aiMeshAnim hosting this
+     *  key frame. The referenced anim Mesh is evaluated
      *  according to the rules defined in the docs for #aiAnimMesh.*/
     unsigned int mValue;
 
@@ -194,7 +194,7 @@ struct aiMeshKey {
 };
 
 // ---------------------------------------------------------------------------
-/** Binds a morph anim mesh to a specific point in time. */
+/** Binds a morph anim Mesh to a specific point in time. */
 struct aiMeshMorphKey {
     /** The time of this key */
     double mTime;
@@ -334,13 +334,13 @@ struct aiNodeAnim {
 };
 
 // ---------------------------------------------------------------------------
-/** Describes vertex-based animations for a single mesh or a group of
+/** Describes vertex-based animations for a single Mesh or a group of
  *  meshes. Meshes carry the animation data for each frame in their
  *  aiMesh::mAnimMeshes array. The purpose of aiMeshAnim is to
- *  define keyframes linking each mesh attachment to a particular
+ *  define keyframes linking each Mesh attachment to a particular
  *  point in time. */
 struct aiMeshAnim {
-    /** Name of the mesh to be animated. An empty string is not allowed,
+    /** Name of the Mesh to be animated. An empty string is not allowed,
      *  animated meshes need to be named (not necessarily uniquely,
      *  the name can basically serve as wild-card to select a group
      *  of meshes with similar animation setup)*/
@@ -365,9 +365,9 @@ struct aiMeshAnim {
 };
 
 // ---------------------------------------------------------------------------
-/** Describes a morphing animation of a given mesh. */
+/** Describes a morphing animation of a given Mesh. */
 struct aiMeshMorphAnim {
-    /** Name of the mesh to be animated. An empty string is not allowed,
+    /** Name of the Mesh to be animated. An empty string is not allowed,
      *  animated meshes need to be named (not necessarily uniquely,
      *  the name can basically serve as wildcard to select a group
      *  of meshes with similar animation setup)*/
@@ -415,19 +415,19 @@ struct aiAnimation {
     C_STRUCT aiNodeAnim **mChannels;
 
 
-    /** The number of mesh animation channels. Each channel affects
-     *  a single mesh and defines vertex-based animation. */
+    /** The number of Mesh animation channels. Each channel affects
+     *  a single Mesh and defines vertex-based animation. */
     unsigned int mNumMeshChannels;
 
-    /** The mesh animation channels. Each channel affects a single mesh.
+    /** The Mesh animation channels. Each channel affects a single Mesh.
      *  The array is mNumMeshChannels in size. */
     C_STRUCT aiMeshAnim **mMeshChannels;
 
-    /** The number of mesh animation channels. Each channel affects
-     *  a single mesh and defines morphing animation. */
+    /** The number of Mesh animation channels. Each channel affects
+     *  a single Mesh and defines morphing animation. */
     unsigned int mNumMorphMeshChannels;
 
-    /** The morph mesh animation channels. Each channel affects a single mesh.
+    /** The morph Mesh animation channels. Each channel affects a single Mesh.
      *  The array is mNumMorphMeshChannels in size. */
     C_STRUCT aiMeshMorphAnim **mMorphMeshChannels;
 

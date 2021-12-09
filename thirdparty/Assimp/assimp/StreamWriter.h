@@ -76,7 +76,7 @@ namespace Assimp {
          *
          *  The StreamReader holds a permanent strong reference to the
          *  stream, which is released upon destruction.
-         *  @param stream Input stream. The stream is not re-seeked and writing
+         *  @param stream MouseInput stream. The stream is not re-seeked and writing
               continues at the current position of the stream cursor.
          *  @param le If @c RuntimeSwitch is true: specifies whether the
          *    stream is in little endian byte order. Otherwise the

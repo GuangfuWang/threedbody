@@ -867,7 +867,7 @@ static void ImGui_ImplGlfw_SwapBuffers(ImGuiViewport* viewport, void*)
 }
 
 //--------------------------------------------------------------------------------------------------------
-// IME (Input Method Editor) basic support for e.g. Asian language users
+// IME (MouseInput Method Editor) basic support for e.g. Asian language users
 //--------------------------------------------------------------------------------------------------------
 
 // We provide a Win32 implementation because this is such a common issue for IME users

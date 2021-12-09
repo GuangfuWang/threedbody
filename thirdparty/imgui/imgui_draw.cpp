@@ -311,7 +311,7 @@ void ImGui::StyleColorsClassic(ImGuiStyle* dst)
   colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
 }
 
-// Those light colors are better suited with a thicker font than the default one + FrameBorder
+// Those Light colors are better suited with a thicker font than the default one + FrameBorder
 void ImGui::StyleColorsLight(ImGuiStyle* dst)
 {
   ImGuiStyle* style = dst ? dst : &ImGui::GetStyle();
@@ -633,7 +633,7 @@ void ImDrawList::PopTextureID()
 // submit the intermediate results. PrimUnreserve() can be used to release unused allocations.
 void ImDrawList::PrimReserve(int idx_count, int vtx_count)
 {
-  // Large mesh support (when enabled)
+  // Large Mesh support (when enabled)
   IM_ASSERT_PARANOID(idx_count >= 0 && vtx_count >= 0);
   if (sizeof(ImDrawIdx) == 2 && (_VtxCurrentIdx + vtx_count >= (1 << 16)) && (Flags & ImDrawListFlags_AllowVtxOffset))
   {

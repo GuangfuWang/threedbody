@@ -16,7 +16,7 @@ class Shader {
  public:
   Shader() = default;
 
-  // Load a vertex and a fragment shader from file
+  // Load a vertex and a fragment Shader from file
   bool load(const std::string &vertexshader_file, const std::string &fragmentshader_file);
 
   // Use the program

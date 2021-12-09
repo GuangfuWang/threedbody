@@ -74,7 +74,7 @@ extern "C" {
  *  diffFinal = DiffColor0 * sampleTex(DiffTexture0,UV0) +
  *     sampleTex(DiffTexture1,UV0) * diffContrib;
  *  @endcode
- *  where 'diffContrib' is the intensity of the incoming light for that pixel.
+ *  where 'diffContrib' is the intensity of the incoming Light for that pixel.
  */
 enum aiTextureOp {
     /** T = T1 * T2 */
@@ -216,7 +216,7 @@ enum aiTextureType {
     aiTextureType_AMBIENT = 3,
 
     /** The texture is added to the result of the lighting
-     *  calculation. It isn't influenced by incoming light.
+     *  calculation. It isn't influenced by incoming Light.
      */
     aiTextureType_EMISSIVE = 4,
 
@@ -263,7 +263,7 @@ enum aiTextureType {
      *  Both 'Lightmaps' and dedicated 'ambient occlusion maps' are
      *  covered by this material property. The texture contains a
      *  scaling value for the final color value of a pixel. Its
-     *  intensity is not affected by incoming light.
+     *  intensity is not affected by incoming Light.
     */
     aiTextureType_LIGHTMAP = 10,
 
@@ -312,7 +312,7 @@ enum aiTextureType {
  *  not distinguish between "specular" and "diffuse" shaders (thus the
  *  specular term for diffuse shading models like Oren-Nayar remains
  *  undefined). <br>
- *  Again, this value is just a hint. Assimp tries to select the shader whose
+ *  Again, this value is just a hint. Assimp tries to select the Shader whose
  *  most common implementation matches the original rendering results of the
  *  3D modeller which wrote a particular model as closely as possible.
  */
@@ -336,7 +336,7 @@ enum aiShadingMode {
 
     /** Toon-Shading per pixel
      *
-     *  Also known as 'comic' shader.
+     *  Also known as 'comic' Shader.
      */
     aiShadingMode_Toon = 0x5,
 
@@ -356,11 +356,11 @@ enum aiShadingMode {
 
     /** CookTorrance-Shading per pixel
      *
-     *  Special shader for metallic surfaces.
+     *  Special Shader for metallic surfaces.
      */
     aiShadingMode_CookTorrance = 0x8,
 
-    /** No shading at all. Constant light influence of 1.0.
+    /** No shading at all. Constant Light influence of 1.0.
     */
     aiShadingMode_NoShading = 0x9,
 
@@ -792,7 +792,7 @@ public:
     /** @brief Add a string property with a given key and type info to the
      *  material structure
      *
-     *  @param pInput Input string
+     *  @param pInput MouseInput string
      *  @param pKey Key/Usage of the property (AI_MATKEY_XXX)
      *  @param type Set by the AI_MATKEY_XXX macro
      *  @param index Set by the AI_MATKEY_XXX macro */

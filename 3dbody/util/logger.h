@@ -51,6 +51,9 @@ inline OStream &operator<<(OStream &os, glm::qua<T, Q> quaternion) {
   return os << glm::to_string(quaternion);
 }
 
+
+}
+
 // Core log macros
 #define GF_CORE_TRACE(...)    gf::log::GetCoreLogger()->trace(__VA_ARGS__)
 #define GF_CORE_INFO(...)     gf::log::GetCoreLogger()->info(__VA_ARGS__)
@@ -65,6 +68,5 @@ inline OStream &operator<<(OStream &os, glm::qua<T, Q> quaternion) {
 #define GF_ERROR(...)         gf::log::GetClientLogger()->error(__VA_ARGS__)
 #define GF_CRITICAL(...)      gf::log::GetClientLogger()->critical(__VA_ARGS__)
 
-}
 
 #endif //INC_3DBODY_LOGGER_H

@@ -1,4 +1,4 @@
-#include "include/scene/scene_view.h"
+#include "include/layout/SceneView.h"
 #include "imgui.h"
 
 namespace gf {
@@ -10,7 +10,7 @@ void SceneView::resize(int32_t width, int32_t height) {
   mFrameBuffer->create_buffers((int32_t) mSize.x, (int32_t) mSize.y);
 }
 
-void SceneView::on_mouse_move(double x, double y, EInputButton button) {
+void SceneView::on_mouse_move(double x, double y, MOUSE_INPUT_CODE button) {
   mCamera->on_mouse_move(x, y, button);
 }
 

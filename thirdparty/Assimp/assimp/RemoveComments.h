@@ -54,7 +54,7 @@ namespace Assimp {
 // ---------------------------------------------------------------------------
 /** \brief Helper class to remove single and multi line comments from a file
  *
- *  Some mesh formats like MD5 have comments that are quite similar
+ *  Some Mesh formats like MD5 have comments that are quite similar
  *  to those in C or C++ so this code has been moved to a separate
  *  module.
  */

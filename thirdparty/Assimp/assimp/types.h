@@ -504,7 +504,7 @@ struct aiMemoryInfo {
     /** Storage allocated for material data  */
     unsigned int materials;
 
-    /** Storage allocated for mesh data */
+    /** Storage allocated for Mesh data */
     unsigned int meshes;
 
     /** Storage allocated for node data */
@@ -513,10 +513,10 @@ struct aiMemoryInfo {
     /** Storage allocated for animation data */
     unsigned int animations;
 
-    /** Storage allocated for camera data */
+    /** Storage allocated for Camera data */
     unsigned int cameras;
 
-    /** Storage allocated for light data */
+    /** Storage allocated for Light data */
     unsigned int lights;
 
     /** Total storage allocated for the full import. */

@@ -218,7 +218,7 @@ namespace Assimp {
     }
 // ---------------------------------------------------------------------------------
 /** @brief Case-ignoring version of TokenMatch
- *  @param in Input
+ *  @param in MouseInput
  *  @param token Token to check for
  *  @param len Number of characters to check
  */

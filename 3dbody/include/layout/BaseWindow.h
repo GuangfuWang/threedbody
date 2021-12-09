@@ -6,7 +6,7 @@
 
 namespace gf {
 
-class GFWindow {
+class BaseWindow {
  public:
 
   virtual void *get_native_window() = 0;

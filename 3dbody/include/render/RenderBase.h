@@ -1,8 +1,8 @@
 #ifndef INC_3DBODY_RENDER_BASE_H
 #define INC_3DBODY_RENDER_BASE_H
 
-#include "include/layout/window.h"
-#include "include/mesh/vertex_holder.h"
+#include "include/layout/BaseWindow.h"
+#include "include/mesh/VertexHolder.h"
 
 namespace gf {
 
@@ -54,7 +54,7 @@ class RenderContext {
 
   RenderContext() : mWindow(nullptr) {}
 
-  virtual bool init(GFWindow *window) {
+  virtual bool init(BaseWindow *window) {
     mWindow = window;
     return true;
   }
@@ -68,9 +68,7 @@ class RenderContext {
   virtual void setupWindowIcon(GLFWwindow* glWindow) = 0;
 
  protected:
-  GFWindow *mWindow;
-
-
+  BaseWindow *mWindow;
 };
 
 }

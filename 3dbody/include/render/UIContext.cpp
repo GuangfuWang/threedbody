@@ -1,12 +1,14 @@
+#include <filesystem>
 #include "pch.hpp"
-#include "ui_context.h"
+#include "UIContext.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+
 namespace gf {
 
-bool UIContext::init(GFWindow *window) {
+bool UIContext::init(BaseWindow *window) {
 
   mWindow = window;
 
@@ -23,6 +25,15 @@ bool UIContext::init(GFWindow *window) {
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
   io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
+
+  float fontSize = 18.0f;// *2.0f;
+
+  std::filesystem::path p=std::filesystem::path(ConfigMap::getInstance()->resource_dir_);
+  p/="fonts/EN/JetBrains-Mono/JetBrainsMono-Bold-7.ttf";
+  io.Fonts->AddFontFromFileTTF(p.string().c_str(), fontSize);
+  p=p.parent_path();
+  p/="JetBrainsMono-Regular-2.ttf";
+  io.FontDefault = io.Fonts->AddFontFromFileTTF(p.string().c_str(), fontSize);
 
   ImGui::StyleColorsDark();
 

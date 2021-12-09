@@ -364,7 +364,7 @@ ASSIMP_API void aiGetExtensionList(
 
 // --------------------------------------------------------------------------------
 /** Get the approximated storage required by an imported asset
- * @param pIn Input asset.
+ * @param pIn MouseInput asset.
  * @param in Data structure to be filled.
  */
 ASSIMP_API void aiGetMemoryRequirements(
