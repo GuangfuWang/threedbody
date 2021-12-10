@@ -6,6 +6,7 @@
 #define INC_3DBODY_3DBODY_INCLUDE_MESH_TEXTURE_H_
 
 #include <memory>
+#include <string>
 
 namespace gf{
 
@@ -33,6 +34,35 @@ class Texture2D : public Texture {
  public:
   static Ref<Texture2D> Create(uint32_t width, uint32_t height);
   static Ref<Texture2D> Create(const std::string &path);
+};
+
+class OpenGLTexture2D final : public Texture2D
+{
+ public:
+  OpenGLTexture2D(uint32_t width, uint32_t height);
+  OpenGLTexture2D(const std::string& path);
+  virtual ~OpenGLTexture2D();
+
+  uint32_t GetWidth() const override { return m_Width;  }
+  uint32_t GetHeight() const override { return m_Height; }
+  uint32_t GetRendererID() const override { return m_RendererID; }
+
+  void SetData(void* data, uint32_t size) override;
+
+  void Bind(uint32_t slot = 0) const override;
+
+  bool IsLoaded() const override { return m_IsLoaded; }
+
+  bool operator==(const Texture& other) const override
+  {
+	return m_RendererID == ((OpenGLTexture2D&)other).m_RendererID;
+  }
+ private:
+  std::string m_Path;
+  bool m_IsLoaded = false;
+  uint32_t m_Width, m_Height;
+  uint32_t m_RendererID;
+  unsigned int m_InternalFormat, m_DataFormat;
 };
 
 }

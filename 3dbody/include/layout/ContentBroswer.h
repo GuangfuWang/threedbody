@@ -15,12 +15,22 @@ class ContentBrowser {
  public:
   ContentBrowser();
 
-  void OnImGuiRender();
+  void render();
  private:
   std::filesystem::path m_CurrentDirectory;
 
   Ref<Texture2D> m_DirectoryIcon;
   Ref<Texture2D> m_FileIcon;
+
+  Ref<Texture2D> m_PDFFileIcon;
+  Ref<Texture2D> m_WORDFileIcon;
+  Ref<Texture2D> m_TXTFileIcon;
+  Ref<Texture2D> m_CPPFileIcon;
+  Ref<Texture2D> m_PPTFileIcon;
+  Ref<Texture2D> m_RARFileIcon;
+  Ref<Texture2D> m_EXCELFileIcon;
+  Ref<Texture2D> m_INIFileIcon;
+  Ref<Texture2D> m_DEFAULTFileIcon;
 };
 }
 

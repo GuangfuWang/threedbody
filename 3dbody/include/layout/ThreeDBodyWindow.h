@@ -8,11 +8,12 @@
 #include "include/shader/Shader.h"
 #include "include/scene/SceneCamera.h"
 #include "include/scene/SceneLight.h"
-#include "SceneView.h"
 
 #include "include/render/UIContext.h"
 #include "include/render/OpenGLContext.h"
 #include "include/render/OpenGLBufferManager.h"
+#include "include/layout/SceneView.h"
+#include "include/layout/ContentBroswer.h"
 #include "include/layout/PropertyPanel.h"
 
 namespace gf {
@@ -66,6 +67,8 @@ class ThreeDBodyWindow : public BaseWindow {
   std::unique_ptr<Property_Panel> mPropertyPanel;
 
   std::unique_ptr<SceneView> mSceneView;
+
+  std::unique_ptr<ContentBrowser> mContentBrowser;
 
   bool mIsRunning;
 

@@ -15,6 +15,8 @@ bool ThreeDBodyWindow::init(int width, int height, const std::string &title) {
 
   mSceneView = std::make_unique<SceneView>();
 
+  mContentBrowser = std::make_unique<ContentBrowser>();
+
   mPropertyPanel = std::make_unique<Property_Panel>();
 
   mPropertyPanel->set_mesh_load_callback(
@@ -64,6 +66,8 @@ void ThreeDBodyWindow::render() {
 
   // render scene to framebuffer and add it to scene view
   mSceneView->render();
+
+  mContentBrowser->render();
 
   mPropertyPanel->render(mSceneView.get());
 

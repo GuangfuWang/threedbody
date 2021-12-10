@@ -30,11 +30,15 @@ bool UIContext::init(BaseWindow *window) {
   float fontSize = 18.0f;// *2.0f;
 
   std::filesystem::path p=std::filesystem::path(ConfigMap::getInstance()->resource_dir_);
-  p/="fonts/EN/JetBrains-Mono/JetBrainsMono-Bold-7.ttf";
-  io.Fonts->AddFontFromFileTTF(p.string().c_str(), fontSize);
-  p=p.parent_path();
-  p/="JetBrainsMono-Regular-2.ttf";
-  io.FontDefault = io.Fonts->AddFontFromFileTTF(p.string().c_str(), fontSize);
+//  p/="fonts/EN/JetBrains-Mono/JetBrainsMono-Bold-7.ttf";
+//  io.Fonts->AddFontFromFileTTF(p.string().c_str(), fontSize);
+//  p=p.parent_path();
+//  p/="JetBrainsMono-Regular-2.ttf";
+//  io.FontDefault = io.Fonts->AddFontFromFileTTF(p.string().c_str(), fontSize);
+	p/="fonts/EN/ArialUni/arialuni.ttf";
+  io.Fonts->AddFontFromFileTTF(p.string().c_str(),
+							   18.0f,
+							   NULL, io.Fonts->GetGlyphRangesChineseFull());
 
   ImGui::StyleColorsDark();
 

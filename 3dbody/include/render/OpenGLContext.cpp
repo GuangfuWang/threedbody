@@ -48,6 +48,7 @@ bool OpenGL_Context::init(BaseWindow *window) {
   //Mouse input handling.
   glfwSetMouseButtonCallback(glWindow, on_mouse_button_callback);
   glfwSetScrollCallback(glWindow, on_scroll_callback);
+  glfwSetDropCallback(glWindow,on_drop_file_callback);
   //Game controller input handling.
   glfwSetJoystickCallback(on_joystick_callback);
   //Window change handling.
