@@ -11,7 +11,7 @@
 #    include <spdlog/sinks/base_sink.h>
 #    include <spdlog/details/synchronous_factory.h>
 
-#    include <android/log.h>
+#    include <android/Log.h>
 #    include <chrono>
 #    include <mutex>
 #    include <string>

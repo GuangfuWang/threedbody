@@ -60,7 +60,7 @@ protected:
             return;
         }
 
-        // log the "skipped.." message
+        // Log the "skipped.." message
         if (skip_counter_ > 0)
         {
             char buf[64];
@@ -72,14 +72,14 @@ protected:
             }
         }
 
-        // log current message
+        // Log current message
         dist_sink<Mutex>::sink_it_(msg);
         last_msg_time_ = msg.time;
         skip_counter_ = 0;
         last_msg_payload_.assign(msg.payload.data(), msg.payload.data() + msg.payload.size());
     }
 
-    // return whether the log msg should be displayed (true) or skipped (false)
+    // return whether the Log msg should be displayed (true) or skipped (false)
     bool filter_(const details::log_msg &msg)
     {
         auto filter_duration = msg.time - last_msg_time_;

@@ -901,7 +901,7 @@ inline int floor_log10_pow2(int e) FMT_NOEXCEPT {
          shift;
 }
 
-// Various fast log computations.
+// Various fast Log computations.
 inline int floor_log2_pow10(int e) FMT_NOEXCEPT {
   FMT_ASSERT(e <= 1233 && e >= -1233, "too large exponent");
   const uint64_t log2_10_integer_part = 3;

@@ -1,3 +1,7 @@
+#ifndef GLEW_STATIC
+#define GLEW_STATIC
+#endif
+#include <gl/glew.h>
 #include "include/shader/Shader.h"
 
 namespace gf{

@@ -4,9 +4,9 @@
 #pragma once
 
 // Thread safe logger (except for set_error_handler())
-// Has name, log level, vector of std::shared sink pointers and formatter
-// Upon each log write the logger:
-// 1. Checks if its log level is enough to log the message and if yes:
+// Has name, Log level, vector of std::shared sink pointers and formatter
+// Upon each Log write the logger:
+// 1. Checks if its Log level is enough to Log the message and if yes:
 // 2. Call the underlying sinks to do the job.
 // 3. Each sink use its own private copy of a formatter to format the message
 // and send to its destination.
@@ -178,18 +178,18 @@ public:
 
 #ifdef SPDLOG_WCHAR_TO_UTF8_SUPPORT
     template<typename... Args>
-    void log(source_loc loc, level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&... args)
+    void Log(source_loc loc, level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&... args)
     {
         log_(loc, lvl, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
-    void log(level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&... args)
+    void Log(level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&... args)
     {
-        log(source_loc{}, lvl, fmt, std::forward<Args>(args)...);
+        Log(source_loc{}, lvl, fmt, std::forward<Args>(args)...);
     }
 
-    void log(log_clock::time_point log_time, source_loc loc, level::level_enum lvl, wstring_view_t msg)
+    void Log(log_clock::time_point log_time, source_loc loc, level::level_enum lvl, wstring_view_t msg)
     {
         bool log_enabled = should_log(lvl);
         bool traceback_enabled = tracer_.enabled();
@@ -204,7 +204,7 @@ public:
         log_it_(log_msg, log_enabled, traceback_enabled);
     }
 
-    void log(source_loc loc, level::level_enum lvl, wstring_view_t msg)
+    void Log(source_loc loc, level::level_enum lvl, wstring_view_t msg)
     {
         bool log_enabled = should_log(lvl);
         bool traceback_enabled = tracer_.enabled();
@@ -219,45 +219,45 @@ public:
         log_it_(log_msg, log_enabled, traceback_enabled);
     }
 
-    void log(level::level_enum lvl, wstring_view_t msg)
+    void Log(level::level_enum lvl, wstring_view_t msg)
     {
-        log(source_loc{}, lvl, msg);
+        Log(source_loc{}, lvl, msg);
     }
 
     template<typename... Args>
     void trace(wformat_string_t<Args...> fmt, Args &&... args)
     {
-        log(level::trace, fmt, std::forward<Args>(args)...);
+        Log(level::trace, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void debug(wformat_string_t<Args...> fmt, Args &&... args)
     {
-        log(level::debug, fmt, std::forward<Args>(args)...);
+        Log(level::debug, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void info(wformat_string_t<Args...> fmt, Args &&... args)
     {
-        log(level::info, fmt, std::forward<Args>(args)...);
+        Log(level::info, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void warn(wformat_string_t<Args...> fmt, Args &&... args)
     {
-        log(level::warn, fmt, std::forward<Args>(args)...);
+        Log(level::warn, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void error(wformat_string_t<Args...> fmt, Args &&... args)
     {
-        log(level::err, fmt, std::forward<Args>(args)...);
+        Log(level::err, fmt, std::forward<Args>(args)...);
     }
 
     template<typename... Args>
     void critical(wformat_string_t<Args...> fmt, Args &&... args)
     {
-        log(level::critical, fmt, std::forward<Args>(args)...);
+        Log(level::critical, fmt, std::forward<Args>(args)...);
     }
 #endif
 
@@ -425,7 +425,7 @@ protected:
 
 #endif // SPDLOG_WCHAR_TO_UTF8_SUPPORT
 
-    // log the given message (if the given log level is high enough),
+    // Log the given message (if the given Log level is high enough),
     // and save backtrace (if backtrace is enabled).
     void log_it_(const details::log_msg &log_msg, bool log_enabled, bool traceback_enabled);
     virtual void sink_it_(const details::log_msg &msg);

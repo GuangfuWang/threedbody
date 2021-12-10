@@ -1,4 +1,4 @@
-#include "pch.hpp"
+
 #include "include/mesh/Mesh.h"
 
 #include <assimp/Importer.hpp>

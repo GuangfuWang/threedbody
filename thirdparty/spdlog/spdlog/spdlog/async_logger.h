@@ -5,10 +5,10 @@
 
 // Fast asynchronous logger.
 // Uses pre allocated queue.
-// Creates a single back thread to pop messages from the queue and log them.
+// Creates a single back thread to pop messages from the queue and Log them.
 //
-// Upon each log write the logger:
-//    1. Checks if its log level is enough to log the message
+// Upon each Log write the logger:
+//    1. Checks if its Log level is enough to Log the message
 //    2. Push a new copy of the message to a queue (or block the caller until
 //    space is available in the queue)
 // Upon destruction, logs all remaining messages in the queue before

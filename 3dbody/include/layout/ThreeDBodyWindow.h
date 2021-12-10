@@ -42,6 +42,9 @@ class ThreeDBodyWindow : public BaseWindow {
 
   void on_scroll(double delta) override;
 
+
+  void on_mouse_button(unsigned char code) override;
+
   void on_key(int key, int scancode, int action, int mods) override;
 
   void on_resize(int width, int height) override;
@@ -65,6 +68,9 @@ class ThreeDBodyWindow : public BaseWindow {
   std::unique_ptr<SceneView> mSceneView;
 
   bool mIsRunning;
+
+  float scene_property_width_ratio = 0.8f;
+  float scene_property_height_ratio = 1.0f;
 
 };
 

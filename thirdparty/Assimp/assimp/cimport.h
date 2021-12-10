@@ -60,7 +60,7 @@ struct aiFileIO; // aiFileIO.h
 typedef void (*aiLogStreamCallback)(const char * /* message */, char * /* user */);
 
 // --------------------------------------------------------------------------------
-/** C-API: Represents a log stream. A log stream receives all log messages and
+/** C-API: Represents a Log stream. A Log stream receives all Log messages and
  *  streams them _somewhere_.
  *  @see aiGetPredefinedLogStream
  *  @see aiAttachLogStream
@@ -256,15 +256,15 @@ ASSIMP_API const C_STRUCT aiScene *aiApplyPostProcessing(
         unsigned int pFlags);
 
 // --------------------------------------------------------------------------------
-/** Get one of the predefine log streams. This is the quick'n'easy solution to
- *  access Assimp's log system. Attaching a log stream can slightly reduce Assimp's
+/** Get one of the predefine Log streams. This is the quick'n'easy solution to
+ *  access Assimp's Log system. Attaching a Log stream can slightly reduce Assimp's
  *  overall import performance.
  *
- *  Usage is rather simple (this will stream the log to a file, named log.txt, and
+ *  Usage is rather simple (this will stream the Log to a file, named Log.txt, and
  *  the stdout stream of the process:
  *  @code
  *    struct aiLogStream c;
- *    c = aiGetPredefinedLogStream(aiDefaultLogStream_FILE,"log.txt");
+ *    c = aiGetPredefinedLogStream(aiDefaultLogStream_FILE,"Log.txt");
  *    aiAttachLogStream(&c);
  *    c = aiGetPredefinedLogStream(aiDefaultLogStream_STDOUT,NULL);
  *    aiAttachLogStream(&c);
@@ -273,20 +273,20 @@ ASSIMP_API const C_STRUCT aiScene *aiApplyPostProcessing(
  *  @param pStreams One of the #aiDefaultLogStream enumerated values.
  *  @param file Solely for the #aiDefaultLogStream_FILE flag: specifies the file to write to.
  *    Pass NULL for all other flags.
- *  @return The log stream. callback is set to NULL if something went wrong.
+ *  @return The Log stream. callback is set to NULL if something went wrong.
  */
 ASSIMP_API C_STRUCT aiLogStream aiGetPredefinedLogStream(
         C_ENUM aiDefaultLogStream pStreams,
         const char *file);
 
 // --------------------------------------------------------------------------------
-/** Attach a custom log stream to the libraries' logging system.
+/** Attach a custom Log stream to the libraries' logging system.
  *
- *  Attaching a log stream can slightly reduce Assimp's overall import
- *  performance. Multiple log-streams can be attached.
- *  @param stream Describes the new log stream.
+ *  Attaching a Log stream can slightly reduce Assimp's overall import
+ *  performance. Multiple Log-streams can be attached.
+ *  @param stream Describes the new Log stream.
  *  @note To ensure proper destruction of the logging system, you need to manually
- *    call aiDetachLogStream() on every single log stream you attach.
+ *    call aiDetachLogStream() on every single Log stream you attach.
  *    Alternatively (for the lazy folks) #aiDetachAllLogStreams is provided.
  */
 ASSIMP_API void aiAttachLogStream(
@@ -302,19 +302,19 @@ ASSIMP_API void aiAttachLogStream(
 ASSIMP_API void aiEnableVerboseLogging(aiBool d);
 
 // --------------------------------------------------------------------------------
-/** Detach a custom log stream from the libraries' logging system.
+/** Detach a custom Log stream from the libraries' logging system.
  *
  *  This is the counterpart of #aiAttachLogStream. If you attached a stream,
  *  don't forget to detach it again.
- *  @param stream The log stream to be detached.
- *  @return AI_SUCCESS if the log stream has been detached successfully.
+ *  @param stream The Log stream to be detached.
+ *  @return AI_SUCCESS if the Log stream has been detached successfully.
  *  @see aiDetachAllLogStreams
  */
 ASSIMP_API C_ENUM aiReturn aiDetachLogStream(
         const C_STRUCT aiLogStream *stream);
 
 // --------------------------------------------------------------------------------
-/** Detach all active log streams from the libraries' logging system.
+/** Detach all active Log streams from the libraries' logging system.
  *  This ensures that the logging system is terminated properly and all
  *  resources allocated by it are actually freed. If you attached a stream,
  *  don't forget to detach it again.

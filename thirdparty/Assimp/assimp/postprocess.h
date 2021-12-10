@@ -242,7 +242,7 @@ enum aiPostProcessSteps {
      * This makes sure that all indices are valid, all animations and
      * bones are linked correctly, all material references are correct .. etc.
      *
-     * It is recommended that you capture Assimp's log output if you use this flag,
+     * It is recommended that you capture Assimp's Log output if you use this flag,
      * so you can easily find out what's wrong if a file fails the
      * validation. The validator is quite strict and will find *all*
      * inconsistencies in the data structure... It is recommended that plugin
@@ -256,7 +256,7 @@ enum aiPostProcessSteps {
      * <li>Warning: There are some minor issues (e.g. 1000000 animation
      *   keyframes with the same time), but further postprocessing and use
      *   of the data structure is still safe. Warning details are written
-     *   to the log file, <tt>#AI_SCENE_FLAGS_VALIDATION_WARNING</tt> is set
+     *   to the Log file, <tt>#AI_SCENE_FLAGS_VALIDATION_WARNING</tt> is set
      *   in #aiScene::mFlags</li>
      * </ul>
      *

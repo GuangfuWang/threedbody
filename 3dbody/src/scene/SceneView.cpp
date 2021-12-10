@@ -1,4 +1,5 @@
 #include "include/layout/SceneView.h"
+#include "util/Log.h"
 #include "imgui.h"
 
 namespace gf {
@@ -41,7 +42,7 @@ void SceneView::render() {
 
   mFrameBuffer->unbind();
 
-  ImGui::Begin("Scene");
+  ImGui::Begin("Model View");
 
   ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
   mSize = {viewportPanelSize.x, viewportPanelSize.y};

@@ -21,7 +21,7 @@ include(${PROJECT_SOURCE_DIR}/thirdparty/stb_image/stb_image.cmake)
 include(${PROJECT_SOURCE_DIR}/thirdparty/spdlog/spdlog.cmake)
 
 
-include(${PROJECT_SOURCE_DIR}/3dbody/util/util.cmake)
+include(${PROJECT_SOURCE_DIR}/3dbody/util/Util.cmake)
 
 
 include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Target_define.cmake)

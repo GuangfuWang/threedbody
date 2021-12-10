@@ -80,7 +80,7 @@ private:
     const std::string ident_;
 
     //
-    // Simply maps spdlog's log level to syslog priority level.
+    // Simply maps spdlog's Log level to syslog priority level.
     //
     int syslog_prio_from_level(const details::log_msg &msg) const
     {

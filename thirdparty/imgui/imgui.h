@@ -829,7 +829,7 @@ IMGUI_API void          LogToFile(int auto_open_depth = -1, const char* filename
 IMGUI_API void          LogToClipboard(int auto_open_depth = -1);                           // start logging to OS clipboard
 IMGUI_API void          LogFinish();                                                        // stop logging (close file, etc.)
 IMGUI_API void          LogButtons();                                                       // helper to display buttons for logging to tty/file/clipboard
-IMGUI_API void          LogText(const char* fmt, ...) IM_FMTARGS(1);                        // pass text data straight to log (without being displayed)
+IMGUI_API void          LogText(const char* fmt, ...) IM_FMTARGS(1);                        // pass text data straight to Log (without being displayed)
 IMGUI_API void          LogTextV(const char* fmt, va_list args) IM_FMTLIST(1);
 
 // Drag and Drop
@@ -1906,7 +1906,7 @@ struct ImGuiIO
   float       DeltaTime;                      // = 1.0f/60.0f     // Time elapsed since last frame, in seconds.
   float       IniSavingRate;                  // = 5.0f           // Minimum time between saving positions/sizes to .ini file, in seconds.
   const char* IniFilename;                    // = "imgui.ini"    // Path to .ini file (important: default "imgui.ini" is relative to current working dir!). Set NULL to disable automatic .ini loading/saving or if you want to manually call LoadIniSettingsXXX() / SaveIniSettingsXXX() functions.
-  const char* LogFilename;                    // = "imgui_log.txt"// Path to .log file (default parameter to ImGui::LogToFile when no file is specified).
+  const char* LogFilename;                    // = "imgui_log.txt"// Path to .Log file (default parameter to ImGui::LogToFile when no file is specified).
   float       MouseDoubleClickTime;           // = 0.30f          // Time for a double-click, in seconds.
   float       MouseDoubleClickMaxDist;        // = 6.0f           // Distance threshold to stay in to validate a double-click, in pixels.
   float       MouseDragThreshold;             // = 6.0f           // Distance threshold before considering we are dragging.
@@ -2247,7 +2247,7 @@ struct ImGuiStorage
 
   ImVector<ImGuiStoragePair>      Data;
 
-  // - Get***() functions find pair, never add/allocate. Pairs are sorted so a query is O(log N)
+  // - Get***() functions find pair, never add/allocate. Pairs are sorted so a query is O(Log N)
   // - Set***() functions find pair, insertion on demand if missing.
   // - Sorted insertion is costly, paid once. A typical frame shouldn't need to insert any new pair.
   void                Clear() { Data.clear(); }

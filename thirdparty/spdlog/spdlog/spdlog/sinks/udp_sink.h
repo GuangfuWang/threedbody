@@ -18,7 +18,7 @@
 #include <functional>
 
 // Simple udp client sink
-// Sends formatted log via udp
+// Sends formatted Log via udp
 
 namespace spdlog {
 namespace sinks {

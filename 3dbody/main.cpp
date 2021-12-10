@@ -1,10 +1,10 @@
 
 #include "include/application/Application.h"
-#include "util/logger.h"
+#include "util/Log.h"
 
 int main(void)
 {
-  gf::log::Init();
+  gf::Log::Init();
   auto app = std::make_unique<gf::Application>("3D Body");
   app->loop();
 

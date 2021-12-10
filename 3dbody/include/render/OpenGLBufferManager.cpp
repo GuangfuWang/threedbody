@@ -1,4 +1,7 @@
-#include "pch.hpp"
+#ifndef GLEW_STATIC
+#define GLEW_STATIC
+#endif
+#include <gl/glew.h>
 #include "OpenGLBufferManager.h"
 
 namespace gf

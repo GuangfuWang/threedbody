@@ -25739,7 +25739,7 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
                 }
 #endif
 #ifdef GL_REGAL_log
-              if (_glewStrSame3(&pos, &len, (const GLubyte*)"log", 3))
+              if (_glewStrSame3(&pos, &len, (const GLubyte*)"Log", 3))
                 {
                   ret = GLEW_REGAL_log;
                   continue;

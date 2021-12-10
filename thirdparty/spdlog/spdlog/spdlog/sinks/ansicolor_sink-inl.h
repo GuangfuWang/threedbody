@@ -41,7 +41,7 @@ template<typename ConsoleMutex>
 SPDLOG_INLINE void ansicolor_sink<ConsoleMutex>::log(const details::log_msg &msg)
 {
     // Wrap the originally formatted message in color codes.
-    // If color is not supported in the terminal, log as is instead.
+    // If color is not supported in the terminal, Log as is instead.
     std::lock_guard<mutex_t> lock(mutex_);
     msg.color_range_start = 0;
     msg.color_range_end = 0;

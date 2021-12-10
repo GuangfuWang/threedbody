@@ -118,7 +118,7 @@ public:
     }
 };
 
-// log level appender
+// Log level appender
 template<typename ScopedPadder>
 class level_formatter final : public flag_formatter
 {
@@ -135,7 +135,7 @@ public:
     }
 };
 
-// short log level appender
+// short Log level appender
 template<typename ScopedPadder>
 class short_level_formatter final : public flag_formatter
 {
@@ -1250,19 +1250,19 @@ SPDLOG_INLINE void pattern_formatter::handle_flag_(char flag, details::padding_i
         formatters_.push_back(details::make_unique<details::ch_formatter>('%'));
         break;
 
-    case ('u'): // elapsed time since last log message in nanos
+    case ('u'): // elapsed time since last Log message in nanos
         formatters_.push_back(details::make_unique<details::elapsed_formatter<Padder, std::chrono::nanoseconds>>(padding));
         break;
 
-    case ('i'): // elapsed time since last log message in micros
+    case ('i'): // elapsed time since last Log message in micros
         formatters_.push_back(details::make_unique<details::elapsed_formatter<Padder, std::chrono::microseconds>>(padding));
         break;
 
-    case ('o'): // elapsed time since last log message in millis
+    case ('o'): // elapsed time since last Log message in millis
         formatters_.push_back(details::make_unique<details::elapsed_formatter<Padder, std::chrono::milliseconds>>(padding));
         break;
 
-    case ('O'): // elapsed time since last log message in seconds
+    case ('O'): // elapsed time since last Log message in seconds
         formatters_.push_back(details::make_unique<details::elapsed_formatter<Padder, std::chrono::seconds>>(padding));
         break;
 

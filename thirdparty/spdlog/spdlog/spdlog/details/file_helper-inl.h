@@ -48,7 +48,7 @@ SPDLOG_INLINE void file_helper::open(const filename_t &fname, bool truncate)
         if (truncate)
         {
             // Truncate by opening-and-closing a tmp file in "wb" mode, always
-            // opening the actual log-we-write-to in "ab" mode, since that
+            // opening the actual Log-we-write-to in "ab" mode, since that
             // interacts more politely with eternal processes that might
             // rotate/truncate the file underneath us.
             std::FILE *tmp;

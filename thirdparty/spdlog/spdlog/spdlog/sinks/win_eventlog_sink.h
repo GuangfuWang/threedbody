@@ -2,7 +2,7 @@
 // Distributed under the MIT License (http://opensource.org/licenses/MIT)
 
 // Writing to Windows Event Log requires the registry entries below to be present, with the following modifications:
-// 1. <log_name>    should be replaced with your log name (e.g. your application name)
+// 1. <log_name>    should be replaced with your Log name (e.g. your application name)
 // 2. <source_name> should be replaced with the specific source name and the key should be duplicated for
 //                  each source used in the application
 //
@@ -269,7 +269,7 @@ public:
         catch (...)
         {
             // get_current_user_sid() is unlikely to fail and if it does, we can still proceed without
-            // current_user_sid but in the event log the record will have no user name
+            // current_user_sid but in the event Log the record will have no user name
         }
     }
 

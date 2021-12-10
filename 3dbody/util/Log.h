@@ -22,10 +22,10 @@ constexpr Ref<T> CreateRef(Args&& ... args)
 }
 
 /**
- * this class is used to output log information.
+ * this class is used to output Log information.
  * this is a thin wrapper of spdlog.
  */
-class log {
+class Log {
  public:
   static void Init();
 
@@ -54,19 +54,19 @@ inline OStream &operator<<(OStream &os, glm::qua<T, Q> quaternion) {
 
 }
 
-// Core log macros
-#define GF_CORE_TRACE(...)    gf::log::GetCoreLogger()->trace(__VA_ARGS__)
-#define GF_CORE_INFO(...)     gf::log::GetCoreLogger()->info(__VA_ARGS__)
-#define GF_CORE_WARN(...)     gf::log::GetCoreLogger()->warn(__VA_ARGS__)
-#define GF_CORE_ERROR(...)    gf::log::GetCoreLogger()->error(__VA_ARGS__)
-#define GF_CORE_CRITICAL(...) gf::log::GetCoreLogger()->critical(__VA_ARGS__)
+// Core Log macros
+#define GF_CORE_TRACE(...)    gf::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define GF_CORE_INFO(...)     gf::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define GF_CORE_WARN(...)     gf::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define GF_CORE_ERROR(...)    gf::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define GF_CORE_CRITICAL(...) gf::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
-// Client log macros
-#define GF_TRACE(...)         gf::log::GetClientLogger()->trace(__VA_ARGS__)
-#define GF_INFO(...)          gf::log::GetClientLogger()->info(__VA_ARGS__)
-#define GF_WARN(...)          gf::log::GetClientLogger()->warn(__VA_ARGS__)
-#define GF_ERROR(...)         gf::log::GetClientLogger()->error(__VA_ARGS__)
-#define GF_CRITICAL(...)      gf::log::GetClientLogger()->critical(__VA_ARGS__)
+// Client Log macros
+#define GF_TRACE(...)         gf::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define GF_INFO(...)          gf::Log::GetClientLogger()->info(__VA_ARGS__)
+#define GF_WARN(...)          gf::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define GF_ERROR(...)         gf::Log::GetClientLogger()->error(__VA_ARGS__)
+#define GF_CRITICAL(...)      gf::Log::GetClientLogger()->critical(__VA_ARGS__)
 
 
 #endif //INC_3DBODY_LOGGER_H

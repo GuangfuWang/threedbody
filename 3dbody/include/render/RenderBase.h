@@ -41,11 +41,11 @@ class FrameBuffer {
   virtual uint32_t get_texture() = 0;
 
  protected:
-  uint32_t mFBO = 0;
-  uint32_t mTexId = 0;
+  uint32_t mFBO     = 0;
+  uint32_t mTexId   = 0;
   uint32_t mDepthId = 0;
-  int32_t mWidth = 0;
-  int32_t mHeight = 0;
+  int32_t  mWidth   = 0;
+  int32_t  mHeight  = 0;
 };
 
 class RenderContext {
@@ -55,8 +55,8 @@ class RenderContext {
   RenderContext() : mWindow(nullptr) {}
 
   virtual bool init(BaseWindow *window) {
-    mWindow = window;
-    return true;
+	mWindow = window;
+	return true;
   }
 
   virtual void pre_render() = 0;
@@ -65,7 +65,7 @@ class RenderContext {
 
   virtual void end() = 0;
 
-  virtual void setupWindowIcon(GLFWwindow* glWindow) = 0;
+  virtual void setupWindowIcon(GLFWwindow *glWindow) = 0;
 
  protected:
   BaseWindow *mWindow;

@@ -1,5 +1,4 @@
 
-#include  "pch.hpp"
 #include "include/layout/ThreeDBodyWindow.h"
 #include "include/scene/SceneCamera.h"
 
@@ -42,6 +41,10 @@ void ThreeDBodyWindow::on_scroll(double delta) {
   mSceneView->on_mouse_wheel(delta);
 }
 
+void ThreeDBodyWindow::on_mouse_button(unsigned char code) {
+
+}
+
 void ThreeDBodyWindow::on_key(int key, int scancode, int action, int mods) {
   if (action==GLFW_PRESS) {
 
@@ -70,7 +73,7 @@ void ThreeDBodyWindow::render() {
   // Render end, swap buffers
   mRenderCtx->post_render();
 
-  handle_input();
+  //handle_input();
 }
 
 void ThreeDBodyWindow::handle_input() {

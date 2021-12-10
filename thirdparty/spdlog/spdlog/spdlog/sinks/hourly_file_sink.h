@@ -22,7 +22,7 @@ namespace spdlog {
 namespace sinks {
 
 /*
- * Generator of Hourly log file names in format basename.YYYY-MM-DD-HH.ext
+ * Generator of Hourly Log file names in format basename.YYYY-MM-DD-HH.ext
  */
 struct hourly_filename_calculator
 {

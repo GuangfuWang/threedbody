@@ -33,10 +33,10 @@ protected:
 
 private:
     // Rotate files:
-    // log.txt -> log.1.txt
-    // log.1.txt -> log.2.txt
-    // log.2.txt -> log.3.txt
-    // log.3.txt -> delete
+    // Log.txt -> Log.1.txt
+    // Log.1.txt -> Log.2.txt
+    // Log.2.txt -> Log.3.txt
+    // Log.3.txt -> delete
     void rotate_();
 
     // delete the target if exists, and rename the src file  to target

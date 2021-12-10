@@ -1,4 +1,10 @@
-//
-// Created by bigdata-wgf on 2021/12/8.
-//
+#include "include/event_handling/EventBase.h"
+#include "include/event_handling/GameControllerEvent.h"
+
+namespace gf{
+
+void on_joystick_callback(int jid, int event) {
+
+}
+}
 

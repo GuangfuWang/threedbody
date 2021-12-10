@@ -7,9 +7,10 @@
 
 #include "GLFW/glfw3.h"
 
+
 namespace gf {
 
-enum class MOUSE_INPUT_CODE {
+enum MOUSE_INPUT_CODE {
   LEFT   = 0,
   RIGHT  = 1,
   MIDDLE = 2,
@@ -29,6 +30,16 @@ class MouseInput {
 
   }
 };
+
+
+extern void on_mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
+
+
+extern void on_scroll_callback(GLFWwindow *window, double xoffset, double yoffset) ;
+
+
+extern void on_drop_file_callback(GLFWwindow *window, int count, const char **paths);
+
 
 }
 

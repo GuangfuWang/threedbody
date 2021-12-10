@@ -20,7 +20,7 @@
 #pragma once
 
 // Simple tcp client sink
-// Connects to remote address and send the formatted log.
+// Connects to remote address and send the formatted Log.
 // Will attempt to reconnect if connection drops.
 // If more complicated behaviour is needed (i.e get responses), you can inherit it and override the sink_it_ method.
 
@@ -31,7 +31,7 @@ struct tcp_sink_config
 {
     std::string server_host;
     int server_port;
-    bool lazy_connect = false; // if true connect on first log call instead of on construction
+    bool lazy_connect = false; // if true connect on first Log call instead of on construction
 
     tcp_sink_config(std::string host, int port)
         : server_host{std::move(host)}

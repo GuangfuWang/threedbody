@@ -82,10 +82,10 @@ SPDLOG_INLINE void rotating_file_sink<Mutex>::flush_()
 }
 
 // Rotate files:
-// log.txt -> log.1.txt
-// log.1.txt -> log.2.txt
-// log.2.txt -> log.3.txt
-// log.3.txt -> delete
+// Log.txt -> Log.1.txt
+// Log.1.txt -> Log.2.txt
+// Log.2.txt -> Log.3.txt
+// Log.3.txt -> delete
 template<typename Mutex>
 SPDLOG_INLINE void rotating_file_sink<Mutex>::rotate_()
 {
@@ -109,7 +109,7 @@ SPDLOG_INLINE void rotating_file_sink<Mutex>::rotate_()
             details::os::sleep_for_millis(100);
             if (!rename_file_(src, target))
             {
-                file_helper_.reopen(true); // truncate the log file anyway to prevent it to grow beyond its limit!
+                file_helper_.reopen(true); // truncate the Log file anyway to prevent it to grow beyond its limit!
                 current_size_ = 0;
                 throw_spdlog_ex("rotating_file_sink: failed renaming " + filename_to_str(src) + " to " + filename_to_str(target), errno);
             }

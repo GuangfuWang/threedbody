@@ -10,7 +10,7 @@
 #include <mutex>
 #include <functional>
 
-// Store log messages in circular buffer.
+// Store Log messages in circular buffer.
 // Useful for storing debug data in case of error/warning happens.
 
 namespace spdlog {

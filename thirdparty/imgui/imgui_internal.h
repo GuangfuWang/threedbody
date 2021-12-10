@@ -205,14 +205,14 @@ namespace ImStb
 #endif
 
 // Debug Logging for selected systems. Remove the '((void)0) //' to enable.
-//#define IMGUI_DEBUG_LOG_POPUP         IMGUI_DEBUG_LOG // Enable log
-//#define IMGUI_DEBUG_LOG_NAV           IMGUI_DEBUG_LOG // Enable log
-//#define IMGUI_DEBUG_LOG_VIEWPORT      IMGUI_DEBUG_LOG // Enable log
-//#define IMGUI_DEBUG_LOG_DOCKING       IMGUI_DEBUG_LOG // Enable log
-#define IMGUI_DEBUG_LOG_POPUP(...)      ((void)0)       // Disable log
-#define IMGUI_DEBUG_LOG_NAV(...)        ((void)0)       // Disable log
-#define IMGUI_DEBUG_LOG_VIEWPORT(...)   ((void)0)       // Disable log
-#define IMGUI_DEBUG_LOG_DOCKING(...)    ((void)0)       // Disable log
+//#define IMGUI_DEBUG_LOG_POPUP         IMGUI_DEBUG_LOG // Enable Log
+//#define IMGUI_DEBUG_LOG_NAV           IMGUI_DEBUG_LOG // Enable Log
+//#define IMGUI_DEBUG_LOG_VIEWPORT      IMGUI_DEBUG_LOG // Enable Log
+//#define IMGUI_DEBUG_LOG_DOCKING       IMGUI_DEBUG_LOG // Enable Log
+#define IMGUI_DEBUG_LOG_POPUP(...)      ((void)0)       // Disable Log
+#define IMGUI_DEBUG_LOG_NAV(...)        ((void)0)       // Disable Log
+#define IMGUI_DEBUG_LOG_VIEWPORT(...)   ((void)0)       // Disable Log
+#define IMGUI_DEBUG_LOG_DOCKING(...)    ((void)0)       // Disable Log
 
 // Static Asserts
 #if (__cplusplus >= 201100) || (defined(_MSVC_LANG) && _MSVC_LANG >= 201100)
@@ -1481,7 +1481,7 @@ struct IMGUI_API ImGuiDockNode
 
 // List of colors that are stored at the time of Begin() into Docked Windows.
 // We currently store the packed colors in a simple array window->DockStyle.Colors[].
-// A better solution may involve appending into a log of colors in ImGuiContext + store offsets into those arrays in ImGuiWindow,
+// A better solution may involve appending into a Log of colors in ImGuiContext + store offsets into those arrays in ImGuiWindow,
 // but it would be more complex as we'd need to double-buffer both as e.g. drop target may refer to window from last frame.
 enum ImGuiWindowDockStyleCol
 {
@@ -1911,8 +1911,8 @@ struct ImGuiContext
   // Capture/Logging
   bool                    LogEnabled;                         // Currently capturing
   ImGuiLogType            LogType;                            // Capture target
-  ImFileHandle            LogFile;                            // If != NULL log to stdout/ file
-  ImGuiTextBuffer         LogBuffer;                          // Accumulation buffer when log to clipboard. This is pointer so our GImGui static constructor doesn't call heap allocators.
+  ImFileHandle            LogFile;                            // If != NULL Log to stdout/ file
+  ImGuiTextBuffer         LogBuffer;                          // Accumulation buffer when Log to clipboard. This is pointer so our GImGui static constructor doesn't call heap allocators.
   const char*             LogNextPrefix;
   const char*             LogNextSuffix;
   float                   LogLinePosY;
@@ -3119,7 +3119,7 @@ extern const char*  ImGuiTestEngine_FindItemDebugLabel(ImGuiContext* ctx, ImGuiI
 
 #define IMGUI_TEST_ENGINE_ITEM_ADD(_BB,_ID)                 if (g.TestEngineHookItems) ImGuiTestEngineHook_ItemAdd(&g, _BB, _ID)               // Register item bounding box
 #define IMGUI_TEST_ENGINE_ITEM_INFO(_ID,_LABEL,_FLAGS)      if (g.TestEngineHookItems) ImGuiTestEngineHook_ItemInfo(&g, _ID, _LABEL, _FLAGS)   // Register item label and status flags (optional)
-#define IMGUI_TEST_ENGINE_LOG(_FMT,...)                     if (g.TestEngineHookItems) ImGuiTestEngineHook_Log(&g, _FMT, __VA_ARGS__)          // Custom log entry from user land into test log
+#define IMGUI_TEST_ENGINE_LOG(_FMT,...)                     if (g.TestEngineHookItems) ImGuiTestEngineHook_Log(&g, _FMT, __VA_ARGS__)          // Custom Log entry from user land into test Log
 #else
 #define IMGUI_TEST_ENGINE_ITEM_INFO(_ID,_LABEL,_FLAGS)      ((void)0)
 #endif

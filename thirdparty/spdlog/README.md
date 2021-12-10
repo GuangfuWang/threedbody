@@ -42,16 +42,16 @@ $ cmake .. && make -j
 * Asynchronous mode (optional)
 * [Custom](https://github.com/gabime/spdlog/wiki/3.-Custom-formatting) formatting.
 * Multi/Single threaded loggers.
-* Various log targets:
-    * Rotating log files.
-    * Daily log files.
+* Various Log targets:
+    * Rotating Log files.
+    * Daily Log files.
     * Console logging (colors supported).
     * syslog.
-    * Windows event log.
+    * Windows event Log.
     * Windows debugger (```OutputDebugString(..)```).
-    * Easily [extendable](https://github.com/gabime/spdlog/wiki/4.-Sinks#implementing-your-own-sink) with custom log targets.
-* Log filtering - log levels can be modified in runtime as well as in compile time.
-* Support for loading log levels from argv or from environment var.
+    * Easily [extendable](https://github.com/gabime/spdlog/wiki/4.-Sinks#implementing-your-own-sink) with custom Log targets.
+* Log filtering - Log levels can be modified in runtime as well as in compile time.
+* Support for loading Log levels from argv or from environment var.
 * [Backtrace](#backtrace-support) support - store debug messages in a ring buffer and display later on demand.
  
 ## Usage samples
@@ -71,13 +71,13 @@ int main()
     spdlog::info("Positional args are {1} {0}..", "too", "supported");
     spdlog::info("{:<30}", "left aligned");
     
-    spdlog::set_level(spdlog::level::debug); // Set global log level to debug
+    spdlog::set_level(spdlog::level::debug); // Set global Log level to debug
     spdlog::debug("This message should be displayed..");    
     
-    // change log pattern
+    // change Log pattern
     spdlog::set_pattern("[%H:%M:%S %z] [%n] [%^---%L---%$] [thread %t] %v");
     
-    // Compile time log levels
+    // Compile time Log levels
     // define SPDLOG_ACTIVE_LEVEL to desired level
     SPDLOG_TRACE("Some trace message with param {}", 42);
     SPDLOG_DEBUG("Some debug message");
@@ -106,7 +106,7 @@ void basic_logfile_example()
 {
     try 
     {
-        auto logger = spdlog::basic_logger_mt("basic_logger", "logs/basic-log.txt");
+        auto logger = spdlog::basic_logger_mt("basic_logger", "logs/basic-Log.txt");
     }
     catch (const spdlog::spdlog_ex &ex)
     {
@@ -154,7 +154,7 @@ for(int i = 0; i < 100; i++)
   spdlog::debug("Backtrace message {}", i); // not logged yet..
 }
 // e.g. if some error happened:
-spdlog::dump_backtrace(); // log them now! show the last 32 messages
+spdlog::dump_backtrace(); // Log them now! show the last 32 messages
 
 // or my_logger->dump_backtrace(32)..
 ```
@@ -211,11 +211,11 @@ void binary_example()
 ```
 
 ---
-#### Logger with multi sinks - each with different format and log level
+#### Logger with multi sinks - each with different format and Log level
 ```c++
 
-// create logger with 2 targets with different log levels and formats.
-// the console will show only warnings or errors, while the file will log all.
+// create logger with 2 targets with different Log levels and formats.
+// the console will show only warnings or errors, while the file will Log all.
 void multi_sink_example()
 {
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -288,7 +288,7 @@ void user_defined_example()
 ```
 
 ---
-#### User defined flags in the log pattern
+#### User defined flags in the Log pattern
 ```c++ 
 // Log patterns can contain custom flags.
 // the following example will add new flag '%*' - which will be bound to a <my_formatter_flag> instance.
@@ -353,7 +353,7 @@ void android_example()
 ```
 
 ---
-#### Load log levels from env variable or from argv
+#### Load Log levels from env variable or from argv
 
 ```c++
 #include "spdlog/cfg/env.h"
@@ -377,11 +377,11 @@ $ ./example
 ---
 #### Log file open/close event handlers
 ```c++
-// You can get callbacks from spdlog before/after log file has been opened or closed. 
-// This is useful for cleanup procedures or for adding someting the start/end of the log files.
+// You can get callbacks from spdlog before/after Log file has been opened or closed. 
+// This is useful for cleanup procedures or for adding someting the start/end of the Log files.
 void file_events_example()
 {
-    // pass the spdlog::file_event_handlers to file sinks for open/close log file notifications
+    // pass the spdlog::file_event_handlers to file sinks for open/close Log file notifications
     spdlog::file_event_handlers handlers;
     handlers.before_open = [](spdlog::filename_t filename) { spdlog::info("Before opening {}", filename); };
     handlers.after_open = [](spdlog::filename_t filename, std::FILE *fstream) { fputs("After opening\n", fstream); };
@@ -396,7 +396,7 @@ void file_events_example()
 ```c++
 void replace_default_logger_example()
 {
-    auto new_logger = spdlog::basic_logger_mt("new_default_logger", "logs/new-default-log.txt", true);
+    auto new_logger = spdlog::basic_logger_mt("new_default_logger", "logs/new-default-Log.txt", true);
     spdlog::set_default_logger(new_logger);
     spdlog::set_level(spdlog::level::trace); 
     spdlog::trace("This message should appear..");

@@ -31,6 +31,11 @@ class EventHandleBase {
   virtual void update(Shader *shader) = 0;
 };
 
+
+extern void on_window_size_callback(GLFWwindow *window, int width, int height);
+
+extern void on_window_close_callback(GLFWwindow *window);
+
 }
 
 #endif //INC_3DBODY_3DBODY_INCLUDE_EVENT_HANDLING_EVENTBASE_H_

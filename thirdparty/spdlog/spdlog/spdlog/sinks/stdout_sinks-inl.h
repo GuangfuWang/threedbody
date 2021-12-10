@@ -40,7 +40,7 @@ SPDLOG_INLINE stdout_sink_base<ConsoleMutex>::stdout_sink_base(FILE *file)
     handle_ = reinterpret_cast<HANDLE>(::_get_osfhandle(::_fileno(file_)));
 
     // don't throw to support cases where no console is attached,
-    // and let the log method to do nothing if (handle_ == INVALID_HANDLE_VALUE).
+    // and let the Log method to do nothing if (handle_ == INVALID_HANDLE_VALUE).
     // throw only if non stdout/stderr target is requested (probably regular file and not console).
     if (handle_ == INVALID_HANDLE_VALUE && file != stdout && file != stderr)
     {

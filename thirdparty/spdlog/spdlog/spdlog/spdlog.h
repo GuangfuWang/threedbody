@@ -73,7 +73,7 @@ SPDLOG_API level::level_enum get_level();
 // Set global logging level
 SPDLOG_API void set_level(level::level_enum log_level);
 
-// Determine whether the default logger should log messages with a certain level
+// Determine whether the default logger should Log messages with a certain level
 SPDLOG_API bool should_log(level::level_enum lvl);
 
 // Set global flush level
@@ -189,15 +189,15 @@ inline void log(level::level_enum lvl, const T &msg)
 
 #ifdef SPDLOG_WCHAR_TO_UTF8_SUPPORT
 template<typename... Args>
-inline void log(source_loc source, level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&... args)
+inline void Log(source_loc source, level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&... args)
 {
-    default_logger_raw()->log(source, lvl, fmt, std::forward<Args>(args)...);
+    default_logger_raw()->Log(source, lvl, fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
-inline void log(level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&... args)
+inline void Log(level::level_enum lvl, wformat_string_t<Args...> fmt, Args &&... args)
 {
-    default_logger_raw()->log(source_loc{}, lvl, fmt, std::forward<Args>(args)...);
+    default_logger_raw()->Log(source_loc{}, lvl, fmt, std::forward<Args>(args)...);
 }
 
 template<typename... Args>
@@ -276,7 +276,7 @@ inline void critical(const T &msg)
 } // namespace spdlog
 
 //
-// enable/disable log calls at compile time according to global level.
+// enable/disable Log calls at compile time according to global level.
 //
 // define SPDLOG_ACTIVE_LEVEL to one of those (before including spdlog.h):
 // SPDLOG_LEVEL_TRACE,

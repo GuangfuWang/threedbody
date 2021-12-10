@@ -27,12 +27,12 @@ SPDLOG_INLINE spdlog::async_logger::async_logger(
     async_overflow_policy overflow_policy)
     : async_logger(std::move(logger_name), {std::move(single_sink)}, std::move(tp), overflow_policy) {}
 
-// send the log message to the thread pool
+// send the Log message to the thread pool
 SPDLOG_INLINE void spdlog::async_logger::sink_it_(const details::log_msg &msg) {
   if (auto pool_ptr = thread_pool_.lock()) {
     pool_ptr->post_log(shared_from_this(), msg, overflow_policy_);
   } else {
-    throw_spdlog_ex("async log: thread pool doesn't exist anymore");
+    throw_spdlog_ex("async Log: thread pool doesn't exist anymore");
   }
 }
 

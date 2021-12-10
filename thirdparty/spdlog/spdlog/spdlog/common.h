@@ -266,8 +266,8 @@ enum class color_mode
 //
 enum class pattern_time_type
 {
-    local, // log localtime
-    utc    // log utc
+    local, // Log localtime
+    utc    // Log utc
 };
 
 //

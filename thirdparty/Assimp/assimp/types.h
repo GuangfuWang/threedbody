@@ -452,21 +452,21 @@ enum aiOrigin {
 }; // !enum aiOrigin
 
 // ----------------------------------------------------------------------------------
-/** @brief Enumerates predefined log streaming destinations.
+/** @brief Enumerates predefined Log streaming destinations.
  *  Logging to these streams can be enabled with a single call to
  *   #LogStream::createDefaultStream.
  */
 enum aiDefaultLogStream {
-    /** Stream the log to a file */
+    /** Stream the Log to a file */
     aiDefaultLogStream_FILE = 0x1,
 
-    /** Stream the log to std::cout */
+    /** Stream the Log to std::cout */
     aiDefaultLogStream_STDOUT = 0x2,
 
-    /** Stream the log to std::cerr */
+    /** Stream the Log to std::cerr */
     aiDefaultLogStream_STDERR = 0x4,
 
-    /** MSVC only: Stream the log the the debugger
+    /** MSVC only: Stream the Log the the debugger
      * (this relies on OutputDebugString from the Win32 SDK)
      */
     aiDefaultLogStream_DEBUGGER = 0x8,

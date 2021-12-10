@@ -59,7 +59,7 @@ namespace Assimp {
 
 // ------------------------------------------------------------------------------------------------
 /** Simple wrapper around boost::timer to simplify reporting. Timings are automatically
- *  dumped to the log file.
+ *  dumped to the Log file.
  */
         class Profiler {
         public:
@@ -76,7 +76,7 @@ namespace Assimp {
             }
 
 
-            /** End a specific named timer and write its end time to the log */
+            /** End a specific named timer and write its end time to the Log */
             void EndRegion(const std::string &region) {
                 RegionMap::const_iterator it = regions.find(region);
                 if (it == regions.end()) {

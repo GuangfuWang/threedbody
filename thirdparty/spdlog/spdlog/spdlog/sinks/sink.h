@@ -23,7 +23,7 @@ public:
     bool should_log(level::level_enum msg_level) const;
 
 protected:
-    // sink log level - default is all
+    // sink Log level - default is all
     level_t level_{level::trace};
 };
 
