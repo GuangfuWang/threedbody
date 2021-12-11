@@ -67,7 +67,9 @@ void ThreeDBodyWindow::render() {
   // render scene to framebuffer and add it to scene view
   mSceneView->render();
 
-  mContentBrowser->render();
+  if (this->contentBrowserOpen){
+	mContentBrowser->render(&(this->contentBrowserOpen));
+  }
 
   mPropertyPanel->render(mSceneView.get());
 

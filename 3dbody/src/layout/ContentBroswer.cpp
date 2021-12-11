@@ -2,15 +2,21 @@
 #include "include/layout/ContentBroswer.h"
 #include "util/ConfigMap.h"
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"      // warning: cast to pointer from integer of different size
+#endif
+
 namespace gf {
 
 ContentBrowser::ContentBrowser()
 	: currentDirectory_(ConfigMap::getInstance()->root_dir_) {
 }
 
-void ContentBrowser::render() {
-
-  ImGui::Begin("Content Browser");
+void ContentBrowser::render(bool * open) {
+  if (!ImGui::Begin("Content Browser", open)) {
+	ImGui::End();
+	return;
+  }
 
   if (ImGui::Button("Return Back")) {
 	currentDirectory_ = currentDirectory_.parent_path();
@@ -115,7 +121,7 @@ FileDirectoryIcon::FileDirectoryIcon() {
   resource /= "icon_others";
 
   resource /= "folder.png";
-  directoryIcon  = Texture2D::create(resource.string());
+  directoryIcon     = Texture2D::create(resource.string());
 
   resource = resource.parent_path();
   resource /= "file-star.png";

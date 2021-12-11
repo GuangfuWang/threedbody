@@ -52,7 +52,16 @@ void Property_Panel::render(SceneView *scene_view) {
   if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen)) {
 
 	if (ImGui::Button("Open...")) {
-	  mFileDialog.Open();
+	  string             load_file;
+	  FILE_DIALOG_RESULT res =
+							 mFileDialog->fileLoadModel( load_file);
+	  if (res==FILE_OPEN_OK) {
+		GF_CORE_INFO("Openning file: {}", load_file);
+	  } else if (res==FILE_OPEN_CANCEL) {
+		GF_CORE_INFO("Open file cancelled...");
+	  } else
+		GF_CORE_ERROR("Open file dialog error");
+
 	}
 	ImGui::SameLine(0, 5.0f);
 	ImGui::Text(mCurrentFile.c_str());
@@ -76,15 +85,15 @@ void Property_Panel::render(SceneView *scene_view) {
 
   ImGui::End();
 
-  mFileDialog.Display();
-  if (mFileDialog.HasSelected()) {
-	auto file_path = mFileDialog.GetSelected().string();
-	mCurrentFile = file_path.substr(file_path.find_last_of("/\\") + 1);
-
-	mMeshLoadCallback(file_path);
-
-	mFileDialog.ClearSelected();
-  }
+//  mFileDialog.Display();
+//  if (mFileDialog.HasSelected()) {
+//	auto file_path = mFileDialog.GetSelected().string();
+//	mCurrentFile = file_path.substr(file_path.find_last_of("/\\") + 1);
+//
+//	mMeshLoadCallback(file_path);
+//
+//	mFileDialog.ClearSelected();
+//  }
 
 }
 

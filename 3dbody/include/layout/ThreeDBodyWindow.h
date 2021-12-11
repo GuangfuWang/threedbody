@@ -22,7 +22,7 @@ class ThreeDBodyWindow : public BaseWindow {
  public:
 
   ThreeDBodyWindow() :
-	  mIsRunning(true), mWindow(nullptr) {
+	  mIsRunning(true), mWindow(nullptr),contentBrowserOpen(true) {
 	mUICtx     = std::make_unique<UIContext>();
 	mRenderCtx = std::make_unique<OpenGL_Context>();
   }
@@ -70,6 +70,8 @@ class ThreeDBodyWindow : public BaseWindow {
   Ref_Unique<ContentBrowser> mContentBrowser;
 
   bool mIsRunning;
+
+  bool contentBrowserOpen;
 
 };
 

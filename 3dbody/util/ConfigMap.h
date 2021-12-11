@@ -6,6 +6,7 @@
 #include <string>
 #include <array>
 #include "def.h"
+#include <include/nfd.h>
 
 namespace gf {
 
@@ -36,6 +37,9 @@ private:
 
   std::vector<const char *> input_format_;
   std::vector<const char *> output_format_;
+
+  nfdu8filteritem_t* filterInputFormat;
+  nfdu8filteritem_t* filterOutputFormat;
 
  private:
   static ConfigMap* instance;

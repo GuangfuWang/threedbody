@@ -6,9 +6,8 @@
 #include <imgui.h>
 #include "def.h"
 #include "include/layout/SceneView.h"
-#include "util/ImGuiFileBrowser.h"
 #include "util/ConfigMap.h"
-
+#include "util/FileDialog.h"
 
 #include <list>
 
@@ -19,9 +18,7 @@ class Property_Panel {
 
   Property_Panel() {
 	mCurrentFile = "< --- >";
-
-	mFileDialog.SetTitle("Open 3d model");
-	mFileDialog.SetFileFilters(ConfigMap::getInstance()->input_format_);
+	mFileDialog  = std::make_unique<FileDialog>();
   }
 
   void render(SceneView *mScene);
@@ -38,7 +35,7 @@ class Property_Panel {
 
  private:
   // create a file browser instance
-  ImGui::FileBrowser                       mFileDialog;
+  Ref_Unique<FileDialog> mFileDialog;
 
   FileLoaderFunc mMeshLoadCallback;
 

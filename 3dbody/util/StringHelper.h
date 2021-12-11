@@ -7,7 +7,8 @@
 #include <regex>
 #include <sstream>
 #include <algorithm>
-
+#include  <include/nfd.h>
+#include <cctype>
 #ifdef GF_WIN
 
 #include <windows.h>
@@ -18,8 +19,20 @@
 #endif
 
 namespace gf {
-using std::vector;
+
 using std::string;
+
+extern nfdfilteritem_t cvtFilter(const char *each) {
+  nfdfilteritem_t res;
+  char            *copy;
+  copy = (char *)malloc(strlen(each) - 1);
+  for (int i = 1; i < strlen(each); i++) {
+	copy[i - 1] = each[i];
+  }
+  res.name = copy;
+  res.spec = copy;
+  return res;
+}
 
 /**
  * this method is used to parse string by token.
@@ -105,68 +118,6 @@ inline string &trim(string &str) {
   str.erase(0, str.find_first_not_of(' '));
   str.erase(str.find_last_not_of(' ') + 1);
   return str;
-}
-
-/**
- * this function converts utf8 to normal string.
- * @param str utf8 encoded string.
- * @return naive string.
- */
-inline string utf8String(const std::string &str) {
-  string ret;
-#ifdef GF_WIN
-
-  int     nwLen  = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, NULL, 0);
-  wchar_t *pwBuf = new wchar_t[nwLen + 1];
-  memset(pwBuf, 0, nwLen*2 + 2);
-  MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.length(), pwBuf, nwLen);
-
-  int  nLen  = WideCharToMultiByte(CP_ACP, 0, pwBuf, -1,
-								   NULL, NULL, NULL, NULL);
-  char *pBuf = new char[nLen + 1];
-  memset(pBuf, 0, nLen + 1);
-  WideCharToMultiByte(CP_ACP, 0, pwBuf, nwLen, pBuf, nLen, NULL, NULL);
-  ret = pBuf;
-  delete[] pwBuf;
-  delete[] pBuf;
-
-#elif defined(GF_LINUX)
-  //FIXME: linux support.
-
-#endif
-
-  return ret;
-}
-
-/**
- * this function converts normal string to utf8 encoded string ,can be used in chinese characters.
- * @param str naive string.
- * @return utf8 encoded string.
- *
- */
-inline string stringUtf8(const std::string &str) {
-#ifdef GF_WIN
-  int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
-  wchar_t *pwBuf = new wchar_t[nwLen + 1];    //一定要加1，不然会出现尾巴
-  ZeroMemory(pwBuf, nwLen*2 + 2);
-  ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), pwBuf, nwLen);
-  int nLen = ::WideCharToMultiByte(CP_UTF8, 0, pwBuf, -1, NULL, NULL, NULL, NULL);
-  char *pBuf = new char[nLen + 1];
-  ZeroMemory(pBuf, nLen + 1);
-  ::WideCharToMultiByte(CP_UTF8, 0, pwBuf, nwLen, pBuf, nLen, NULL, NULL);
-
-  std::string strRet(pBuf);
-
-  delete[]pwBuf;
-  delete[]pBuf;
-  pwBuf = NULL;
-  pBuf  = NULL;
-  return strRet;
-#elif defined(GF_LINUX)
-  //FIXME: linux support.
-
-#endif
-
 }
 
 }
