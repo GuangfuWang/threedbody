@@ -89,8 +89,8 @@ AI_FORCE_INLINE bool is_qnan(float in) {
     // the straightforward solution does not work:
     //   return (in != in);
     // compiler generates code like this
-    //   load <in> to <register-with-different-width>
-    //   compare <register-with-different-width> against <in>
+    //   load <in> to <register-with-different-mWidth>
+    //   compare <register-with-different-mWidth> against <in>
 
     // FIXME: Use <float> stuff instead? I think fpclassify needs C99
     _IEEESingle temp;
@@ -106,8 +106,8 @@ AI_FORCE_INLINE bool is_qnan(double in) {
     // the straightforward solution does not work:
     //   return (in != in);
     // compiler generates code like this
-    //   load <in> to <register-with-different-width>
-    //   compare <register-with-different-width> against <in>
+    //   load <in> to <register-with-different-mWidth>
+    //   compare <register-with-different-mWidth> against <in>
 
     // FIXME: Use <float> stuff instead? I think fpclassify needs C99
     _IEEEDouble temp;

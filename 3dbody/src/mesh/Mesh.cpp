@@ -5,20 +5,18 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
-#include "include/render/OpenGLBufferManager.h"
-
 namespace gf
 {
 void Mesh::init()
 {
   mRenderBufferMgr = std::make_unique<gf::OpenGL_VertexIndexBuffer>();
 
-  create_buffers();
+  createBuffers();
 }
 
 Mesh::~Mesh()
 {
-  delete_buffers();
+  deleteBuffers();
 }
 
 bool Mesh::load(const std::string& filepath)
@@ -50,7 +48,7 @@ bool Mesh::load(const std::string& filepath)
       vh.mPos = { mesh->mVertices[i].x, mesh->mVertices[i].y ,mesh->mVertices[i].z };
       vh.mNormal = { mesh->mNormals[i].x, mesh->mNormals[i].y ,mesh->mNormals[i].z };
 
-      add_vertex(vh);
+	  addVertex(vh);
     }
 
     for (size_t i = 0; i < mesh->mNumFaces; i++)
@@ -58,7 +56,7 @@ bool Mesh::load(const std::string& filepath)
       aiFace face = mesh->mFaces[i];
 
       for (size_t j = 0; j < face.mNumIndices; j++)
-        add_vertex_index(face.mIndices[j]);
+		addVertexIndex(face.mIndices[j]);
     }
 
     init();
@@ -67,14 +65,14 @@ bool Mesh::load(const std::string& filepath)
   return false;
 }
 
-void Mesh::create_buffers()
+void Mesh::createBuffers()
 {
-  mRenderBufferMgr->create_buffers(mVertices, mVertexIndices);
+  mRenderBufferMgr->createBuffers(mVertices, mVertexIndices);
 }
 
-void Mesh::delete_buffers()
+void Mesh::deleteBuffers()
 {
-  mRenderBufferMgr->delete_buffers();
+  mRenderBufferMgr->deleteBuffers();
 }
 
 void Mesh::bind()

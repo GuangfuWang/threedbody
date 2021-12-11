@@ -1,6 +1,3 @@
-//
-// Created by bigdata-wgf on 2021/12/9.
-//
 
 #ifndef INC_3DBODY_3DBODY_INCLUDE_MESH_TEXTURE_H_
 #define INC_3DBODY_3DBODY_INCLUDE_MESH_TEXTURE_H_
@@ -8,61 +5,58 @@
 #include <memory>
 #include <string>
 
-namespace gf{
+#include "def.h"
 
-template<typename T>
-using Ref = std::shared_ptr<T>;
+namespace gf {
 
 class Texture {
  public:
   virtual ~Texture() = default;
 
-  virtual uint32_t GetWidth() const = 0;
-  virtual uint32_t GetHeight() const = 0;
-  virtual uint32_t GetRendererID() const = 0;
+  virtual uint32_t getWidth() const = 0;
+  virtual uint32_t getHeight() const = 0;
+  virtual uint32_t getRendererID() const = 0;
 
-  virtual void SetData(void *data, uint32_t size) = 0;
+  virtual void setData(void *data, uint32_t size) = 0;
 
-  virtual void Bind(uint32_t slot = 0) const = 0;
+  virtual void bind(uint32_t slot = 0) const = 0;
 
-  virtual bool IsLoaded() const = 0;
+  virtual bool isLoaded() const = 0;
 
   virtual bool operator==(const Texture &other) const = 0;
 };
 
 class Texture2D : public Texture {
  public:
-  static Ref<Texture2D> Create(uint32_t width, uint32_t height);
-  static Ref<Texture2D> Create(const std::string &path);
+  static Ref<Texture2D> create(uint32_t width, uint32_t height);
+  static Ref<Texture2D> create(const std::string &path);
 };
 
-class OpenGLTexture2D final : public Texture2D
-{
+class OpenGLTexture2D final : public Texture2D {
  public:
   OpenGLTexture2D(uint32_t width, uint32_t height);
-  OpenGLTexture2D(const std::string& path);
+  OpenGLTexture2D(const std::string &path);
   virtual ~OpenGLTexture2D();
 
-  uint32_t GetWidth() const override { return m_Width;  }
-  uint32_t GetHeight() const override { return m_Height; }
-  uint32_t GetRendererID() const override { return m_RendererID; }
+  uint32_t getWidth() const override { return mWidth; }
+  uint32_t getHeight() const override { return mHeight; }
+  uint32_t getRendererID() const override { return mRendererID; }
 
-  void SetData(void* data, uint32_t size) override;
+  void setData(void *data, uint32_t size) override;
 
-  void Bind(uint32_t slot = 0) const override;
+  void bind(uint32_t slot = 0) const override;
 
-  bool IsLoaded() const override { return m_IsLoaded; }
+  bool isLoaded() const override { return mIsLoaded; }
 
-  bool operator==(const Texture& other) const override
-  {
-	return m_RendererID == ((OpenGLTexture2D&)other).m_RendererID;
+  bool operator==(const Texture &other) const override {
+	return mRendererID==((OpenGLTexture2D &)other).mRendererID;
   }
  private:
-  std::string m_Path;
-  bool m_IsLoaded = false;
-  uint32_t m_Width, m_Height;
-  uint32_t m_RendererID;
-  unsigned int m_InternalFormat, m_DataFormat;
+  std::string  mPath;
+  bool         mIsLoaded = false;
+  uint32_t     mWidth, mHeight;
+  uint32_t     mRendererID;
+  unsigned int mInternalFormat, mDataFormat;
 };
 
 }

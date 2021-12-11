@@ -76,7 +76,7 @@ ConfigMap::ConfigMap() {
     output_format_.emplace_back(".assbin");
     output_format_.emplace_back(".step");
   }
-  std::filesystem::path curr = getRootDir();
+  fs::path curr = getRootDir();
   root_dir_ = curr.string();
   curr /= "resources";
   resource_dir_ = curr.string();

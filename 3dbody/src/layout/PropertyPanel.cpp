@@ -4,7 +4,7 @@
 
 namespace gf {
 
-static void draw_vec3_widget(const std::string &label, glm::vec3 &values, float columnWidth = 100.0f) {
+static void drawVec3Widget(const std::string &label, glm::vec3 &values, float columnWidth = 100.0f) {
   ImGuiIO &io      = ImGui::GetIO();
   auto    boldFont = io.Fonts->Fonts[0];
 
@@ -45,7 +45,7 @@ static void draw_vec3_widget(const std::string &label, glm::vec3 &values, float 
 }
 
 void Property_Panel::render(SceneView *scene_view) {
-  auto mesh = scene_view->get_mesh();
+  auto mesh = scene_view->getMesh();
   ImGui::SetNextWindowSize(mySize);
   ImGui::Begin("Properties");
   mySize = ImGui::GetContentRegionAvail();
@@ -71,7 +71,7 @@ void Property_Panel::render(SceneView *scene_view) {
 	ImGui::Separator();
 	ImGui::Text("Position");
 	ImGui::Separator();
-	draw_vec3_widget("Position", scene_view->get_light()->mPosition, 80.0f);
+	drawVec3Widget("Position", scene_view->getLight()->mPosition, 80.0f);
   }
 
   ImGui::End();

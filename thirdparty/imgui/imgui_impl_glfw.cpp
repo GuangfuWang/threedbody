@@ -275,7 +275,7 @@ static bool ImGui_ImplGlfw_Init(GLFWwindow* window, bool install_callbacks, Glfw
   io.GetClipboardTextFn = ImGui_ImplGlfw_GetClipboardText;
   io.ClipboardUserData = bd->Window;
 
-  // Create mouse cursors
+  // create mouse cursors
   // (By design, on X11 cursors are user configurable and some cursors may be missing. When a cursor doesn't exist,
   // GLFW will emit an error which will often be printed by the app, so we temporarily disable error reporting.
   // Missing cursors will return NULL and our _UpdateMouseCursor() function will use the Arrow cursor instead.)
@@ -660,7 +660,7 @@ static void ImGui_ImplGlfw_CreateWindow(ImGuiViewport* viewport)
   glfwWindowHint(GLFW_FLOATING, (viewport->Flags & ImGuiViewportFlags_TopMost) ? true : false);
 #endif
   GLFWwindow* share_window = (bd->ClientApi == GlfwClientApi_OpenGL) ? bd->Window : NULL;
-  vd->Window = glfwCreateWindow((int)viewport->Size.x, (int)viewport->Size.y, "No Title Yet", NULL, share_window);
+  vd->Window = glfwCreateWindow((int)viewport->Size.x, (int)viewport->Size.y, "No mTitle Yet", NULL, share_window);
   vd->WindowOwned = true;
   viewport->PlatformHandle = (void*)vd->Window;
 #ifdef _WIN32
@@ -801,10 +801,10 @@ static void ImGui_ImplGlfw_SetWindowSize(ImGuiViewport* viewport, ImVec2 size)
     // positioned from the upper-left corner. GLFW makes an effort to convert macOS style coordinates, however it
     // doesn't handle it when changing size. We are manually moving the window in order for changes of size to be based
     // on the upper-left corner.
-    int x, y, width, height;
+    int x, y, mWidth, mHeight;
     glfwGetWindowPos(vd->Window, &x, &y);
-    glfwGetWindowSize(vd->Window, &width, &height);
-    glfwSetWindowPos(vd->Window, x, y - height + size.y);
+    glfwGetWindowSize(vd->Window, &mWidth, &mHeight);
+    glfwSetWindowPos(vd->Window, x, y - mHeight + size.y);
 #endif
   vd->IgnoreWindowSizeEventFrame = ImGui::GetFrameCount();
   glfwSetWindowSize(vd->Window, (int)size.x, (int)size.y);

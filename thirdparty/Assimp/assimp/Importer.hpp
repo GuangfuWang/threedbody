@@ -99,7 +99,7 @@ namespace Assimp {
 /** CPP-API: The Importer class forms an C++ interface to the functionality of the
 *   Open Asset Import Library.
 *
-* Create an object of this class and call ReadFile() to import a file.
+* create an object of this class and call ReadFile() to import a file.
 * If the import succeeds, the function returns a pointer to the imported data.
 * The data remains property of the object, it is intended to be accessed
 * read-only. The imported data will be destroyed along with the Importer

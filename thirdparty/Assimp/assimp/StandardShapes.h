@@ -157,7 +157,7 @@ namespace Assimp {
          *       |-----|       <- radius 1
          *
          *        __x__        <- ]               ^
-         *       /     \          | height        |
+         *       /     \          | mHeight        |
          *      /       \         |               Y
          *     /         \        |
          *    /           \       |
@@ -167,7 +167,7 @@ namespace Assimp {
          *
          *  @endcode
          *
-         *  @param height Height of the cone
+         *  @param height mHeight of the cone
          *  @param radius1 First radius
          *  @param radius2 Second radius
          *  @param tess Number of triangles.

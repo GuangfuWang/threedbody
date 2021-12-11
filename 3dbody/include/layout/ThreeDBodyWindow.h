@@ -3,7 +3,8 @@
 #ifndef INC_3DBODY_3DBODY_INCLUDE_LAYOUT_THREEDBODYWINDOW_H_
 #define INC_3DBODY_3DBODY_INCLUDE_LAYOUT_THREEDBODYWINDOW_H_
 
-#include "include/render/RenderBase.h"
+#include "include/layout/BaseWindow.h"
+#include "include/render/VertexIndexBuffer.h"
 #include "include/mesh/Mesh.h"
 #include "include/shader/Shader.h"
 #include "include/scene/SceneCamera.h"
@@ -11,7 +12,6 @@
 
 #include "include/render/UIContext.h"
 #include "include/render/OpenGLContext.h"
-#include "include/render/OpenGLBufferManager.h"
 #include "include/layout/SceneView.h"
 #include "include/layout/ContentBroswer.h"
 #include "include/layout/PropertyPanel.h"
@@ -29,51 +29,47 @@ class ThreeDBodyWindow : public BaseWindow {
 
   ~ThreeDBodyWindow();
 
-  bool init(int width, int height, const std::string &title);
+  bool init(int width, int height, const string &title);
 
   void render();
 
-  void handle_input();
+  void handleInput();
 
-  void *get_native_window() override { return mWindow; }
+  void *getNativeWindow() override { return mWindow; }
 
-  void set_native_window(void *window) {
+  void setNativeWindow(void *window) {
 	mWindow = (GLFWwindow *)window;
   }
 
-  void on_scroll(double delta) override;
+  void onScroll(double delta) override;
 
+  void onMouseButton(unsigned char code) override;
 
-  void on_mouse_button(unsigned char code) override;
+  void onKey(int key, int scancode, int action, int mods) override;
 
-  void on_key(int key, int scancode, int action, int mods) override;
+  void onResize(int width, int height) override;
 
-  void on_resize(int width, int height) override;
+  void onClose() override;
 
-  void on_close() override;
-
-  bool is_running() { return mIsRunning; }
+  bool isRunning() { return mIsRunning; }
 
  private:
 
   GLFWwindow *mWindow;
 
   // Render contexts
-  std::unique_ptr<UIContext> mUICtx;
+  Ref_Unique<UIContext> mUICtx;
 
-  std::unique_ptr<OpenGL_Context> mRenderCtx;
+  Ref_Unique<OpenGL_Context> mRenderCtx;
 
   // UI components
-  std::unique_ptr<Property_Panel> mPropertyPanel;
+  Ref_Unique<Property_Panel> mPropertyPanel;
 
-  std::unique_ptr<SceneView> mSceneView;
+  Ref_Unique<SceneView> mSceneView;
 
-  std::unique_ptr<ContentBrowser> mContentBrowser;
+  Ref_Unique<ContentBrowser> mContentBrowser;
 
   bool mIsRunning;
-
-  float scene_property_width_ratio = 0.8f;
-  float scene_property_height_ratio = 1.0f;
 
 };
 

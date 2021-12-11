@@ -108,7 +108,7 @@ public:
 
     /** Performs a spherical interpolation between two quaternions and writes the result into the third.
      * @param pOut Target object to received the interpolated rotation.
-     * @param pStart Start rotation of the interpolation at factor == 0.
+     * @param pStart start rotation of the interpolation at factor == 0.
      * @param pEnd End rotation, factor == 1.
      * @param pFactor Interpolation factor between 0 and 1. Values outside of this range yield undefined results.
      */

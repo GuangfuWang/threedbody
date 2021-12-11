@@ -3,10 +3,12 @@
 #ifndef INC_3DBODY_3DBODY_INCLUDE_LAYOUT_PRPPERTY_PANEL_H_
 #define INC_3DBODY_3DBODY_INCLUDE_LAYOUT_PRPPERTY_PANEL_H_
 
-#include "imgui.h"
+#include <imgui.h>
+#include "def.h"
+#include "include/layout/SceneView.h"
 #include "util/ImGuiFileBrowser.h"
 #include "util/ConfigMap.h"
-#include "SceneView.h"
+
 
 #include <list>
 
@@ -16,7 +18,7 @@ class Property_Panel {
  public:
 
   Property_Panel() {
-	mCurrentFile = "< ... >";
+	mCurrentFile = "< --- >";
 
 	mFileDialog.SetTitle("Open 3d model");
 	mFileDialog.SetFileFilters(ConfigMap::getInstance()->input_format_);
@@ -24,7 +26,7 @@ class Property_Panel {
 
   void render(SceneView *mScene);
 
-  void set_mesh_load_callback(const std::function<void(const std::string &)> &callback) {
+  void setMeshLoadCallback(const FileLoaderFunc &callback) {
 	mMeshLoadCallback = callback;
   }
 
@@ -38,9 +40,9 @@ class Property_Panel {
   // create a file browser instance
   ImGui::FileBrowser                       mFileDialog;
 
-  std::function<void(const std::string &)> mMeshLoadCallback;
+  FileLoaderFunc mMeshLoadCallback;
 
-  std::string mCurrentFile;
+  string mCurrentFile;
 
   ImVec2 mySize;
 

@@ -8,18 +8,18 @@ void SceneView::resize(int32_t width, int32_t height) {
   mSize.x = width;
   mSize.y = height;
 
-  mFrameBuffer->create_buffers((int32_t) mSize.x, (int32_t) mSize.y);
+  mFrameBuffer->createBuffers((int32_t)mSize.x, (int32_t)mSize.y);
 }
 
-void SceneView::on_mouse_move(double x, double y, MOUSE_INPUT_CODE button) {
-  mCamera->on_mouse_move(x, y, button);
+void SceneView::onMouseMove(double x, double y, MOUSE_INPUT_CODE button) {
+  mCamera->onMouseMove(x, y, button);
 }
 
-void SceneView::on_mouse_wheel(double delta) {
-  mCamera->on_mouse_wheel(delta);
+void SceneView::onMouseWheel(double delta) {
+  mCamera->onMouseWheel(delta);
 }
 
-void SceneView::load_mesh(const std::string &filepath) {
+void SceneView::loadMesh(const std::string &filepath) {
   if (!mMesh)
     mMesh = std::make_shared<Mesh>();
 
@@ -47,11 +47,11 @@ void SceneView::render() {
   ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
   mSize = {viewportPanelSize.x, viewportPanelSize.y};
 
-  mCamera->set_aspect(mSize.x / mSize.y);
+  mCamera->setAspect(mSize.x/mSize.y);
   mCamera->update(mShader.get());
 
   // add rendered texture to ImGUI scene window
-  uint64_t textureID = mFrameBuffer->get_texture();
+  uint64_t textureID = mFrameBuffer->getTexture();
   ImGui::Image(reinterpret_cast<void *>(textureID),
                ImVec2{mSize.x, mSize.y},
                ImVec2{0, 1},

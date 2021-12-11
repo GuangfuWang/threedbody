@@ -19,7 +19,7 @@ enum JOYSTICK_INPUT {
   HAT_LEFT_DOWN  = (HAT_LEFT | HAT_DOWN),
 };
 
-extern void on_joystick_callback(int jid, int event);
+extern void onJoystickCallback(int jid, int event);
 
 }
 

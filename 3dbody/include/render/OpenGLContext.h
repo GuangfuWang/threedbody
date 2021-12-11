@@ -1,19 +1,20 @@
 #ifndef INC_3DBODY_OPENGL_CONTEXT_H
 #define INC_3DBODY_OPENGL_CONTEXT_H
 
-#include "RenderBase.h"
+#include "include/render/RenderContext.h"
+#include "include/layout/BaseWindow.h"
 
 namespace gf
 {
-  class OpenGL_Context : public RenderContext
+  class OpenGL_Context final : public RenderContext
   {
   public:
 
     bool init(BaseWindow* window) override;
 
-    void pre_render() override;
+    void preRender() override;
 
-    void post_render() override;
+    void postRender() override;
 
     void end() override;
 

@@ -22,8 +22,8 @@ class Light : public EventHandleBase {
   ~Light() {}
 
   void update(Shader *shader) override {
-    shader->set_vec3(mPosition, "lightPosition");
-    shader->set_vec3(mColor * mStrength, "lightColor");
+	shader->setVec3(mPosition, "lightPosition");
+	shader->setVec3(mColor*mStrength, "lightColor");
   }
 
   glm::vec3 mPosition;

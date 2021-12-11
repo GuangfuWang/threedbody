@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file CreateAnimMesh.h
- *  Create AnimMesh from Mesh
+ *  create AnimMesh from Mesh
  */
 #ifndef INCLUDED_AI_CREATE_ANIM_MESH_H
 #define INCLUDED_AI_CREATE_ANIM_MESH_H
@@ -50,7 +50,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Assimp {
 
-/** Create aiAnimMesh from aiMesh. */
+/** create aiAnimMesh from aiMesh. */
     ASSIMP_API aiAnimMesh *aiCreateAnimMesh(const aiMesh *mesh);
 
 } // end of namespace Assimp

@@ -97,8 +97,8 @@ namespace Assimp {
             // Moreover, we must use this ugly and error prone syntax because Visual Studio neither support constexpr or sizeof(name_of_field).
             static const std::size_t dib_size =
                     sizeof(uint32_t) + // size
-                    sizeof(int32_t) +  // width
-                    sizeof(int32_t) +  // height
+                    sizeof(int32_t) +  // mWidth
+                    sizeof(int32_t) +  // mHeight
                     sizeof(uint16_t) + // planes
                     sizeof(uint16_t) + // bits_per_pixel
                     sizeof(uint32_t) + // compression

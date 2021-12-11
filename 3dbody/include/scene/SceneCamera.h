@@ -23,96 +23,96 @@ class Camera : public EventHandleBase {
     mFar = far;
     mFOV = fov;
 
-    set_aspect(mAspect);
+	setAspect(mAspect);
 
-    update_view_matrix();
+	updateViewMatrix();
   }
 
   void update(Shader *shader) override {
     glm::mat4 model{1.0f};
-    shader->set_mat4(model, "model");
-    shader->set_mat4(mViewMatrix, "view");
-    shader->set_mat4(get_projection(), "projection");
-    shader->set_vec3(mPosition, "camPos");
+	shader->setMat4(model, "model");
+	shader->setMat4(mViewMatrix, "view");
+	shader->setMat4(getProjection(), "projection");
+	shader->setVec3(mPosition, "camPos");
   }
 
-  void set_aspect(float aspect) {
+  void setAspect(float aspect) {
     mProjection = glm::perspective(mFOV, aspect, mNear, mFar);
   }
 
-  void set_distance(float offset) {
+  void setDistance(float offset) {
     mDistance += offset;
-    update_view_matrix();
+	updateViewMatrix();
   }
 
-  const glm::mat4 &get_projection() const {
+  const glm::mat4 &getProjection() const {
     return mProjection;
   }
 
-  glm::mat4 get_view_projection() const {
-    return mProjection * get_view_matrix();
+  glm::mat4 getViewProjection() const {
+    return mProjection *getViewMatrix();
   }
 
-  glm::vec3 get_up() const {
-    return glm::rotate(get_direction(), cUp);
+  glm::vec3 getUp() const {
+    return glm::rotate(getDirection(), cUp);
   }
 
-  glm::vec3 get_right() const {
-    return glm::rotate(get_direction(), cRight);
+  glm::vec3 getRight() const {
+    return glm::rotate(getDirection(), cRight);
   }
 
-  glm::vec3 get_forward() const {
-    return glm::rotate(get_direction(), cForward);
+  glm::vec3 getForward() const {
+    return glm::rotate(getDirection(), cForward);
   }
 
-  glm::quat get_direction() const {
+  glm::quat getDirection() const {
     return glm::quat(glm::vec3(-mPitch, -mYaw, 0.0f));
   }
 
-  glm::mat4 get_view_matrix() const {
+  glm::mat4 getViewMatrix() const {
     return mViewMatrix;
   }
 
-  void on_mouse_wheel(double delta) {
-    set_distance(delta * 0.5f);
+  void onMouseWheel(double delta) {
+	setDistance(delta*0.5f);
 
-    update_view_matrix();
+	updateViewMatrix();
   }
 
   void reset() {
     mFocus = {0.0f, 0.0f, 0.0f};
     //mDistance = 5.0f;
-    update_view_matrix();
+	updateViewMatrix();
   }
 
-  void on_mouse_move(double x, double y, MOUSE_INPUT_CODE button) {
+  void onMouseMove(double x, double y, MOUSE_INPUT_CODE button) {
     glm::vec2 pos2d{x, y};
 
     if (button == MOUSE_INPUT_CODE::RIGHT) {
       glm::vec2 delta = (pos2d - mCurrentPos2d) * 0.004f;
 
-      float sign = get_up().y < 0 ? -1.0f : 1.0f;
+      float sign = getUp().y < 0 ? -1.0f : 1.0f;
       mYaw += sign * delta.x * cRotationSpeed;
       mPitch += delta.y * cRotationSpeed;
 
-      update_view_matrix();
+	  updateViewMatrix();
     } else if (button == MOUSE_INPUT_CODE::MIDDLE) {
       // TODO: Adjust pan speed for distance
       glm::vec2 delta = (pos2d - mCurrentPos2d) * 0.003f;
 
-      mFocus += -get_right() * delta.x * mDistance;
-      mFocus += get_up() * delta.y * mDistance;
+      mFocus += -getRight() * delta.x * mDistance;
+      mFocus += getUp() * delta.y * mDistance;
 
-      update_view_matrix();
+	  updateViewMatrix();
     }
 
     mCurrentPos2d = pos2d;
   }
 
-  void update_view_matrix() {
-    mPosition = mFocus - get_forward() * mDistance;
+  void updateViewMatrix() {
+    mPosition = mFocus - getForward() * mDistance;
 
-    glm::quat orientation = get_direction();
+    glm::quat orientation = getDirection();
     mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition) * glm::toMat4(orientation);
     mViewMatrix = glm::inverse(mViewMatrix);
   }

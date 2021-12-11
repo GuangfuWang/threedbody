@@ -29,7 +29,7 @@ enum ImGuiFileBrowserFlags_
   ImGuiFileBrowserFlags_SelectDirectory    = 1 << 0, // select directory instead of regular file
   ImGuiFileBrowserFlags_EnterNewFilename   = 1 << 1, // allow user to enter new filename when selecting regular file
   ImGuiFileBrowserFlags_NoModal            = 1 << 2, // file browsing window is modal by default. specify this to use a popup window
-  ImGuiFileBrowserFlags_NoTitleBar         = 1 << 3, // hide window title bar
+  ImGuiFileBrowserFlags_NoTitleBar         = 1 << 3, // hide window mTitle bar
   ImGuiFileBrowserFlags_NoStatusBar        = 1 << 4, // hide status bar at the bottom of browsing window
   ImGuiFileBrowserFlags_CloseOnEsc         = 1 << 5, // close file browser when pressing 'ESC'
   ImGuiFileBrowserFlags_CreateNewDir       = 1 << 6, // allow user to create new directory
@@ -52,7 +52,7 @@ class FileBrowser
   // default is (700, 450)
   void SetWindowSize(int width, int height) noexcept;
 
-  // set the window title text
+  // set the window mTitle text
   void SetTitle(std::string title);
 
   void SetCancelText(std::string cancel);
@@ -338,7 +338,7 @@ inline void ImGui::FileBrowser::Display()
     if (::ImGui::IsItemHovered())
     {
       ::ImGui::BeginTooltip();
-      ::ImGui::TextUnformatted("Create new folder");
+      ::ImGui::TextUnformatted("create new folder");
       ::ImGui::EndTooltip();
     }
 

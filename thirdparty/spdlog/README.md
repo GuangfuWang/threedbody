@@ -85,7 +85,7 @@ int main()
 
 ```
 ---
-#### Create stdout/stderr logger object
+#### create stdout/stderr logger object
 ```c++
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
@@ -120,7 +120,7 @@ void basic_logfile_example()
 #include "spdlog/sinks/rotating_file_sink.h"
 void rotating_example()
 {
-    // Create a file rotating logger with 5mb size max and 3 rotated files
+    // create a file rotating logger with 5mb size max and 3 rotated files
     auto max_size = 1048576 * 5;
     auto max_files = 3;
     auto logger = spdlog::rotating_logger_mt("some_logger_name", "logs/rotating.txt", max_size, max_files);
@@ -134,7 +134,7 @@ void rotating_example()
 #include "spdlog/sinks/daily_file_sink.h"
 void daily_example()
 {
-    // Create a daily logger - a new file is created every day on 2:30am
+    // create a daily logger - a new file is created every day on 2:30am
     auto logger = spdlog::daily_logger_mt("daily_logger", "logs/daily.txt", 2, 30);
 }
 
@@ -462,6 +462,6 @@ Documentation can be found in the [wiki](https://github.com/gabime/spdlog/wiki/1
 
 ---
 
-Thanks to [JetBrains](https://www.jetbrains.com/?from=spdlog) for donating product licenses to help develop **spdlog** <a href="https://www.jetbrains.com/?from=spdlog"><img src="logos/jetbrains-variant-4.svg" width="94" align="center" /></a>
+Thanks to [JetBrains](https://www.jetbrains.com/?from=spdlog) for donating product licenses to help develop **spdlog** <a href="https://www.jetbrains.com/?from=spdlog"><img src="logos/jetbrains-variant-4.svg" mWidth="94" align="center" /></a>
 
 

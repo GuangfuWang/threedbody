@@ -5,11 +5,12 @@
 #include <filesystem>
 #include <string>
 #include <array>
+#include "def.h"
 
 namespace gf {
 
-inline std::filesystem::path getRootDir() {
-  std::filesystem::path curr = std::filesystem::current_path().parent_path();
+inline fs::path getRootDir() {
+  fs::path curr = fs::current_path().parent_path();
   return curr;
 }
 

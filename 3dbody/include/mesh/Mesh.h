@@ -3,7 +3,8 @@
 
 #include "include/scene/SceneCamera.h"
 #include "include/mesh/VertexHolder.h"
-#include "include/render/RenderBase.h"
+#include "include/render/VertexIndexBuffer.h"
+#include "def.h"
 
 namespace gf {
 
@@ -17,19 +18,19 @@ class Mesh : public EventHandleBase {
 
   bool load(const std::string &filepath);
 
-  void add_vertex(const VertexHolder &vertex) { mVertices.push_back(vertex); }
+  void addVertex(const VertexHolder &vertex) { mVertices.push_back(vertex); }
 
-  void add_vertex_index(unsigned int vertex_idx) { mVertexIndices.push_back(vertex_idx); }
+  void addVertexIndex(unsigned int vertex_idx) { mVertexIndices.push_back(vertex_idx); }
 
-  std::vector<unsigned int> get_vertex_indices() { return mVertexIndices; }
+  std::vector<RenderIndexType> getVertexIndices() { return mVertexIndices; }
 
   void update(Shader *shader) override {
     // pbr color
-    shader->set_vec3(mColor, "albedo");
+	shader->setVec3(mColor, "albedo");
 
-    shader->set_f1(mRoughness, "roughness");
-    shader->set_f1(mMetallic, "metallic");
-    shader->set_f1(1.0f, "ao");
+	shader->setF1(mRoughness, "roughness");
+	shader->setF1(mMetallic, "metallic");
+	shader->setF1(1.0f, "ao");
 
   }
 
@@ -39,9 +40,9 @@ class Mesh : public EventHandleBase {
 
   void init();
 
-  void create_buffers();
+  void createBuffers();
 
-  void delete_buffers();
+  void deleteBuffers();
 
   void render();
 
@@ -52,11 +53,11 @@ class Mesh : public EventHandleBase {
  private:
 
   // Buffers manager
-  std::unique_ptr<VertexIndexBuffer> mRenderBufferMgr;
+  Ref_Unique<VertexIndexBuffer> mRenderBufferMgr;
 
   // Vertices and indices
-  std::vector<VertexHolder> mVertices;
-  std::vector<unsigned int> mVertexIndices;
+  vector<VertexHolder> mVertices;
+  vector<RenderIndexType> mVertexIndices;
 
 };
 

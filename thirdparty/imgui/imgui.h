@@ -364,8 +364,8 @@ IMGUI_API ImDrawList*   GetWindowDrawList();                        // get draw 
 IMGUI_API float         GetWindowDpiScale();                        // get DPI scale currently associated to the current window's viewport.
 IMGUI_API ImVec2        GetWindowPos();                             // get current window position in screen space (useful if you want to do your own drawing via the DrawList API)
 IMGUI_API ImVec2        GetWindowSize();                            // get current window size
-IMGUI_API float         GetWindowWidth();                           // get current window width (shortcut for GetWindowSize().x)
-IMGUI_API float         GetWindowHeight();                          // get current window height (shortcut for GetWindowSize().y)
+IMGUI_API float         GetWindowWidth();                           // get current window mWidth (shortcut for GetWindowSize().x)
+IMGUI_API float         GetWindowHeight();                          // get current window mHeight (shortcut for GetWindowSize().y)
 IMGUI_API ImGuiViewport*GetWindowViewport();                        // get viewport currently associated to the current window.
 
 // Window manipulation
@@ -373,7 +373,7 @@ IMGUI_API ImGuiViewport*GetWindowViewport();                        // get viewp
 IMGUI_API void          SetNextWindowPos(const ImVec2& pos, ImGuiCond cond = 0, const ImVec2& pivot = ImVec2(0, 0)); // set next window position. call before Begin(). use pivot=(0.5f,0.5f) to center on given point, etc.
 IMGUI_API void          SetNextWindowSize(const ImVec2& size, ImGuiCond cond = 0);                  // set next window size. set axis to 0.0f to force an auto-fit on this axis. call before Begin()
 IMGUI_API void          SetNextWindowSizeConstraints(const ImVec2& size_min, const ImVec2& size_max, ImGuiSizeCallback custom_callback = NULL, void* custom_callback_data = NULL); // set next window size limits. use -1,-1 on either X/Y axis to preserve the current size. Sizes will be rounded down. Use callback to apply non-trivial programmatic constraints.
-IMGUI_API void          SetNextWindowContentSize(const ImVec2& size);                               // set next window content size (~ scrollable client area, which enforce the range of scrollbars). Not including window decorations (title bar, menu bar, etc.) nor WindowPadding. set an axis to 0.0f to leave it automatic. call before Begin()
+IMGUI_API void          SetNextWindowContentSize(const ImVec2& size);                               // set next window content size (~ scrollable client area, which enforce the range of scrollbars). Not including window decorations (mTitle bar, menu bar, etc.) nor WindowPadding. set an axis to 0.0f to leave it automatic. call before Begin()
 IMGUI_API void          SetNextWindowCollapsed(bool collapsed, ImGuiCond cond = 0);                 // set next window collapsed state. call before Begin()
 IMGUI_API void          SetNextWindowFocus();                                                       // set next window to be focused / top-most. call before Begin()
 IMGUI_API void          SetNextWindowBgAlpha(float alpha);                                          // set next window background color alpha. helper to easily override the Alpha component of ImGuiCol_WindowBg/ChildBg/PopupBg. you may also use ImGuiWindowFlags_NoBackground.
@@ -423,17 +423,17 @@ IMGUI_API void          PushButtonRepeat(bool repeat);                          
 IMGUI_API void          PopButtonRepeat();
 
 // Parameters stacks (current window)
-IMGUI_API void          PushItemWidth(float item_width);                                // push width of items for common large "item+label" widgets. >0.0f: width in pixels, <0.0f align xx pixels to the right of window (so -FLT_MIN always align width to the right side).
+IMGUI_API void          PushItemWidth(float item_width);                                // push mWidth of items for common large "item+label" widgets. >0.0f: mWidth in pixels, <0.0f align xx pixels to the right of window (so -FLT_MIN always align mWidth to the right side).
 IMGUI_API void          PopItemWidth();
-IMGUI_API void          SetNextItemWidth(float item_width);                             // set width of the _next_ common large "item+label" widget. >0.0f: width in pixels, <0.0f align xx pixels to the right of window (so -FLT_MIN always align width to the right side)
-IMGUI_API float         CalcItemWidth();                                                // width of item given pushed settings and current cursor position. NOT necessarily the width of last item unlike most 'Item' functions.
+IMGUI_API void          SetNextItemWidth(float item_width);                             // set mWidth of the _next_ common large "item+label" widget. >0.0f: mWidth in pixels, <0.0f align xx pixels to the right of window (so -FLT_MIN always align mWidth to the right side)
+IMGUI_API float         CalcItemWidth();                                                // mWidth of item given pushed settings and current cursor position. NOT necessarily the mWidth of last item unlike most 'Item' functions.
 IMGUI_API void          PushTextWrapPos(float wrap_local_pos_x = 0.0f);                 // push word-wrapping position for Text*() commands. < 0.0f: no wrapping; 0.0f: wrap to end of window (or column); > 0.0f: wrap at 'wrap_pos_x' position in window local space
 IMGUI_API void          PopTextWrapPos();
 
 // Style read access
 // - Use the style editor (ShowStyleEditor() function) to interactively see what the colors are)
 IMGUI_API ImFont*       GetFont();                                                      // get current font
-IMGUI_API float         GetFontSize();                                                  // get current font size (= height in pixels) of current font with current scale applied
+IMGUI_API float         GetFontSize();                                                  // get current font size (= mHeight in pixels) of current font with current scale applied
 IMGUI_API ImVec2        GetFontTexUvWhitePixel();                                       // get UV coordinate for a while pixel, useful to draw custom shapes via the ImDrawList API
 IMGUI_API ImU32         GetColorU32(ImGuiCol idx, float alpha_mul = 1.0f);              // retrieve given style color with style alpha applied and optional extra alpha multiplier, packed as a 32-bit value suitable for ImDrawList
 IMGUI_API ImU32         GetColorU32(const ImVec4& col);                                 // retrieve given color with style alpha applied, packed as a 32-bit value suitable for ImDrawList
@@ -499,7 +499,7 @@ IMGUI_API void          TextColored(const ImVec4& col, const char* fmt, ...)    
 IMGUI_API void          TextColoredV(const ImVec4& col, const char* fmt, va_list args)  IM_FMTLIST(2);
 IMGUI_API void          TextDisabled(const char* fmt, ...)                              IM_FMTARGS(1); // shortcut for PushStyleColor(ImGuiCol_Text, style.Colors[ImGuiCol_TextDisabled]); Text(fmt, ...); PopStyleColor();
 IMGUI_API void          TextDisabledV(const char* fmt, va_list args)                    IM_FMTLIST(1);
-IMGUI_API void          TextWrapped(const char* fmt, ...)                               IM_FMTARGS(1); // shortcut for PushTextWrapPos(0.0f); Text(fmt, ...); PopTextWrapPos();. Note that this won't work on an auto-resizing window if there's no other widgets to extend the window width, yoy may need to set a size using SetNextWindowSize().
+IMGUI_API void          TextWrapped(const char* fmt, ...)                               IM_FMTARGS(1); // shortcut for PushTextWrapPos(0.0f); Text(fmt, ...); PopTextWrapPos();. Note that this won't work on an auto-resizing window if there's no other widgets to extend the window mWidth, yoy may need to set a size using SetNextWindowSize().
 IMGUI_API void          TextWrappedV(const char* fmt, va_list args)                     IM_FMTLIST(1);
 IMGUI_API void          LabelText(const char* label, const char* fmt, ...)              IM_FMTARGS(2); // display text+label aligned the same way as value+label widgets
 IMGUI_API void          LabelTextV(const char* label, const char* fmt, va_list args)    IM_FMTLIST(2);
@@ -628,15 +628,15 @@ IMGUI_API void          SetNextItemOpen(bool is_open, ImGuiCond cond = 0);      
 // Widgets: Selectables
 // - A selectable highlights when hovered, and can display another color when selected.
 // - Neighbors selectable extend their highlight bounds in order to leave no gap between them. This is so a series of selected Selectable appear contiguous.
-IMGUI_API bool          Selectable(const char* label, bool selected = false, ImGuiSelectableFlags flags = 0, const ImVec2& size = ImVec2(0, 0)); // "bool selected" carry the selection state (read-only). Selectable() is clicked is returns true so you can modify your selection state. size.x==0.0: use remaining width, size.x>0.0: specify width. size.y==0.0: use label height, size.y>0.0: specify height
+IMGUI_API bool          Selectable(const char* label, bool selected = false, ImGuiSelectableFlags flags = 0, const ImVec2& size = ImVec2(0, 0)); // "bool selected" carry the selection state (read-only). Selectable() is clicked is returns true so you can modify your selection state. size.x==0.0: use remaining mWidth, size.x>0.0: specify mWidth. size.y==0.0: use label mHeight, size.y>0.0: specify mHeight
 IMGUI_API bool          Selectable(const char* label, bool* p_selected, ImGuiSelectableFlags flags = 0, const ImVec2& size = ImVec2(0, 0));      // "bool* p_selected" point to the selection state (read-write), as a convenient helper.
 
 // Widgets: List Boxes
 // - This is essentially a thin wrapper to using BeginChild/EndChild with some stylistic changes.
 // - The BeginListBox()/EndListBox() api allows you to manage your contents and selection state however you want it, by creating e.g. Selectable() or any items.
 // - The simplified/old ListBox() api are helpers over BeginListBox()/EndListBox() which are kept available for convenience purpose. This is analoguous to how Combos are created.
-// - Choose frame width:   size.x > 0.0f: custom  /  size.x < 0.0f or -FLT_MIN: right-align   /  size.x = 0.0f (default): use current ItemWidth
-// - Choose frame height:  size.y > 0.0f: custom  /  size.y < 0.0f or -FLT_MIN: bottom-align  /  size.y = 0.0f (default): arbitrary default height which can fit ~7 items
+// - Choose frame mWidth:   size.x > 0.0f: custom  /  size.x < 0.0f or -FLT_MIN: right-align   /  size.x = 0.0f (default): use current ItemWidth
+// - Choose frame mHeight:  size.y > 0.0f: custom  /  size.y < 0.0f or -FLT_MIN: bottom-align  /  size.y = 0.0f (default): arbitrary default mHeight which can fit ~7 items
 IMGUI_API bool          BeginListBox(const char* label, const ImVec2& size = ImVec2(0, 0)); // open a framed scrolling region
 IMGUI_API void          EndListBox();                                                       // only call EndListBox() if BeginListBox() returned true!
 IMGUI_API bool          ListBox(const char* label, int* current_item, const char* const items[], int items_count, int height_in_items = -1);
@@ -688,7 +688,7 @@ IMGUI_API void          SetTooltipV(const char* fmt, va_list args) IM_FMTLIST(1)
 
 // Popups: begin/end functions
 //  - BeginPopup(): query popup state, if open start appending into the window. Call EndPopup() afterwards. ImGuiWindowFlags are forwarded to the window.
-//  - BeginPopupModal(): block every interactions behind the window, cannot be closed by user, add a dimming background, has a title bar.
+//  - BeginPopupModal(): block every interactions behind the window, cannot be closed by user, add a dimming background, has a mTitle bar.
 IMGUI_API bool          BeginPopup(const char* str_id, ImGuiWindowFlags flags = 0);                         // return true if the popup is open, and you can start outputting to it.
 IMGUI_API bool          BeginPopupModal(const char* name, bool* p_open = NULL, ImGuiWindowFlags flags = 0); // return true if the modal is open, and you can start outputting to it.
 IMGUI_API void          EndPopup();                                                                         // only call EndPopup() if BeginPopupXXX() returns true!
@@ -752,7 +752,7 @@ IMGUI_API bool          TableNextColumn();                          // append in
 IMGUI_API bool          TableSetColumnIndex(int column_n);          // append into the specified column. Return true when column is visible.
 
 // Tables: Headers & Columns declaration
-// - Use TableSetupColumn() to specify label, resizing policy, default width/weight, id, various other flags etc.
+// - Use TableSetupColumn() to specify label, resizing policy, default mWidth/weight, id, various other flags etc.
 // - Use TableHeadersRow() to create a header row and automatically submit a TableHeader() for each column.
 //   Headers are required to perform: reordering, sorting, and opening the context menu.
 //   The context menu can also be made available in columns body using ImGuiTableFlags_ContextMenuInBody.
@@ -787,8 +787,8 @@ IMGUI_API void                  TableSetBgColor(ImGuiTableBgTarget target, ImU32
 IMGUI_API void          Columns(int count = 1, const char* id = NULL, bool border = true);
 IMGUI_API void          NextColumn();                                                       // next column, defaults to current row or next row if the current row is finished
 IMGUI_API int           GetColumnIndex();                                                   // get current column index
-IMGUI_API float         GetColumnWidth(int column_index = -1);                              // get column width (in pixels). pass -1 to use current column
-IMGUI_API void          SetColumnWidth(int column_index, float width);                      // set column width (in pixels). pass -1 to use current column
+IMGUI_API float         GetColumnWidth(int column_index = -1);                              // get column mWidth (in pixels). pass -1 to use current column
+IMGUI_API void          SetColumnWidth(int column_index, float width);                      // set column mWidth (in pixels). pass -1 to use current column
 IMGUI_API float         GetColumnOffset(int column_index = -1);                             // get position of column line (in pixels, from the left side of the contents region). pass -1 to use current column, otherwise 0..GetColumnsCount() inclusive. column 0 is typically 0.0f
 IMGUI_API void          SetColumnOffset(int column_index, float offset_x);                  // set position of column line (in pixels, from the left side of the contents region). pass -1 to use current column
 IMGUI_API int           GetColumnsCount();
@@ -805,7 +805,7 @@ IMGUI_API void          SetTabItemClosed(const char* tab_or_docked_window_label)
 // Docking
 // [BETA API] Enable with io.ConfigFlags |= ImGuiConfigFlags_DockingEnable.
 // Note: You can use most Docking facilities without calling any API. You DO NOT need to call DockSpace() to use Docking!
-// - Drag from window title bar or their tab to dock/undock. Hold SHIFT to disable docking/undocking.
+// - Drag from window mTitle bar or their tab to dock/undock. Hold SHIFT to disable docking/undocking.
 // - Drag from window menu button (upper-left button) to undock an entire node (all windows).
 // - When io.ConfigDockingWithShift == true, you instead need to hold SHIFT to _enable_ docking/undocking.
 // About dockspaces:
@@ -992,7 +992,7 @@ IMGUI_API ImGuiViewport*    FindViewportByPlatformHandle(void* platform_handle);
 enum ImGuiWindowFlags_
 {
   ImGuiWindowFlags_None                   = 0,
-  ImGuiWindowFlags_NoTitleBar             = 1 << 0,   // Disable title-bar
+  ImGuiWindowFlags_NoTitleBar             = 1 << 0,   // Disable mTitle-bar
   ImGuiWindowFlags_NoResize               = 1 << 1,   // Disable user resizing with the lower-right grip
   ImGuiWindowFlags_NoMove                 = 1 << 2,   // Disable user moving the window
   ImGuiWindowFlags_NoScrollbar            = 1 << 3,   // Disable scrollbars (window can still scroll with mouse or programmatically)
@@ -1003,7 +1003,7 @@ enum ImGuiWindowFlags_
   ImGuiWindowFlags_NoSavedSettings        = 1 << 8,   // Never load/save settings in .ini file
   ImGuiWindowFlags_NoMouseInputs          = 1 << 9,   // Disable catching mouse, hovering test with pass through.
   ImGuiWindowFlags_MenuBar                = 1 << 10,  // Has a menu-bar
-  ImGuiWindowFlags_HorizontalScrollbar    = 1 << 11,  // Allow horizontal scrollbar to appear (off by default). You may use SetNextWindowContentSize(ImVec2(width,0.0f)); prior to calling Begin() to specify width. Read code in imgui_demo in the "Horizontal Scrolling" section.
+  ImGuiWindowFlags_HorizontalScrollbar    = 1 << 11,  // Allow horizontal scrollbar to appear (off by default). You may use SetNextWindowContentSize(ImVec2(mWidth,0.0f)); prior to calling Begin() to specify mWidth. Read code in imgui_demo in the "Horizontal Scrolling" section.
   ImGuiWindowFlags_NoFocusOnAppearing     = 1 << 12,  // Disable taking focus when transitioning from hidden to visible state
   ImGuiWindowFlags_NoBringToFrontOnFocus  = 1 << 13,  // Disable bringing window to front when taking focus (e.g. clicking on it or programmatically giving it focus)
   ImGuiWindowFlags_AlwaysVerticalScrollbar= 1 << 14,  // Always show vertical scrollbar (even if ContentSize.y < Size.y)
@@ -1011,7 +1011,7 @@ enum ImGuiWindowFlags_
   ImGuiWindowFlags_AlwaysUseWindowPadding = 1 << 16,  // Ensure child windows without border uses style.WindowPadding (ignored by default for non-bordered child windows, because more convenient)
   ImGuiWindowFlags_NoNavInputs            = 1 << 18,  // No gamepad/keyboard navigation within the window
   ImGuiWindowFlags_NoNavFocus             = 1 << 19,  // No focusing toward this window with gamepad/keyboard navigation (e.g. skipped by CTRL+TAB)
-  ImGuiWindowFlags_UnsavedDocument        = 1 << 20,  // Display a dot next to the title. When used in a tab/docking context, tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
+  ImGuiWindowFlags_UnsavedDocument        = 1 << 20,  // Display a dot next to the mTitle. When used in a tab/docking context, tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
   ImGuiWindowFlags_NoDocking              = 1 << 21,  // Disable docking of this window
 
   ImGuiWindowFlags_NoNav                  = ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus,
@@ -1076,7 +1076,7 @@ enum ImGuiTreeNodeFlags_
   ImGuiTreeNodeFlags_OpenOnArrow          = 1 << 7,   // Only open when clicking on the arrow part. If ImGuiTreeNodeFlags_OpenOnDoubleClick is also set, single-click arrow or double-click all box to open.
   ImGuiTreeNodeFlags_Leaf                 = 1 << 8,   // No collapsing, no arrow (use as a convenience for leaf nodes).
   ImGuiTreeNodeFlags_Bullet               = 1 << 9,   // Display a bullet instead of arrow
-  ImGuiTreeNodeFlags_FramePadding         = 1 << 10,  // Use FramePadding (even for an unframed text node) to vertically align text baseline to regular widget height. Equivalent to calling AlignTextToFramePadding().
+  ImGuiTreeNodeFlags_FramePadding         = 1 << 10,  // Use FramePadding (even for an unframed text node) to vertically align text baseline to regular widget mHeight. Equivalent to calling AlignTextToFramePadding().
   ImGuiTreeNodeFlags_SpanAvailWidth       = 1 << 11,  // Extend hit box to the right-most edge, even if not framed. This is not the default in order to allow adding other items on the same line. In the future we may refactor the hit system to be front-to-back, allowing natural overlaps and then this can become the default.
   ImGuiTreeNodeFlags_SpanFullWidth        = 1 << 12,  // Extend hit box to the left-most and right-most edges (bypass the indented area).
   ImGuiTreeNodeFlags_NavLeftJumpsBackHere = 1 << 13,  // (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
@@ -1152,7 +1152,7 @@ enum ImGuiTabBarFlags_
 enum ImGuiTabItemFlags_
 {
   ImGuiTabItemFlags_None                          = 0,
-  ImGuiTabItemFlags_UnsavedDocument               = 1 << 0,   // Display a dot next to the title + tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
+  ImGuiTabItemFlags_UnsavedDocument               = 1 << 0,   // Display a dot next to the mTitle + tab is selected when clicking the X + closure is not assumed (will wait for user to stop submitting the tab). Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.
   ImGuiTabItemFlags_SetSelected                   = 1 << 1,   // Trigger flag to programmatically make the tab selected when calling BeginTabItem()
   ImGuiTabItemFlags_NoCloseWithMiddleMouseButton  = 1 << 2,   // Disable behavior of closing tabs (that are submitted with p_open != NULL) with middle mouse button. You can still repro this behavior on user's side with if (IsItemHovered() && IsMouseClicked(2)) *p_open = false.
   ImGuiTabItemFlags_NoPushId                      = 1 << 3,   // Don't call PushID(tab->ID)/PopID() on BeginTabItem()/EndTabItem()
@@ -1172,8 +1172,8 @@ enum ImGuiTabItemFlags_
 // - When ScrollX is off:
 //    - Table defaults to ImGuiTableFlags_SizingStretchSame -> all Columns defaults to ImGuiTableColumnFlags_WidthStretch with same weight.
 //    - Columns sizing policy allowed: Stretch (default), Fixed/Auto.
-//    - Fixed Columns will generally obtain their requested width (unless the table cannot fit them all).
-//    - Stretch Columns will share the remaining width.
+//    - Fixed Columns will generally obtain their requested mWidth (unless the table cannot fit them all).
+//    - Stretch Columns will share the remaining mWidth.
 //    - Mixed Fixed/Stretch columns is possible but has various side-effects on resizing behaviors.
 //      The typical use of mixing sizing policies is: any number of LEADING Fixed columns, followed by one or two TRAILING Stretch columns.
 //      (this is because the visible order of columns have subtle but necessary effects on how they react to manual resizing).
@@ -1181,7 +1181,7 @@ enum ImGuiTabItemFlags_
 //    - Table defaults to ImGuiTableFlags_SizingFixedFit -> all Columns defaults to ImGuiTableColumnFlags_WidthFixed
 //    - Columns sizing policy allowed: Fixed/Auto mostly.
 //    - Fixed Columns can be enlarged as needed. Table will show an horizontal scrollbar if needed.
-//    - When using auto-resizing (non-resizable) fixed columns, querying the content width to use item right-alignment e.g. SetNextItemWidth(-FLT_MIN) doesn't make sense, would create a feedback loop.
+//    - When using auto-resizing (non-resizable) fixed columns, querying the content mWidth to use item right-alignment e.g. SetNextItemWidth(-FLT_MIN) doesn't make sense, would create a feedback loop.
 //    - Using Stretch columns OFTEN DOES NOT MAKE SENSE if ScrollX is on, UNLESS you have specified a value for 'inner_width' in BeginTable().
 //      If you specify a value for 'inner_width' then effectively the scrolling space is known and Stretch or mixed Fixed/Stretch columns become meaningful again.
 // - Read on documentation at the top of imgui_tables.cpp for details.
@@ -1193,7 +1193,7 @@ enum ImGuiTableFlags_
   ImGuiTableFlags_Reorderable                = 1 << 1,   // Enable reordering columns in header row (need calling TableSetupColumn() + TableHeadersRow() to display headers)
   ImGuiTableFlags_Hideable                   = 1 << 2,   // Enable hiding/disabling columns in context menu.
   ImGuiTableFlags_Sortable                   = 1 << 3,   // Enable sorting. Call TableGetSortSpecs() to obtain sort specs. Also see ImGuiTableFlags_SortMulti and ImGuiTableFlags_SortTristate.
-  ImGuiTableFlags_NoSavedSettings            = 1 << 4,   // Disable persisting columns order, width and sort settings in the .ini file.
+  ImGuiTableFlags_NoSavedSettings            = 1 << 4,   // Disable persisting columns order, mWidth and sort settings in the .ini file.
   ImGuiTableFlags_ContextMenuInBody          = 1 << 5,   // Right-click on columns body/contents will display table context menu. By default it is available in TableHeadersRow().
   // Decorations
   ImGuiTableFlags_RowBg                      = 1 << 6,   // Set each RowBg color with ImGuiCol_TableRowBg or ImGuiCol_TableRowBgAlt (equivalent of calling TableSetBgColor with ImGuiTableBgFlags_RowBg0 on each row manually)
@@ -1209,15 +1209,15 @@ enum ImGuiTableFlags_
   ImGuiTableFlags_NoBordersInBody            = 1 << 11,  // [ALPHA] Disable vertical borders in columns Body (borders will always appears in Headers). -> May move to style
   ImGuiTableFlags_NoBordersInBodyUntilResize = 1 << 12,  // [ALPHA] Disable vertical borders in columns Body until hovered for resize (borders will always appears in Headers). -> May move to style
   // Sizing Policy (read above for defaults)
-  ImGuiTableFlags_SizingFixedFit             = 1 << 13,  // Columns default to _WidthFixed or _WidthAuto (if resizable or not resizable), matching contents width.
-  ImGuiTableFlags_SizingFixedSame            = 2 << 13,  // Columns default to _WidthFixed or _WidthAuto (if resizable or not resizable), matching the maximum contents width of all columns. Implicitly enable ImGuiTableFlags_NoKeepColumnsVisible.
+  ImGuiTableFlags_SizingFixedFit             = 1 << 13,  // Columns default to _WidthFixed or _WidthAuto (if resizable or not resizable), matching contents mWidth.
+  ImGuiTableFlags_SizingFixedSame            = 2 << 13,  // Columns default to _WidthFixed or _WidthAuto (if resizable or not resizable), matching the maximum contents mWidth of all columns. Implicitly enable ImGuiTableFlags_NoKeepColumnsVisible.
   ImGuiTableFlags_SizingStretchProp          = 3 << 13,  // Columns default to _WidthStretch with default weights proportional to each columns contents widths.
   ImGuiTableFlags_SizingStretchSame          = 4 << 13,  // Columns default to _WidthStretch with default weights all equal, unless overridden by TableSetupColumn().
   // Sizing Extra Options
-  ImGuiTableFlags_NoHostExtendX              = 1 << 16,  // Make outer width auto-fit to columns, overriding outer_size.x value. Only available when ScrollX/ScrollY are disabled and Stretch columns are not used.
-  ImGuiTableFlags_NoHostExtendY              = 1 << 17,  // Make outer height stop exactly at outer_size.y (prevent auto-extending table past the limit). Only available when ScrollX/ScrollY are disabled. Data below the limit will be clipped and not visible.
+  ImGuiTableFlags_NoHostExtendX              = 1 << 16,  // Make outer mWidth auto-fit to columns, overriding outer_size.x value. Only available when ScrollX/ScrollY are disabled and Stretch columns are not used.
+  ImGuiTableFlags_NoHostExtendY              = 1 << 17,  // Make outer mHeight stop exactly at outer_size.y (prevent auto-extending table past the limit). Only available when ScrollX/ScrollY are disabled. Data below the limit will be clipped and not visible.
   ImGuiTableFlags_NoKeepColumnsVisible       = 1 << 18,  // Disable keeping column always minimally visible when ScrollX is off and table gets too small. Not recommended if columns are resizable.
-  ImGuiTableFlags_PreciseWidths              = 1 << 19,  // Disable distributing remainder width to stretched columns (width allocation on a 100-wide table with 3 columns: Without this flag: 33,33,34. With this flag: 33,33,33). With larger number of columns, resizing will appear to be less smooth.
+  ImGuiTableFlags_PreciseWidths              = 1 << 19,  // Disable distributing remainder mWidth to stretched columns (mWidth allocation on a 100-wide table with 3 columns: Without this flag: 33,33,34. With this flag: 33,33,33). With larger number of columns, resizing will appear to be less smooth.
   // Clipping
   ImGuiTableFlags_NoClip                     = 1 << 20,  // Disable clipping rectangle for every individual columns (reduce draw command count, items will be able to overflow into other columns). Generally incompatible with TableSetupScrollFreeze().
   // Padding
@@ -1259,7 +1259,7 @@ enum ImGuiTableColumnFlags_
   ImGuiTableColumnFlags_NoSortAscending       = 1 << 10,  // Disable ability to sort in the ascending direction.
   ImGuiTableColumnFlags_NoSortDescending      = 1 << 11,  // Disable ability to sort in the descending direction.
   ImGuiTableColumnFlags_NoHeaderLabel         = 1 << 12,  // TableHeadersRow() will not submit label for this column. Convenient for some small columns. Name will still appear in context menu.
-  ImGuiTableColumnFlags_NoHeaderWidth         = 1 << 13,  // Disable header text width contribution to automatic column width.
+  ImGuiTableColumnFlags_NoHeaderWidth         = 1 << 13,  // Disable header text mWidth contribution to automatic column mWidth.
   ImGuiTableColumnFlags_PreferSortAscending   = 1 << 14,  // Make the initial sort direction Ascending when first sorting on this column (default).
   ImGuiTableColumnFlags_PreferSortDescending  = 1 << 15,  // Make the initial sort direction Descending when first sorting on this column.
   ImGuiTableColumnFlags_IndentEnable          = 1 << 16,  // Use current Indent value when entering cell (default for column 0).
@@ -1287,7 +1287,7 @@ enum ImGuiTableColumnFlags_
 enum ImGuiTableRowFlags_
 {
   ImGuiTableRowFlags_None                         = 0,
-  ImGuiTableRowFlags_Headers                      = 1 << 0    // Identify header row (set default background color + width of its contents accounted different for auto column width)
+  ImGuiTableRowFlags_Headers                      = 1 << 0    // Identify header row (set default background color + mWidth of its contents accounted different for auto column mWidth)
 };
 
 // Enum for ImGui::TableSetBgColor()
@@ -1847,8 +1847,8 @@ struct ImGuiStyle
   float       WindowRounding;             // Radius of window corners rounding. Set to 0.0f to have rectangular windows. Large values tend to lead to variety of artifacts and are not recommended.
   float       WindowBorderSize;           // Thickness of border around windows. Generally set to 0.0f or 1.0f. (Other values are not well tested and more CPU/GPU costly).
   ImVec2      WindowMinSize;              // Minimum window size. This is a global setting. If you want to constraint individual windows, use SetNextWindowSizeConstraints().
-  ImVec2      WindowTitleAlign;           // Alignment for title bar text. Defaults to (0.0f,0.5f) for left-aligned,vertically centered.
-  ImGuiDir    WindowMenuButtonPosition;   // Side of the collapsing/docking button in the title bar (None/Left/Right). Defaults to ImGuiDir_Left.
+  ImVec2      WindowTitleAlign;           // Alignment for mTitle bar text. Defaults to (0.0f,0.5f) for left-aligned,vertically centered.
+  ImGuiDir    WindowMenuButtonPosition;   // Side of the collapsing/docking button in the mTitle bar (None/Left/Right). Defaults to ImGuiDir_Left.
   float       ChildRounding;              // Radius of child window corners rounding. Set to 0.0f to have rectangular windows.
   float       ChildBorderSize;            // Thickness of border around child windows. Generally set to 0.0f or 1.0f. (Other values are not well tested and more CPU/GPU costly).
   float       PopupRounding;              // Radius of popup window corners rounding. (Note that tooltip windows use WindowRounding)
@@ -1862,14 +1862,14 @@ struct ImGuiStyle
   ImVec2      TouchExtraPadding;          // Expand reactive bounding box for touch-based system where touch position is not accurate enough. Unfortunately we don't sort widgets so priority on overlap will always be given to the first widget. So don't grow this too much!
   float       IndentSpacing;              // Horizontal indentation when e.g. entering a tree node. Generally == (FontSize + FramePadding.x*2).
   float       ColumnsMinSpacing;          // Minimum horizontal spacing between two columns. Preferably > (FramePadding.x + 1).
-  float       ScrollbarSize;              // Width of the vertical scrollbar, Height of the horizontal scrollbar.
+  float       ScrollbarSize;              // mWidth of the vertical scrollbar, mHeight of the horizontal scrollbar.
   float       ScrollbarRounding;          // Radius of grab corners for scrollbar.
-  float       GrabMinSize;                // Minimum width/height of a grab box for slider/scrollbar.
+  float       GrabMinSize;                // Minimum mWidth/mHeight of a grab box for slider/scrollbar.
   float       GrabRounding;               // Radius of grabs corners rounding. Set to 0.0f to have rectangular slider grabs.
   float       LogSliderDeadzone;          // The size in pixels of the dead-zone around zero on logarithmic sliders that cross zero.
   float       TabRounding;                // Radius of upper corners of a tab. Set to 0.0f to have rectangular tabs.
   float       TabBorderSize;              // Thickness of border around tabs.
-  float       TabMinWidthForCloseButton;  // Minimum width for close button to appears on an unselected tab when hovered. Set to 0.0f to always show when hovering, set to FLT_MAX to never show close button unless selected.
+  float       TabMinWidthForCloseButton;  // Minimum mWidth for close button to appears on an unselected tab when hovered. Set to 0.0f to always show when hovering, set to FLT_MAX to never show close button unless selected.
   ImGuiDir    ColorButtonPosition;        // Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
   ImVec2      ButtonTextAlign;            // Alignment of button text when button is larger than text. Defaults to (0.5f, 0.5f) (centered).
   ImVec2      SelectableTextAlign;        // Alignment of selectable text. Defaults to (0.0f, 0.0f) (top-left aligned). It's generally important to keep this left-aligned if you want to lay multiple items on a same line.
@@ -1935,11 +1935,11 @@ struct ImGuiIO
 
   // Miscellaneous options
   bool        MouseDrawCursor;                // = false          // Request ImGui to draw a mouse cursor for you (if you are on a platform without a mouse cursor). Cannot be easily renamed to 'io.ConfigXXX' because this is frequently used by backend implementations.
-  bool        ConfigMacOSXBehaviors;          // = defined(__APPLE__) // OS X style: Text editing cursor movement using Alt instead of Ctrl, Shortcuts using Cmd/Super instead of Ctrl, Line/Text Start and End using Cmd+Arrows instead of Home/End, Double click selects by word instead of selecting whole text, Multi-selection in lists uses Cmd/Super instead of Ctrl.
+  bool        ConfigMacOSXBehaviors;          // = defined(__APPLE__) // OS X style: Text editing cursor movement using Alt instead of Ctrl, Shortcuts using Cmd/Super instead of Ctrl, Line/Text start and End using Cmd+Arrows instead of Home/End, Double click selects by word instead of selecting whole text, Multi-selection in lists uses Cmd/Super instead of Ctrl.
   bool        ConfigInputTextCursorBlink;     // = true           // Enable blinking cursor (optional as some users consider it to be distracting).
   bool        ConfigDragClickToInputText;     // = false          // [BETA] Enable turning DragXXX widgets into text input with a simple mouse click-release (without moving). Not desirable on devices without a keyboard.
   bool        ConfigWindowsResizeFromEdges;   // = true           // Enable resizing of windows from their edges and from the lower-left corner. This requires (io.BackendFlags & ImGuiBackendFlags_HasMouseCursors) because it needs mouse cursor feedback. (This used to be a per-window ImGuiWindowFlags_ResizeFromAnySide flag)
-  bool        ConfigWindowsMoveFromTitleBarOnly; // = false       // Enable allowing to move windows only when clicking on their title bar. Does not apply to windows without a title bar.
+  bool        ConfigWindowsMoveFromTitleBarOnly; // = false       // Enable allowing to move windows only when clicking on their mTitle bar. Does not apply to windows without a mTitle bar.
   float       ConfigMemoryCompactTimer;       // = 60.0f          // Timer (in seconds) to free transient windows/tables memory buffers when unused. Set to -1.0f to disable.
 
   //------------------------------------------------------------------
@@ -2292,7 +2292,7 @@ struct ImGuiStorage
 // Generally what happens is:
 // - Clipper lets you process the first element (DisplayStart = 0, DisplayEnd = 1) regardless of it being visible or not.
 // - User code submit that one element.
-// - Clipper can measure the height of the first element
+// - Clipper can measure the mHeight of the first element
 // - Clipper calculate the actual range of elements to display based on the current clipping rectangle, position the cursor before the first visible element.
 // - User code submit visible elements.
 // - The clipper also handles various subtleties related to keyboard/gamepad navigation, wrapping etc.
@@ -2301,7 +2301,7 @@ struct ImGuiListClipper
   int             DisplayStart;       // First item to display, updated by each call to Step()
   int             DisplayEnd;         // End of items to display (exclusive)
   int             ItemsCount;         // [Internal] Number of items
-  float           ItemsHeight;        // [Internal] Height of item after a first step and item submission can calculate it
+  float           ItemsHeight;        // [Internal] mHeight of item after a first step and item submission can calculate it
   float           StartPosY;          // [Internal] Cursor position at the time of Begin() or after table frozen rows are all processed
   void*           TempData;           // [Internal] Internal data
 
@@ -2366,7 +2366,7 @@ struct ImColor
 // Hold a series of drawing commands. The user provides a renderer for ImDrawData which essentially contains an array of ImDrawList.
 //-----------------------------------------------------------------------------
 
-// The maximum line width to bake anti-aliased textures for. Build atlas with ImFontAtlasFlags_NoBakedLines to disable baking.
+// The maximum line mWidth to bake anti-aliased textures for. Build atlas with ImFontAtlasFlags_NoBakedLines to disable baking.
 #ifndef IM_DRAWLIST_TEX_LINES_WIDTH_MAX
 #define IM_DRAWLIST_TEX_LINES_WIDTH_MAX     (63)
 #endif
@@ -2397,8 +2397,8 @@ struct ImDrawCmd
 {
   ImVec4          ClipRect;           // 4*4  // Clipping rectangle (x1, y1, x2, y2). Subtract ImDrawData->DisplayPos to get clipping rectangle in "viewport" coordinates
   ImTextureID     TextureId;          // 4-8  // User-provided texture ID. Set by user in ImfontAtlas::SetTexID() for fonts or passed to Image*() functions. Ignore if never using images or multiple fonts atlas.
-  unsigned int    VtxOffset;          // 4    // Start offset in vertex buffer. ImGuiBackendFlags_RendererHasVtxOffset: always 0, otherwise may be >0 to support meshes larger than 64K vertices with 16-bit indices.
-  unsigned int    IdxOffset;          // 4    // Start offset in index buffer. Always equal to sum of ElemCount drawn so far.
+  unsigned int    VtxOffset;          // 4    // start offset in vertex buffer. ImGuiBackendFlags_RendererHasVtxOffset: always 0, otherwise may be >0 to support meshes larger than 64K vertices with 16-bit indices.
+  unsigned int    IdxOffset;          // 4    // start offset in index buffer. Always equal to sum of ElemCount drawn so far.
   unsigned int    ElemCount;          // 4    // Number of indices (multiple of 3) to be rendered as triangles. Vertices are stored in the callee ImDrawList's vtx_buffer[] array, indices in idx_buffer[].
   ImDrawCallback  UserCallback;       // 4-8  // If != NULL, call the function instead of rendering the vertices. clip_rect and texture_id will be set normally.
   void*           UserCallbackData;   // 4-8  // The draw callback code can access this.
@@ -2579,7 +2579,7 @@ struct ImDrawList
   // Advanced
   IMGUI_API void  AddCallback(ImDrawCallback callback, void* callback_data);  // Your rendering function must check for 'UserCallback' in ImDrawCmd and call the function instead of rendering triangles.
   IMGUI_API void  AddDrawCmd();                                               // This is useful if you need to forcefully create a new draw call (to allow for dependent rendering / blending). Otherwise primitives are merged into the same draw-call as much as possible
-  IMGUI_API ImDrawList* CloneOutput() const;                                  // Create a clone of the CmdBuffer/IdxBuffer/VtxBuffer.
+  IMGUI_API ImDrawList* CloneOutput() const;                                  // create a clone of the CmdBuffer/IdxBuffer/VtxBuffer.
 
   // Advanced: Channels
   // - Use to split render into layers. By switching channels to can render out-of-order (e.g. submit FG primitives before BG primitives)
@@ -2653,7 +2653,7 @@ struct ImFontConfig
   int             FontDataSize;           //          // TTF/OTF data size
   bool            FontDataOwnedByAtlas;   // true     // TTF/OTF data ownership taken by the container ImFontAtlas (will delete memory itself).
   int             FontNo;                 // 0        // Index of font within TTF/OTF file
-  float           SizePixels;             //          // Size in pixels for rasterizer (more or less maps to the resulting font height).
+  float           SizePixels;             //          // Size in pixels for rasterizer (more or less maps to the resulting font mHeight).
   int             OversampleH;            // 3        // Rasterize at higher quality for sub-pixel positioning. Note the difference between 2 and 3 is minimal so you can reduce this to 2 to save memory. Read https://github.com/nothings/stb/blob/master/tests/oversample/README.md for details.
   int             OversampleV;            // 1        // Rasterize at higher quality for sub-pixel positioning. This is not really useful as we don't use sub-pixel positions on the Y axis.
   bool            PixelSnapH;             // false    // Align every glyph to pixel boundary. Useful e.g. if you are merging a non-pixel aligned font with the default font. If enabled, you can set OversampleH/V to 1.
@@ -2719,7 +2719,7 @@ struct ImFontAtlasCustomRect
 enum ImFontAtlasFlags_
 {
   ImFontAtlasFlags_None               = 0,
-  ImFontAtlasFlags_NoPowerOfTwoHeight = 1 << 0,   // Don't round the height to next power of two
+  ImFontAtlasFlags_NoPowerOfTwoHeight = 1 << 0,   // Don't round the mHeight to next power of two
   ImFontAtlasFlags_NoMouseCursors     = 1 << 1,   // Don't build software mouse cursors into the atlas (save a little texture memory)
   ImFontAtlasFlags_NoBakedLines       = 1 << 2    // Don't build thick line textures into the atlas (save a little texture memory). The AntiAliasedLinesUseTex features uses them, otherwise they will be rendered using polygons (more expensive for CPU/GPU).
 };
@@ -2758,7 +2758,7 @@ struct ImFontAtlas
 
   // Build atlas, retrieve pixel data.
   // User is in charge of copying the pixels into graphics memory (e.g. create a texture with your engine). Then store your texture handle with SetTexID().
-  // The pitch is always = Width * BytesPerPixels (1 or 4)
+  // The pitch is always = mWidth * BytesPerPixels (1 or 4)
   // Building in RGBA32 format is provided for convenience and compatibility, but note that unless you manually manipulate or copy color data into
   // the texture (e.g. when using the AddCustomRect*** api), then the RGB pixels emitted will always be white (~75% of memory/bandwidth waste.
   IMGUI_API bool              Build();                    // Build pixels data. This is called automatically for you by the GetTexData*** functions.
@@ -2776,9 +2776,9 @@ struct ImFontAtlas
   // NB: Consider using ImFontGlyphRangesBuilder to build glyph ranges from textual data.
   IMGUI_API const ImWchar*    GetGlyphRangesDefault();                // Basic Latin, Extended Latin
   IMGUI_API const ImWchar*    GetGlyphRangesKorean();                 // Default + Korean characters
-  IMGUI_API const ImWchar*    GetGlyphRangesJapanese();               // Default + Hiragana, Katakana, Half-Width, Selection of 2999 Ideographs
-  IMGUI_API const ImWchar*    GetGlyphRangesChineseFull();            // Default + Half-Width + Japanese Hiragana/Katakana + full set of about 21000 CJK Unified Ideographs
-  IMGUI_API const ImWchar*    GetGlyphRangesChineseSimplifiedCommon();// Default + Half-Width + Japanese Hiragana/Katakana + set of 2500 CJK Unified Ideographs for common simplified Chinese
+  IMGUI_API const ImWchar*    GetGlyphRangesJapanese();               // Default + Hiragana, Katakana, Half-mWidth, Selection of 2999 Ideographs
+  IMGUI_API const ImWchar*    GetGlyphRangesChineseFull();            // Default + Half-mWidth + Japanese Hiragana/Katakana + full set of about 21000 CJK Unified Ideographs
+  IMGUI_API const ImWchar*    GetGlyphRangesChineseSimplifiedCommon();// Default + Half-mWidth + Japanese Hiragana/Katakana + set of 2500 CJK Unified Ideographs for common simplified Chinese
   IMGUI_API const ImWchar*    GetGlyphRangesCyrillic();               // Default + about 400 Cyrillic characters
   IMGUI_API const ImWchar*    GetGlyphRangesThai();                   // Default + Thai characters
   IMGUI_API const ImWchar*    GetGlyphRangesVietnamese();             // Default + Vietnamese characters
@@ -2808,7 +2808,7 @@ struct ImFontAtlas
 
   ImFontAtlasFlags            Flags;              // Build flags (see ImFontAtlasFlags_)
   ImTextureID                 TexID;              // User data to refer to the texture once it has been uploaded to user's graphic systems. It is passed back to you during rendering via the ImDrawCmd structure.
-  int                         TexDesiredWidth;    // Texture width desired by user before Build(). Must be a power-of-two. If have many glyphs your graphics API have texture size restrictions you may want to increase texture width to decrease height.
+  int                         TexDesiredWidth;    // Texture mWidth desired by user before Build(). Must be a power-of-two. If have many glyphs your graphics API have texture size restrictions you may want to increase texture mWidth to decrease mHeight.
   int                         TexGlyphPadding;    // Padding between glyphs within texture in pixels. Defaults to 1. If your rendering method doesn't rely on bilinear filtering you may set this to 0.
   bool                        Locked;             // Marked as Locked by ImGui::NewFrame() so attempt to modify the atlas will assert.
 
@@ -2818,8 +2818,8 @@ struct ImFontAtlas
   bool                        TexPixelsUseColors; // Tell whether our texture data is known to use colors (rather than just alpha channel), in order to help backend select a format.
   unsigned char*              TexPixelsAlpha8;    // 1 component per pixel, each component is unsigned 8-bit. Total size = TexWidth * TexHeight
   unsigned int*               TexPixelsRGBA32;    // 4 component per pixel, each component is unsigned 8-bit. Total size = TexWidth * TexHeight * 4
-  int                         TexWidth;           // Texture width calculated during Build().
-  int                         TexHeight;          // Texture height calculated during Build().
+  int                         TexWidth;           // Texture mWidth calculated during Build().
+  int                         TexHeight;          // Texture mHeight calculated during Build().
   ImVec2                      TexUvScale;         // = (1.0f/TexWidth, 1.0f/TexHeight)
   ImVec2                      TexUvWhitePixel;    // Texture coordinates to a white pixel
   ImVector<ImFont*>           Fonts;              // Hold all the fonts returned by AddFont*. Fonts[0] is the default font upon calling ImGui::NewFrame(), use ImGui::PushFont()/PopFont() to change the current font.
@@ -2848,7 +2848,7 @@ struct ImFont
   // Members: Hot ~20/24 bytes (for CalcTextSize)
   ImVector<float>             IndexAdvanceX;      // 12-16 // out //            // Sparse. Glyphs->AdvanceX in a directly indexable way (cache-friendly for CalcTextSize functions which only this this info, and are often bottleneck in large UI).
   float                       FallbackAdvanceX;   // 4     // out // = FallbackGlyph->AdvanceX
-  float                       FontSize;           // 4     // in  //            // Height of characters/line, set during loading (don't change after loading)
+  float                       FontSize;           // 4     // in  //            // mHeight of characters/line, set during loading (don't change after loading)
 
   // Members: Hot ~28/40 bytes (for CalcTextSize + render loop)
   ImVector<ImWchar>           IndexLookup;        // 12-16 // out //            // Sparse. Index glyphs by Unicode code-point.
@@ -2877,8 +2877,8 @@ struct ImFont
   bool                        IsLoaded() const                    { return ContainerAtlas != NULL; }
   const char*                 GetDebugName() const                { return ConfigData ? ConfigData->Name : "<unknown>"; }
 
-  // 'max_width' stops rendering after a certain width (could be turned into a 2d size). FLT_MAX to disable.
-  // 'wrap_width' enable automatic word-wrapping across multiple lines to fit into given width. 0.0f to disable.
+  // 'max_width' stops rendering after a certain mWidth (could be turned into a 2d size). FLT_MAX to disable.
+  // 'wrap_width' enable automatic word-wrapping across multiple lines to fit into given mWidth. 0.0f to disable.
   IMGUI_API ImVec2            CalcTextSizeA(float size, float max_width, float wrap_width, const char* text_begin, const char* text_end = NULL, const char** remaining = NULL) const; // utf8
   IMGUI_API const char*       CalcWordWrapPositionA(float scale, const char* text, const char* text_end, float wrap_width) const;
   IMGUI_API void              RenderChar(ImDrawList* draw_list, float size, ImVec2 pos, ImU32 col, ImWchar c) const;
@@ -2905,7 +2905,7 @@ enum ImGuiViewportFlags_
   ImGuiViewportFlags_IsPlatformWindow         = 1 << 0,   // Represent a Platform Window
   ImGuiViewportFlags_IsPlatformMonitor        = 1 << 1,   // Represent a Platform Monitor (unused yet)
   ImGuiViewportFlags_OwnedByApp               = 1 << 2,   // Platform Window: is created/managed by the application (rather than a dear imgui backend)
-  ImGuiViewportFlags_NoDecoration             = 1 << 3,   // Platform Window: Disable platform decorations: title bar, borders, etc. (generally set all windows, but if ImGuiConfigFlags_ViewportsDecoration is set we only set this on popups/tooltips)
+  ImGuiViewportFlags_NoDecoration             = 1 << 3,   // Platform Window: Disable platform decorations: mTitle bar, borders, etc. (generally set all windows, but if ImGuiConfigFlags_ViewportsDecoration is set we only set this on popups/tooltips)
   ImGuiViewportFlags_NoTaskBarIcon            = 1 << 4,   // Platform Window: Disable platform task bar icon (generally set on popups/tooltips, or all windows if ImGuiConfigFlags_ViewportsNoTaskBarIcon is set)
   ImGuiViewportFlags_NoFocusOnAppearing       = 1 << 5,   // Platform Window: Don't take focus when created.
   ImGuiViewportFlags_NoFocusOnClick           = 1 << 6,   // Platform Window: Don't take focus when clicked on.
@@ -3026,17 +3026,17 @@ struct ImGuiPlatformIO
   // Platform functions are typically called before their Renderer counterpart, apart from Destroy which are called the other way.
 
   // Platform function --------------------------------------------------- Called by -----
-  void    (*Platform_CreateWindow)(ImGuiViewport* vp);                    // . . U . .  // Create a new platform window for the given viewport
+  void    (*Platform_CreateWindow)(ImGuiViewport* vp);                    // . . U . .  // create a new platform window for the given viewport
   void    (*Platform_DestroyWindow)(ImGuiViewport* vp);                   // N . U . D  //
-  void    (*Platform_ShowWindow)(ImGuiViewport* vp);                      // . . U . .  // Newly created windows are initially hidden so SetWindowPos/Size/Title can be called on them before showing the window
+  void    (*Platform_ShowWindow)(ImGuiViewport* vp);                      // . . U . .  // Newly created windows are initially hidden so SetWindowPos/Size/mTitle can be called on them before showing the window
   void    (*Platform_SetWindowPos)(ImGuiViewport* vp, ImVec2 pos);        // . . U . .  // Set platform window position (given the upper-left corner of client area)
   ImVec2  (*Platform_GetWindowPos)(ImGuiViewport* vp);                    // N . . . .  //
-  void    (*Platform_SetWindowSize)(ImGuiViewport* vp, ImVec2 size);      // . . U . .  // Set platform window client area size (ignoring OS decorations such as OS title bar etc.)
+  void    (*Platform_SetWindowSize)(ImGuiViewport* vp, ImVec2 size);      // . . U . .  // Set platform window client area size (ignoring OS decorations such as OS mTitle bar etc.)
   ImVec2  (*Platform_GetWindowSize)(ImGuiViewport* vp);                   // N . . . .  // Get platform window client area size
   void    (*Platform_SetWindowFocus)(ImGuiViewport* vp);                  // N . . . .  // Move window to front and set input focus
   bool    (*Platform_GetWindowFocus)(ImGuiViewport* vp);                  // . . U . .  //
   bool    (*Platform_GetWindowMinimized)(ImGuiViewport* vp);              // N . . . .  // Get platform window minimized state. When minimized, we generally won't attempt to get/set size and contents will be culled more easily
-  void    (*Platform_SetWindowTitle)(ImGuiViewport* vp, const char* str); // . . U . .  // Set platform window title (given an UTF-8 string)
+  void    (*Platform_SetWindowTitle)(ImGuiViewport* vp, const char* str); // . . U . .  // Set platform window mTitle (given an UTF-8 string)
   void    (*Platform_SetWindowAlpha)(ImGuiViewport* vp, float alpha);     // . . U . .  // (Optional) Setup global transparency (not per-pixel transparency)
   void    (*Platform_UpdateWindow)(ImGuiViewport* vp);                    // . . U . .  // (Optional) Called by UpdatePlatformWindows(). Optional hook to allow the platform backend from doing general book-keeping every frame.
   void    (*Platform_RenderWindow)(ImGuiViewport* vp, void* render_arg);  // . . . R .  // (Optional) Main rendering (platform side! This is often unused, or just setting a "current" context for OpenGL bindings). 'render_arg' is the value passed to RenderPlatformWindowsDefault().
@@ -3047,7 +3047,7 @@ struct ImGuiPlatformIO
   int     (*Platform_CreateVkSurface)(ImGuiViewport* vp, ImU64 vk_inst, const void* vk_allocators, ImU64* out_vk_surface); // (Optional) For a Vulkan Renderer to call into Platform code (since the surface creation needs to tie them both).
 
   // (Optional) Renderer functions (e.g. DirectX, OpenGL, Vulkan)
-  void    (*Renderer_CreateWindow)(ImGuiViewport* vp);                    // . . U . .  // Create swap chain, frame buffers etc. (called after Platform_CreateWindow)
+  void    (*Renderer_CreateWindow)(ImGuiViewport* vp);                    // . . U . .  // create swap chain, frame buffers etc. (called after Platform_CreateWindow)
   void    (*Renderer_DestroyWindow)(ImGuiViewport* vp);                   // N . U . D  // Destroy swap chain, frame buffers etc. (called before Platform_DestroyWindow)
   void    (*Renderer_SetWindowSize)(ImGuiViewport* vp, ImVec2 size);      // . . U . .  // Resize swap chain, frame buffers etc. (called after Platform_SetWindowSize)
   void    (*Renderer_RenderWindow)(ImGuiViewport* vp, void* render_arg);  // . . . R .  // (Optional) Clear framebuffer, setup render target, then render the viewport->DrawData. 'render_arg' is the value passed to RenderPlatformWindowsDefault().

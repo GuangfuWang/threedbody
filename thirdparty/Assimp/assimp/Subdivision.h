@@ -67,7 +67,7 @@ namespace Assimp {
         virtual ~Subdivider();
 
         // ---------------------------------------------------------------
-        /** Create a subdivider of a specific type
+        /** create a subdivider of a specific type
          *
          *  @param algo Algorithm to be used for subdivision
          *  @return Subdivider instance. */

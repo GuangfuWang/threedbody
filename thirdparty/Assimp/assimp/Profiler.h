@@ -69,7 +69,7 @@ namespace Assimp {
 
         public:
 
-            /** Start a named timer */
+            /** start a named timer */
             void BeginRegion(const std::string &region) {
                 regions[region] = std::chrono::system_clock::now();
                 ASSIMP_LOG_DEBUG((format("START `"), region, "`"));

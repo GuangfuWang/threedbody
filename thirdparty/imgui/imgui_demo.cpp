@@ -218,7 +218,7 @@ static void HelpMarker(const char *desc) {
 // Helper to display basic user controls.
 void ImGui::ShowUserGuide() {
     ImGuiIO &io = ImGui::GetIO();
-    ImGui::BulletText("Double-click on title bar to collapse window.");
+    ImGui::BulletText("Double-click on mTitle bar to collapse window.");
     ImGui::BulletText(
             "Click and drag on lower corner to resize window\n"
             "(double-click to auto fit window to its contents).");
@@ -365,12 +365,12 @@ void ImGui::ShowDemoWindow(bool *p_open) {
         return;
     }
 
-    // Most "big" widgets share a common width settings by default. See 'Demo->Layout->Widgets Width' for details.
+    // Most "big" widgets share a common mWidth settings by default. See 'Demo->Layout->Widgets mWidth' for details.
 
     // e.g. Use 2/3 of the space for widgets and 1/3 for labels (right align)
     //ImGui::PushItemWidth(-ImGui::GetWindowWidth() * 0.35f);
 
-    // e.g. Leave a fixed amount of width for labels (by passing a negative value), the rest goes to widgets.
+    // e.g. Leave a fixed amount of mWidth for labels (by passing a negative value), the rest goes to widgets.
     ImGui::PushItemWidth(ImGui::GetFontSize() * -12);
 
     // Menu Bar
@@ -812,7 +812,7 @@ static void ShowDemoWindowWidgets() {
             ImGui::CheckboxFlags("ImGuiTreeNodeFlags_SpanAvailWidth", &base_flags, ImGuiTreeNodeFlags_SpanAvailWidth);
             ImGui::SameLine();
             HelpMarker(
-                    "Extend hit area to all available width instead of allowing more items to be laid out after the node.");
+                    "Extend hit area to all available mWidth instead of allowing more items to be laid out after the node.");
             ImGui::CheckboxFlags("ImGuiTreeNodeFlags_SpanFullWidth", &base_flags, ImGuiTreeNodeFlags_SpanFullWidth);
             ImGui::Checkbox("Align label with current X position", &align_label_with_current_x_position);
             ImGui::Checkbox("Test tree node as drag source", &test_drag_and_drop);
@@ -930,7 +930,7 @@ static void ShowDemoWindowWidgets() {
             ImGui::Spacing();
 
             static float wrap_width = 200.0f;
-            ImGui::SliderFloat("Wrap width", &wrap_width, -20, 600, "%.0f");
+            ImGui::SliderFloat("Wrap mWidth", &wrap_width, -20, 600, "%.0f");
 
             ImDrawList *draw_list = ImGui::GetWindowDrawList();
             for (int n = 0; n < 2; n++) {
@@ -997,7 +997,7 @@ static void ShowDemoWindowWidgets() {
         // - The imgui_impl_opengl3.cpp renderer expect a GLuint OpenGL texture identifier, etc.
         // More:
         // - If you decided that ImTextureID = MyEngineTexture*, then you can pass your MyEngineTexture* pointers
-        //   to ImGui::Image(), and gather width/height through your own functions, etc.
+        //   to ImGui::Image(), and gather mWidth/mHeight through your own functions, etc.
         // - You can use ShowMetricsWindow() to inspect the draw data that are being passed to your renderer,
         //   it will help you debug issues if you are confused about it.
         // - Consider using the lower-level ImDrawList::AddImage() API, via ImGui::GetWindowDrawList()->AddImage().
@@ -1126,8 +1126,8 @@ static void ShowDemoWindowWidgets() {
             ImGui::EndListBox();
         }
 
-        // Custom size: use all width, 5 items tall
-        ImGui::Text("Full-width:");
+        // Custom size: use all mWidth, 5 items tall
+        ImGui::Text("Full-mWidth:");
         if (ImGui::BeginListBox("##listbox 2", ImVec2(-FLT_MIN, 5 * ImGui::GetTextLineHeightWithSpacing()))) {
             for (int n = 0; n < IM_ARRAYSIZE(items); n++) {
                 const bool is_selected = (item_current_idx == n);
@@ -1605,7 +1605,7 @@ static void ShowDemoWindowWidgets() {
         static double refresh_time = 0.0;
         if (!animate || refresh_time == 0.0)
             refresh_time = ImGui::GetTime();
-        while (refresh_time < ImGui::GetTime()) // Create data at fixed 60 Hz rate for the demo
+        while (refresh_time < ImGui::GetTime()) // create data at fixed 60 Hz rate for the demo
         {
             static float phase = 0.0f;
             values[values_offset] = cosf(phase);
@@ -1660,8 +1660,8 @@ static void ShowDemoWindowWidgets() {
             }
         }
 
-        // Typically we would use ImVec2(-1.0f,0.0f) or ImVec2(-FLT_MIN,0.0f) to use all available width,
-        // or ImVec2(width,0.0f) for a specified width. ImVec2(0.0f,0.0f) uses ItemWidth.
+        // Typically we would use ImVec2(-1.0f,0.0f) or ImVec2(-FLT_MIN,0.0f) to use all available mWidth,
+        // or ImVec2(mWidth,0.0f) for a specified mWidth. ImVec2(0.0f,0.0f) uses ItemWidth.
         ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f));
         ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
         ImGui::Text("Progress Bar");
@@ -2428,19 +2428,19 @@ static void ShowDemoWindowWidgets() {
         if (embed_all_inside_a_child_window)
             ImGui::EndChild();
 
-        // Calling IsItemHovered() after begin returns the hovered status of the title bar.
-        // This is useful in particular if you want to create a context menu associated to the title bar of a window.
+        // Calling IsItemHovered() after begin returns the hovered status of the mTitle bar.
+        // This is useful in particular if you want to create a context menu associated to the mTitle bar of a window.
         static bool test_window = false;
-        ImGui::Checkbox("Hovered/Active tests after Begin() for title bar testing", &test_window);
+        ImGui::Checkbox("Hovered/Active tests after Begin() for mTitle bar testing", &test_window);
         if (test_window) {
-            ImGui::Begin("Title bar Hovered/Active tests", &test_window);
+            ImGui::Begin("mTitle bar Hovered/Active tests", &test_window);
             if (ImGui::BeginPopupContextItem()) // <-- This is using IsItemHovered()
             {
                 if (ImGui::MenuItem("Close")) { test_window = false; }
                 ImGui::EndPopup();
             }
             ImGui::Text(
-                    "IsItemHovered() after begin = %d (== is title bar hovered)\n"
+                    "IsItemHovered() after begin = %d (== is mTitle bar hovered)\n"
                     "IsItemActive() after begin = %d (== is window being clicked/moved)\n",
                     ImGui::IsItemHovered(), ImGui::IsItemActive());
             ImGui::End();
@@ -2548,19 +2548,19 @@ static void ShowDemoWindowLayout() {
         ImGui::TreePop();
     }
 
-    if (ImGui::TreeNode("Widgets Width")) {
+    if (ImGui::TreeNode("Widgets mWidth")) {
         static float f = 0.0f;
         static bool show_indented_items = true;
         ImGui::Checkbox("Show indented items", &show_indented_items);
 
-        // Use SetNextItemWidth() to set the width of a single upcoming item.
-        // Use PushItemWidth()/PopItemWidth() to set the width of a group of items.
-        // In real code use you'll probably want to choose width values that are proportional to your font size
-        // e.g. Using '20.0f * GetFontSize()' as width instead of '200.0f', etc.
+        // Use SetNextItemWidth() to set the mWidth of a single upcoming item.
+        // Use PushItemWidth()/PopItemWidth() to set the mWidth of a group of items.
+        // In real code use you'll probably want to choose mWidth values that are proportional to your font size
+        // e.g. Using '20.0f * GetFontSize()' as mWidth instead of '200.0f', etc.
 
         ImGui::Text("SetNextItemWidth/PushItemWidth(100)");
         ImGui::SameLine();
-        HelpMarker("Fixed width.");
+        HelpMarker("Fixed mWidth.");
         ImGui::PushItemWidth(100);
         ImGui::DragFloat("float##1b", &f);
         if (show_indented_items) {
@@ -2584,7 +2584,7 @@ static void ShowDemoWindowLayout() {
 
         ImGui::Text("SetNextItemWidth/PushItemWidth(GetContentRegionAvail().x * 0.5f)");
         ImGui::SameLine();
-        HelpMarker("Half of available width.\n(~ right-cursor_pos)\n(works within a column set)");
+        HelpMarker("Half of available mWidth.\n(~ right-cursor_pos)\n(works within a column set)");
         ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x * 0.5f);
         ImGui::DragFloat("float##3a", &f);
         if (show_indented_items) {
@@ -3025,7 +3025,7 @@ static void ShowDemoWindowLayout() {
         // Miscellaneous Horizontal Scrolling Demo
         HelpMarker(
                 "Horizontal scrolling for a window is enabled via the ImGuiWindowFlags_HorizontalScrollbar flag.\n\n"
-                "You may want to also explicitly specify content width by using SetNextWindowContentWidth() before Begin().");
+                "You may want to also explicitly specify content mWidth by using SetNextWindowContentWidth() before Begin().");
         static int lines = 7;
         ImGui::SliderInt("Lines", &lines, 1, 15);
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 3.0f);
@@ -3103,7 +3103,7 @@ static void ShowDemoWindowLayout() {
             ImGui::Checkbox("Button",
                             &show_button);            // Will grow contents size (unless explicitly overwritten)
             ImGui::Checkbox("Tree nodes",
-                            &show_tree_nodes);    // Will grow contents size and display highlight over full width
+                            &show_tree_nodes);    // Will grow contents size and display highlight over full mWidth
             ImGui::Checkbox("Text wrapped", &show_text_wrapped);// Will grow and use contents size
             ImGui::Checkbox("Columns", &show_columns);          // Will use contents size
             ImGui::Checkbox("Tab bar", &show_tab_bar);          // Will use contents size
@@ -3145,14 +3145,14 @@ static void ShowDemoWindowLayout() {
                 if (ImGui::BeginTable("table", 4, ImGuiTableFlags_Borders)) {
                     for (int n = 0; n < 4; n++) {
                         ImGui::TableNextColumn();
-                        ImGui::Text("Width %.2f", ImGui::GetContentRegionAvail().x);
+                        ImGui::Text("mWidth %.2f", ImGui::GetContentRegionAvail().x);
                     }
                     ImGui::EndTable();
                 }
                 ImGui::Text("Columns:");
                 ImGui::Columns(4);
                 for (int n = 0; n < 4; n++) {
-                    ImGui::Text("Width %.2f", ImGui::GetColumnWidth());
+                    ImGui::Text("mWidth %.2f", ImGui::GetColumnWidth());
                     ImGui::NextColumn();
                 }
                 ImGui::Columns(1);
@@ -3597,8 +3597,8 @@ static void EditTableSizingFlags(ImGuiTableFlags *p_flags) {
     static const EnumDesc policies[] =
             {
                     {ImGuiTableFlags_None,              "Default",                           "Use default sizing policy:\n- ImGuiTableFlags_SizingFixedFit if ScrollX is on or if host window has ImGuiWindowFlags_AlwaysAutoResize.\n- ImGuiTableFlags_SizingStretchSame otherwise."},
-                    {ImGuiTableFlags_SizingFixedFit,    "ImGuiTableFlags_SizingFixedFit",    "Columns default to _WidthFixed (if resizable) or _WidthAuto (if not resizable), matching contents width."},
-                    {ImGuiTableFlags_SizingFixedSame,   "ImGuiTableFlags_SizingFixedSame",   "Columns are all the same width, matching the maximum contents width.\nImplicitly disable ImGuiTableFlags_Resizable and enable ImGuiTableFlags_NoKeepColumnsVisible."},
+                    {ImGuiTableFlags_SizingFixedFit,    "ImGuiTableFlags_SizingFixedFit",    "Columns default to _WidthFixed (if resizable) or _WidthAuto (if not resizable), matching contents mWidth."},
+                    {ImGuiTableFlags_SizingFixedSame,   "ImGuiTableFlags_SizingFixedSame",   "Columns are all the same mWidth, matching the maximum contents mWidth.\nImplicitly disable ImGuiTableFlags_Resizable and enable ImGuiTableFlags_NoKeepColumnsVisible."},
                     {ImGuiTableFlags_SizingStretchProp, "ImGuiTableFlags_SizingStretchProp", "Columns default to _WidthStretch with weights proportional to their widths."},
                     {ImGuiTableFlags_SizingStretchSame, "ImGuiTableFlags_SizingStretchSame", "Columns default to _WidthStretch with same weights."}
             };
@@ -3672,7 +3672,7 @@ static void ShowDemoWindowTables() {
     if (!ImGui::CollapsingHeader("Tables & Columns"))
         return;
 
-    // Using those as a base value to create width/height that are factor of the size of our font
+    // Using those as a base value to create mWidth/mHeight that are factor of the size of our font
     const float TEXT_BASE_WIDTH = ImGui::CalcTextSize("A").x;
     const float TEXT_BASE_HEIGHT = ImGui::GetTextLineHeightWithSpacing();
 
@@ -3690,7 +3690,7 @@ static void ShowDemoWindowTables() {
     static bool disable_indent = false;
     ImGui::Checkbox("Disable tree indentation", &disable_indent);
     ImGui::SameLine();
-    HelpMarker("Disable the indenting of tree nodes so demo tables can use the full window width.");
+    HelpMarker("Disable the indenting of tree nodes so demo tables can use the full window mWidth.");
     ImGui::Separator();
     if (disable_indent)
         ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 0.0f);
@@ -3837,7 +3837,7 @@ static void ShowDemoWindowTables() {
         ImGui::SetNextItemOpen(open_action != 0);
     if (ImGui::TreeNode("Resizable, stretch")) {
         // By default, if we don't enable ScrollX the sizing policy for each columns is "Stretch"
-        // Each columns maintain a sizing weight, and they will occupy all available width.
+        // Each columns maintain a sizing weight, and they will occupy all available mWidth.
         static ImGuiTableFlags flags =
                 ImGuiTableFlags_SizingStretchSame | ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersOuter |
                 ImGuiTableFlags_BordersV | ImGuiTableFlags_ContextMenuInBody;
@@ -3866,12 +3866,12 @@ static void ShowDemoWindowTables() {
         ImGui::SetNextItemOpen(open_action != 0);
     if (ImGui::TreeNode("Resizable, fixed")) {
         // Here we use ImGuiTableFlags_SizingFixedFit (even though _ScrollX is not set)
-        // So columns will adopt the "Fixed" policy and will maintain a fixed width regardless of the whole available width (unless table is small)
-        // If there is not enough available width to fit all columns, they will however be resized down.
+        // So columns will adopt the "Fixed" policy and will maintain a fixed mWidth regardless of the whole available mWidth (unless table is small)
+        // If there is not enough available mWidth to fit all columns, they will however be resized down.
         // FIXME-TABLE: Providing a stretch-on-init would make sense especially for tables which don't have saved settings
         HelpMarker(
                 "Using _Resizable + _SizingFixedFit flags.\n"
-                "Fixed-width columns generally makes more sense if you want to use horizontal scrolling.\n\n"
+                "Fixed-mWidth columns generally makes more sense if you want to use horizontal scrolling.\n\n"
                 "Double-click a column border to auto-fit the column to its contents.");
         PushStyleCompact();
         static ImGuiTableFlags flags =
@@ -4116,7 +4116,7 @@ static void ShowDemoWindowTables() {
             EditTableSizingFlags(&sizing_policy_flags[table_n]);
 
             // To make it easier to understand the different sizing policy,
-            // For each policy: we display one table where the columns have equal contents width, and one where the columns have different contents width.
+            // For each policy: we display one table where the columns have equal contents mWidth, and one where the columns have different contents mWidth.
             if (ImGui::BeginTable("table1", 3, sizing_policy_flags[table_n] | flags1)) {
                 for (int row = 0; row < 3; row++) {
                     ImGui::TableNextRow();
@@ -4162,18 +4162,18 @@ static void ShowDemoWindowTables() {
         ImGui::PushID("Advanced");
         ImGui::PushItemWidth(TEXT_BASE_WIDTH * 30);
         EditTableSizingFlags(&flags);
-        ImGui::Combo("Contents", &contents_type, "Show width\0Short Text\0Long Text\0Button\0Fill Button\0InputText\0");
+        ImGui::Combo("Contents", &contents_type, "Show mWidth\0Short Text\0Long Text\0Button\0Fill Button\0InputText\0");
         if (contents_type == CT_FillButton) {
             ImGui::SameLine();
             HelpMarker(
-                    "Be mindful that using right-alignment (e.g. size.x = -FLT_MIN) creates a feedback loop where contents width can feed into auto-column width can feed into contents width.");
+                    "Be mindful that using right-alignment (e.g. size.x = -FLT_MIN) creates a feedback loop where contents mWidth can feed into auto-column mWidth can feed into contents mWidth.");
         }
         ImGui::DragInt("Columns", &column_count, 0.1f, 1, 64, "%d", ImGuiSliderFlags_AlwaysClamp);
         ImGui::CheckboxFlags("ImGuiTableFlags_Resizable", &flags, ImGuiTableFlags_Resizable);
         ImGui::CheckboxFlags("ImGuiTableFlags_PreciseWidths", &flags, ImGuiTableFlags_PreciseWidths);
         ImGui::SameLine();
         HelpMarker(
-                "Disable distributing remainder width to stretched columns (width allocation on a 100-wide table with 3 columns: Without this flag: 33,33,34. With this flag: 33,33,33). With larger number of columns, resizing will appear to be less smooth.");
+                "Disable distributing remainder mWidth to stretched columns (mWidth allocation on a 100-wide table with 3 columns: Without this flag: 33,33,34. With this flag: 33,33,33). With larger number of columns, resizing will appear to be less smooth.");
         ImGui::CheckboxFlags("ImGuiTableFlags_ScrollX", &flags, ImGuiTableFlags_ScrollX);
         ImGui::CheckboxFlags("ImGuiTableFlags_ScrollY", &flags, ImGuiTableFlags_ScrollY);
         ImGui::CheckboxFlags("ImGuiTableFlags_NoClip", &flags, ImGuiTableFlags_NoClip);
@@ -4302,9 +4302,9 @@ static void ShowDemoWindowTables() {
             for (int row = 0; row < 20; row++) {
                 ImGui::TableNextRow();
                 for (int column = 0; column < 7; column++) {
-                    // Both TableNextColumn() and TableSetColumnIndex() return true when a column is visible or performing width measurement.
+                    // Both TableNextColumn() and TableSetColumnIndex() return true when a column is visible or performing mWidth measurement.
                     // Because here we know that:
-                    // - A) all our columns are contributing the same to row height
+                    // - A) all our columns are contributing the same to row mHeight
                     // - B) column 0 is always visible,
                     // We only always submit this one column and can skip others.
                     // More advanced per-column clipping behaviors may benefit from polling the status flags via TableGetColumnFlags().
@@ -4351,7 +4351,7 @@ static void ShowDemoWindowTables() {
     if (open_action != -1)
         ImGui::SetNextItemOpen(open_action != 0);
     if (ImGui::TreeNode("Columns flags")) {
-        // Create a first table just to show all the options/flags we want to make visible in our example!
+        // create a first table just to show all the options/flags we want to make visible in our example!
         const int column_count = 3;
         const char *column_names[column_count] = {"One", "Two", "Three"};
         static ImGuiTableColumnFlags column_flags[column_count] = {ImGuiTableColumnFlags_DefaultSort,
@@ -4378,7 +4378,7 @@ static void ShowDemoWindowTables() {
             ImGui::EndTable();
         }
 
-        // Create the real table we care about for the example!
+        // create the real table we care about for the example!
         // We use a scrolling table to be able to showcase the difference between the _IsEnabled and _IsVisible flags above, otherwise in
         // a non-scrolling table columns are always visible (unless using ImGuiTableFlags_NoKeepColumnsVisible + resizing the parent window down)
         const ImGuiTableFlags flags
@@ -4413,7 +4413,7 @@ static void ShowDemoWindowTables() {
     if (open_action != -1)
         ImGui::SetNextItemOpen(open_action != 0);
     if (ImGui::TreeNode("Columns widths")) {
-        HelpMarker("Using TableSetupColumn() to setup default width.");
+        HelpMarker("Using TableSetupColumn() to setup default mWidth.");
 
         static ImGuiTableFlags flags1 = ImGuiTableFlags_Borders | ImGuiTableFlags_NoBordersInBodyUntilResize;
         PushStyleCompact();
@@ -4441,7 +4441,7 @@ static void ShowDemoWindowTables() {
         }
 
         HelpMarker(
-                "Using TableSetupColumn() to setup explicit width.\n\nUnless _NoKeepColumnsVisible is set, fixed columns with set width may still be shrunk down if there's not enough space in the host.");
+                "Using TableSetupColumn() to setup explicit mWidth.\n\nUnless _NoKeepColumnsVisible is set, fixed columns with set mWidth may still be shrunk down if there's not enough space in the host.");
 
         static ImGuiTableFlags flags2 = ImGuiTableFlags_None;
         PushStyleCompact();
@@ -4519,9 +4519,9 @@ static void ShowDemoWindowTables() {
 
     if (open_action != -1)
         ImGui::SetNextItemOpen(open_action != 0);
-    if (ImGui::TreeNode("Row height")) {
+    if (ImGui::TreeNode("Row mHeight")) {
         HelpMarker(
-                "You can pass a 'min_row_height' to TableNextRow().\n\nRows are padded with 'style.CellPadding.y' on top and bottom, so effectively the minimum row height will always be >= 'style.CellPadding.y * 2.0f'.\n\nWe cannot honor a _maximum_ row height as that would requires a unique clipping rectangle per row.");
+                "You can pass a 'min_row_height' to TableNextRow().\n\nRows are padded with 'style.CellPadding.y' on top and bottom, so effectively the minimum row mHeight will always be >= 'style.CellPadding.y * 2.0f'.\n\nWe cannot honor a _maximum_ row mHeight as that would requires a unique clipping rectangle per row.");
         if (ImGui::BeginTable("table_row_height", 1, ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersInnerV)) {
             for (int row = 0; row < 10; row++) {
                 float min_row_height = (float) (int) (TEXT_BASE_HEIGHT * 0.30f * row);
@@ -4547,11 +4547,11 @@ static void ShowDemoWindowTables() {
         ImGui::CheckboxFlags("ImGuiTableFlags_NoHostExtendX", &flags, ImGuiTableFlags_NoHostExtendX);
         ImGui::SameLine();
         HelpMarker(
-                "Make outer width auto-fit to columns, overriding outer_size.x value.\n\nOnly available when ScrollX/ScrollY are disabled and Stretch columns are not used.");
+                "Make outer mWidth auto-fit to columns, overriding outer_size.x value.\n\nOnly available when ScrollX/ScrollY are disabled and Stretch columns are not used.");
         ImGui::CheckboxFlags("ImGuiTableFlags_NoHostExtendY", &flags, ImGuiTableFlags_NoHostExtendY);
         ImGui::SameLine();
         HelpMarker(
-                "Make outer height stop exactly at outer_size.y (prevent auto-extending table past the limit).\n\nOnly available when ScrollX/ScrollY are disabled. Data below the limit will be clipped and not visible.");
+                "Make outer mHeight stop exactly at outer_size.y (prevent auto-extending table past the limit).\n\nOnly available when ScrollX/ScrollY are disabled. Data below the limit will be clipped and not visible.");
         PopStyleCompact();
 
         ImVec2 outer_size = ImVec2(0.0f, TEXT_BASE_HEIGHT * 5.5f);
@@ -4726,10 +4726,10 @@ static void ShowDemoWindowTables() {
 
     if (open_action != -1)
         ImGui::SetNextItemOpen(open_action != 0);
-    if (ImGui::TreeNode("Item width")) {
+    if (ImGui::TreeNode("Item mWidth")) {
         HelpMarker(
                 "Showcase using PushItemWidth() and how it is preserved on a per-column basis.\n\n"
-                "Note that on auto-resizing non-resizable fixed columns, querying the content width for e.g. right-alignment doesn't make sense.");
+                "Note that on auto-resizing non-resizable fixed columns, querying the content mWidth for e.g. right-alignment doesn't make sense.");
         if (ImGui::BeginTable("table_item_width", 3, ImGuiTableFlags_Borders)) {
             ImGui::TableSetupColumn("small");
             ImGui::TableSetupColumn("half");
@@ -4914,7 +4914,7 @@ static void ShowDemoWindowTables() {
     if (open_action != -1)
         ImGui::SetNextItemOpen(open_action != 0);
     if (ImGui::TreeNode("Synced instances")) {
-        HelpMarker("Multiple tables with the same identifier will share their settings, width, visibility, order etc.");
+        HelpMarker("Multiple tables with the same identifier will share their settings, mWidth, visibility, order etc.");
         for (int n = 0; n < 3; n++) {
             char buf[32];
             sprintf(buf, "Synced Table %d", n);
@@ -4948,7 +4948,7 @@ static void ShowDemoWindowTables() {
     if (open_action != -1)
         ImGui::SetNextItemOpen(open_action != 0);
     if (ImGui::TreeNode("Sorting")) {
-        // Create item list
+        // create item list
         static ImVector<MyItem> items;
         if (items.Size == 0) {
             items.resize(50, MyItem());
@@ -5105,11 +5105,11 @@ static void ShowDemoWindowTables() {
                 ImGui::CheckboxFlags("ImGuiTableFlags_NoHostExtendX", &flags, ImGuiTableFlags_NoHostExtendX);
                 ImGui::SameLine();
                 HelpMarker(
-                        "Make outer width auto-fit to columns, overriding outer_size.x value.\n\nOnly available when ScrollX/ScrollY are disabled and Stretch columns are not used.");
+                        "Make outer mWidth auto-fit to columns, overriding outer_size.x value.\n\nOnly available when ScrollX/ScrollY are disabled and Stretch columns are not used.");
                 ImGui::CheckboxFlags("ImGuiTableFlags_NoHostExtendY", &flags, ImGuiTableFlags_NoHostExtendY);
                 ImGui::SameLine();
                 HelpMarker(
-                        "Make outer height stop exactly at outer_size.y (prevent auto-extending table past the limit).\n\nOnly available when ScrollX/ScrollY are disabled. Data below the limit will be clipped and not visible.");
+                        "Make outer mHeight stop exactly at outer_size.y (prevent auto-extending table past the limit).\n\nOnly available when ScrollX/ScrollY are disabled. Data below the limit will be clipped and not visible.");
                 ImGui::CheckboxFlags("ImGuiTableFlags_NoKeepColumnsVisible", &flags,
                                      ImGuiTableFlags_NoKeepColumnsVisible);
                 ImGui::SameLine();
@@ -5117,7 +5117,7 @@ static void ShowDemoWindowTables() {
                 ImGui::CheckboxFlags("ImGuiTableFlags_PreciseWidths", &flags, ImGuiTableFlags_PreciseWidths);
                 ImGui::SameLine();
                 HelpMarker(
-                        "Disable distributing remainder width to stretched columns (width allocation on a 100-wide table with 3 columns: Without this flag: 33,33,34. With this flag: 33,33,33). With larger number of columns, resizing will appear to be less smooth.");
+                        "Disable distributing remainder mWidth to stretched columns (mWidth allocation on a 100-wide table with 3 columns: Without this flag: 33,33,34. With this flag: 33,33,33). With larger number of columns, resizing will appear to be less smooth.");
                 ImGui::CheckboxFlags("ImGuiTableFlags_NoClip", &flags, ImGuiTableFlags_NoClip);
                 ImGui::SameLine();
                 HelpMarker(
@@ -5176,7 +5176,7 @@ static void ShowDemoWindowTables() {
 
                 ImGui::DragFloat("row_min_height", &row_min_height, 1.0f, 0.0f, FLT_MAX);
                 ImGui::SameLine();
-                HelpMarker("Specify height of the Selectable item.");
+                HelpMarker("Specify mHeight of the Selectable item.");
 
                 ImGui::DragInt("items_count", &items_count, 0.1f, 0, 9999);
                 ImGui::Combo("items_type (first column)", &contents_type, contents_type_names,
@@ -5444,7 +5444,7 @@ static void ShowDemoWindowColumns() {
             if (h_borders && ImGui::GetColumnIndex() == 0)
                 ImGui::Separator();
             ImGui::Text("%c%c%c", 'a' + i, 'a' + i, 'a' + i);
-            ImGui::Text("Width %.2f", ImGui::GetColumnWidth());
+            ImGui::Text("mWidth %.2f", ImGui::GetColumnWidth());
             ImGui::Text("Avail %.2f", ImGui::GetContentRegionAvail().x);
             ImGui::Text("Offset %.2f", ImGui::GetColumnOffset());
             ImGui::Text("Long text that is likely to clip");
@@ -5457,7 +5457,7 @@ static void ShowDemoWindowColumns() {
         ImGui::TreePop();
     }
 
-    // Create multiple items in a same cell before switching to next column
+    // create multiple items in a same cell before switching to next column
     if (ImGui::TreeNode("Mixed items")) {
         ImGui::Columns(3, "mixed");
         ImGui::Separator();
@@ -6455,9 +6455,9 @@ struct ExampleAppConsole {
             return;
         }
 
-        // As a specific feature guaranteed by the library, after calling Begin() the last Item represent the title bar.
-        // So e.g. IsItemHovered() will return true when hovering the title bar.
-        // Here we create a context menu only available from the title bar.
+        // As a specific feature guaranteed by the library, after calling Begin() the last Item represent the mTitle bar.
+        // So e.g. IsItemHovered() will return true when hovering the mTitle bar.
+        // Here we create a context menu only available from the mTitle bar.
         if (ImGui::BeginPopupContextItem()) {
             if (ImGui::MenuItem("Close Console"))
                 *p_open = false;
@@ -6499,7 +6499,7 @@ struct ExampleAppConsole {
         Filter.Draw("Filter (\"incl,-excl\") (\"error\")", 180);
         ImGui::Separator();
 
-        // Reserve enough left-over height for 1 separator + 1 input text
+        // Reserve enough left-over mHeight for 1 separator + 1 input text
         const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
         ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false,
                           ImGuiWindowFlags_HorizontalScrollbar);
@@ -6511,7 +6511,7 @@ struct ExampleAppConsole {
         // Display every line as a separate entry so we can change their color or add custom widgets.
         // If you only want raw text you can use ImGui::TextUnformatted(Log.begin(), Log.end());
         // NB- if you have thousands of entries this approach may be too inefficient and may require user-side clipping
-        // to only process visible items. The clipper will automatically measure the height of your first item and then
+        // to only process visible items. The clipper will automatically measure the mHeight of your first item and then
         // "seek" to display only items in the visible area.
         // To use the clipper we can replace your standard loop:
         //      for (int i = 0; i < Items.Size; i++)
@@ -6520,7 +6520,7 @@ struct ExampleAppConsole {
         //      clipper.Begin(Items.Size);
         //      while (clipper.Step())
         //         for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
-        // - That your items are evenly spaced (same height)
+        // - That your items are evenly spaced (same mHeight)
         // - That you have cheap random access to your elements (you can access them given their index,
         //   without processing all the ones before)
         // You cannot this code as-is if a filter is active because it breaks the 'cheap random-access' property.
@@ -6529,8 +6529,8 @@ struct ExampleAppConsole {
         // or offsets of items that passed the filtering test, recomputing this array when user changes the filter,
         // and appending newly elements as they are inserted. This is left as a task to the user until we can manage
         // to improve this example code!
-        // If your items are of variable height:
-        // - Split them into same height items would be simpler and facilitate random-seeking into your list.
+        // If your items are of variable mHeight:
+        // - Split them into same mHeight items would be simpler and facilitate random-seeking into your list.
         // - Consider using manual call to IsRectVisible() and skipping extraneous decoration from your items.
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
         if (copy_to_clipboard)
@@ -6729,7 +6729,7 @@ static void ShowExampleAppConsole(bool *p_open) {
 // Usage:
 //  static ExampleAppLog my_log;
 //  my_log.AddLog("Hello %d world\n", 123);
-//  my_log.Draw("title");
+//  my_log.Draw("mTitle");
 struct ExampleAppLog {
     ImGuiTextBuffer Buf;
     ImGuiTextFilter Filter;
@@ -6812,7 +6812,7 @@ struct ExampleAppLog {
             // If you have tens of thousands of items and their processing cost is non-negligible, coarse clipping them
             // on your side is recommended. Using ImGuiListClipper requires
             // - A) random access into your data
-            // - B) items all being the  same height,
+            // - B) items all being the  same mHeight,
             // both of which we can handle since we an array pointing to the beginning of each line of text.
             // When using the filter (in the block of code above) we don't have random access into the data to display
             // anymore, which is why we don't use the clipper. Storing or skimming through the search result would make
@@ -7105,9 +7105,9 @@ static void ShowExampleAppConstrainedResize(bool *p_open) {
             {
                     "Resize vertical only",
                     "Resize horizontal only",
-                    "Width > 100, Height > 100",
-                    "Width 400-500",
-                    "Height 400-500",
+                    "mWidth > 100, mHeight > 100",
+                    "mWidth 400-500",
+                    "mHeight 400-500",
                     "Custom: Always Square",
                     "Custom: Fixed Steps (100)",
             };
@@ -7118,9 +7118,9 @@ static void ShowExampleAppConstrainedResize(bool *p_open) {
     if (type == 0) ImGui::SetNextWindowSizeConstraints(ImVec2(-1, 0), ImVec2(-1, FLT_MAX));      // Vertical only
     if (type == 1) ImGui::SetNextWindowSizeConstraints(ImVec2(0, -1), ImVec2(FLT_MAX, -1));      // Horizontal only
     if (type == 2)
-        ImGui::SetNextWindowSizeConstraints(ImVec2(100, 100), ImVec2(FLT_MAX, FLT_MAX)); // Width > 100, Height > 100
-    if (type == 3) ImGui::SetNextWindowSizeConstraints(ImVec2(400, -1), ImVec2(500, -1));          // Width 400-500
-    if (type == 4) ImGui::SetNextWindowSizeConstraints(ImVec2(-1, 400), ImVec2(-1, 500));          // Height 400-500
+        ImGui::SetNextWindowSizeConstraints(ImVec2(100, 100), ImVec2(FLT_MAX, FLT_MAX)); // mWidth > 100, mHeight > 100
+    if (type == 3) ImGui::SetNextWindowSizeConstraints(ImVec2(400, -1), ImVec2(500, -1));          // mWidth 400-500
+    if (type == 4) ImGui::SetNextWindowSizeConstraints(ImVec2(-1, 400), ImVec2(-1, 500));          // mHeight 400-500
     if (type == 5)
         ImGui::SetNextWindowSizeConstraints(ImVec2(0, 0), ImVec2(FLT_MAX, FLT_MAX),
                                             CustomConstraints::Square);                     // Always Square
@@ -7240,27 +7240,27 @@ static void ShowExampleAppWindowTitles(bool *) {
     const ImGuiViewport *viewport = ImGui::GetMainViewport();
     const ImVec2 base_pos = viewport->Pos;
 
-    // By default, Windows are uniquely identified by their title.
+    // By default, Windows are uniquely identified by their mTitle.
     // You can use the "##" and "###" markers to manipulate the display/ID.
 
-    // Using "##" to display same title but have unique identifier.
+    // Using "##" to display same mTitle but have unique identifier.
     ImGui::SetNextWindowPos(ImVec2(base_pos.x + 100, base_pos.y + 100), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Same title as another window##1");
-    ImGui::Text("This is window 1.\nMy title is the same as window 2, but my identifier is unique.");
+    ImGui::Begin("Same mTitle as another window##1");
+    ImGui::Text("This is window 1.\nMy mTitle is the same as window 2, but my identifier is unique.");
     ImGui::End();
 
     ImGui::SetNextWindowPos(ImVec2(base_pos.x + 100, base_pos.y + 200), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Same title as another window##2");
-    ImGui::Text("This is window 2.\nMy title is the same as window 1, but my identifier is unique.");
+    ImGui::Begin("Same mTitle as another window##2");
+    ImGui::Text("This is window 2.\nMy mTitle is the same as window 1, but my identifier is unique.");
     ImGui::End();
 
-    // Using "###" to display a changing title but keep a static identifier "AnimatedTitle"
+    // Using "###" to display a changing mTitle but keep a static identifier "AnimatedTitle"
     char buf[128];
-    sprintf(buf, "Animated title %c %d###AnimatedTitle", "|/-\\"[(int) (ImGui::GetTime() / 0.25f) & 3],
+    sprintf(buf, "Animated mTitle %c %d###AnimatedTitle", "|/-\\"[(int) (ImGui::GetTime() / 0.25f) & 3],
             ImGui::GetFrameCount());
     ImGui::SetNextWindowPos(ImVec2(base_pos.x + 100, base_pos.y + 300), ImGuiCond_FirstUseEver);
     ImGui::Begin(buf);
-    ImGui::Text("This window has a changing title.");
+    ImGui::Text("This window has a changing mTitle.");
     ImGui::End();
 }
 
@@ -7535,7 +7535,7 @@ static void ShowExampleAppCustomRendering(bool *p_open) {
 
 // Simplified structure to mimic a Document model
 struct MyDocument {
-    const char *Name;       // Document title
+    const char *Name;       // Document mTitle
     bool Open;       // Set when open (we keep an array of all available documents to simplify demo code!)
     bool OpenPrev;   // Copy of Open from last update.
     bool Dirty;      // Set when the document has been modified
@@ -7602,7 +7602,7 @@ struct ExampleAppDocuments {
         Documents.push_back(MyDocument("Eggplant", true, ImVec4(0.8f, 0.5f, 1.0f, 1.0f)));
         Documents.push_back(MyDocument("Carrot", true, ImVec4(1.0f, 0.8f, 0.5f, 1.0f)));
         Documents.push_back(MyDocument("Tomato", false, ImVec4(1.0f, 0.3f, 0.4f, 1.0f)));
-        Documents.push_back(MyDocument("A Rather Long Title", false));
+        Documents.push_back(MyDocument("A Rather Long mTitle", false));
         Documents.push_back(MyDocument("Some Document", false));
     }
 };
@@ -7678,7 +7678,7 @@ void ShowExampleAppDocuments(bool *p_open) {
 
     // About the ImGuiWindowFlags_UnsavedDocument / ImGuiTabItemFlags_UnsavedDocument flags.
     // They have multiple effects:
-    // - Display a dot next to the title.
+    // - Display a dot next to the mTitle.
     // - Tab is selected when clicking the X close button.
     // - Closure is not assumed (will wait for user to stop submitting the tab).
     //   Otherwise closure is assumed when pressing the X, so if you keep submitting the tab may reappear at end of tab bar.

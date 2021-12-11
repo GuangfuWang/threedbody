@@ -32,9 +32,9 @@ class EventHandleBase {
 };
 
 
-extern void on_window_size_callback(GLFWwindow *window, int width, int height);
+extern void onWindowSizeCallback(GLFWwindow *window, int width, int height);
 
-extern void on_window_close_callback(GLFWwindow *window);
+extern void onWindowCloseCallback(GLFWwindow *window);
 
 }
 

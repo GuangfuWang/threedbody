@@ -26,7 +26,7 @@ namespace sinks {
  */
 struct hourly_filename_calculator
 {
-    // Create filename for the form basename.YYYY-MM-DD-H
+    // create filename for the form basename.YYYY-MM-DD-H
     static filename_t calc_filename(const filename_t &filename, const tm &now_tm)
     {
         filename_t basename, ext;

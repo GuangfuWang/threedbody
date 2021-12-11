@@ -2,30 +2,30 @@
 #ifndef _VIEW_WINDOW_H_
 #define _VIEW_WINDOW_H_
 
-#include <string>
+#include "def.h"
 
 namespace gf {
 
 class BaseWindow {
  public:
 
-  virtual void *get_native_window() = 0;
+  virtual void *getNativeWindow() = 0;
 
-  virtual void set_native_window(void *window) = 0;
+  virtual void setNativeWindow(void *window) = 0;
 
-  virtual void on_scroll(double delta) = 0;
+  virtual void onScroll(double delta) = 0;
 
-  virtual void on_mouse_button(unsigned char code) = 0;
+  virtual void onMouseButton(unsigned char code) = 0;
 
-  virtual void on_key(int key, int scancode, int action, int mods) = 0;
+  virtual void onKey(int key, int scancode, int action, int mods) = 0;
 
-  virtual void on_resize(int width, int height) = 0;
+  virtual void onResize(int width, int height) = 0;
 
-  virtual void on_close() = 0;
+  virtual void onClose() = 0;
 
-  int Width;
-  int Height;
-  std::string Title;
+  int    mWidth;
+  int    mHeight;
+  string mTitle;
 };
 
 }

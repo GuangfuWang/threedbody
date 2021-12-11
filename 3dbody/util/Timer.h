@@ -28,7 +28,7 @@ namespace gf {
         /**
          * start timing when clocking.
          */
-        inline void Start() {
+        inline void start() {
             t_ = std::chrono::system_clock::now();
             start_ = t_;
         }
@@ -37,7 +37,7 @@ namespace gf {
          * duration between last tick in milliSeconds.
          * @return
          */
-        inline unsigned int Tick() {
+        inline unsigned int tick() {
             unsigned int start = std::chrono::duration_cast<std::chrono::milliseconds>(
                     std::chrono::system_clock::now() - t_).count();
             t_ = std::chrono::system_clock::now();
@@ -48,7 +48,7 @@ namespace gf {
          * duration between whole timing period in milli seconds.
          * @return
          */
-        inline unsigned int Tock() {
+        inline unsigned int tock() {
             unsigned int total = std::chrono::duration_cast<std::chrono::milliseconds>(
                     std::chrono::system_clock::now() - start_).count();
             start_ = t_ = std::chrono::system_clock::now();
@@ -64,7 +64,7 @@ namespace gf {
      * sleep a certain amount of time in milli seconds.
      * @param milliSeconds time to be sleep.
      */
-    inline void sleep(unsigned int milliSeconds) {
+    extern void sleep(unsigned int milliSeconds) {
         std::this_thread::sleep_for(std::chrono::milliseconds(milliSeconds));
     }
 

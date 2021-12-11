@@ -565,7 +565,7 @@
 #endif
 
 /*
- *  Width of hexadecimal for number field.
+ *  mWidth of hexadecimal for number field.
  */
 
 #ifndef PRINTF_INT64_HEX_WIDTH

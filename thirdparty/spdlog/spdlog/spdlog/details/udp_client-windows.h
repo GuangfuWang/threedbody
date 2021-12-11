@@ -76,7 +76,7 @@ public:
         {
             int last_error = ::WSAGetLastError();
             ::WSACleanup();
-            throw_winsock_error_("error: Create Socket failed", last_error);
+            throw_winsock_error_("error: create Socket failed", last_error);
         }
 
         int option_value = TX_BUFFER_SIZE;

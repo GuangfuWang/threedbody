@@ -11,7 +11,7 @@ class Shader {
  private:
   unsigned int mProgramId;
 
-  unsigned int get_compiled_shader(unsigned int shader_type, const std::string &shader_source);
+  unsigned int getCompiledShader(unsigned int shader_type, const std::string &shader_source);
 
  public:
   Shader() = default;
@@ -25,16 +25,16 @@ class Shader {
   // Delete the program
   void unload();
 
-  unsigned int get_program_id() { return mProgramId; }
+  unsigned int getProgramId() { return mProgramId; }
 
-  void set_mat4(const glm::mat4 &mat4, const std::string &name);
+  void setMat4(const glm::mat4 &mat4, const std::string &name);
 
-  void set_i1(int v, const std::string &name);
-  void set_f1(float v, const std::string &name);
-  void set_f3(float a, float b, float c, const std::string &name);
+  void setI1(int v, const std::string &name);
+  void setF1(float v, const std::string &name);
+  void setF3(float a, float b, float c, const std::string &name);
 
-  void set_vec3(const glm::vec3 &vec3, const std::string &name);
-  void set_vec4(const glm::vec4 &vec4, const std::string &name);
+  void setVec3(const glm::vec3 &vec3, const std::string &name);
+  void setVec4(const glm::vec4 &vec4, const std::string &name);
 
 };
 

@@ -92,7 +92,7 @@ using syslog_sink_mt = syslog_sink<std::mutex>;
 using syslog_sink_st = syslog_sink<details::null_mutex>;
 } // namespace sinks
 
-// Create and register a syslog logger
+// create and register a syslog logger
 template<typename Factory = spdlog::synchronous_factory>
 inline std::shared_ptr<logger> syslog_logger_mt(const std::string &logger_name, const std::string &syslog_ident = "", int syslog_option = 0,
     int syslog_facility = LOG_USER, bool enable_formatting = false)

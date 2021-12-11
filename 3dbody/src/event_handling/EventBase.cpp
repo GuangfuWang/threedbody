@@ -2,14 +2,14 @@
 #include "include/event_handling/EventBase.h"
 #include "include/layout/BaseWindow.h"
 
-void gf::on_window_size_callback(GLFWwindow *window, int width, int height) {
+void gf::onWindowSizeCallback(GLFWwindow *window, int width, int height) {
   auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
-  pWindow->on_resize(width, height);
+  pWindow->onResize(width, height);
 }
 
 
-void gf::on_window_close_callback(GLFWwindow *window)  {
+void gf::onWindowCloseCallback(GLFWwindow *window)  {
   BaseWindow *pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
-  pWindow->on_close();
+  pWindow->onClose();
 }
 

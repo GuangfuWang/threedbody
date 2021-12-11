@@ -9,7 +9,7 @@ Application::Application(const std::string &app_name) {
 }
 
 void Application::loop() {
-  while (mWindow->is_running()) {
+  while (mWindow->isRunning()) {
     mWindow->render();
   }
 }

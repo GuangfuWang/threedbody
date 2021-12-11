@@ -10,7 +10,7 @@ namespace spdlog {
 namespace cfg {
 namespace helpers {
 //
-// Init levels from given string
+// init levels from given string
 //
 // Examples:
 //

@@ -112,7 +112,7 @@ inline string &trim(string &str) {
  * @param str utf8 encoded string.
  * @return naive string.
  */
-inline string utf8_string(const std::string &str) {
+inline string utf8String(const std::string &str) {
   string ret;
 #ifdef GF_WIN
 
@@ -144,7 +144,7 @@ inline string utf8_string(const std::string &str) {
  * @return utf8 encoded string.
  *
  */
-inline string string_utf8(const std::string &str) {
+inline string stringUtf8(const std::string &str) {
 #ifdef GF_WIN
   int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
   wchar_t *pwBuf = new wchar_t[nwLen + 1];    //一定要加1，不然会出现尾巴

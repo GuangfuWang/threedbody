@@ -1,18 +1,18 @@
 #ifndef GLEW_STATIC
 #define GLEW_STATIC
 #endif
-#include <gl/glew.h>
+#include <GL/glew.h>
+#include <stb_image.h>
 
-#include <filesystem>
-#include "OpenGLContext.h"
-#include "stb_image.h"
-#include "util/ConfigMap.h"
-#include "util/Log.h"
+#include "include/render/OpenGLContext.h"
+
 #include "include/event_handling/EventBase.h"
 #include "include/event_handling/MouseEvent.h"
 #include "include/event_handling/KeyEvent.h"
 #include "include/event_handling/GameControllerEvent.h"
 
+#include "util/ConfigMap.h"
+#include "util/Log.h"
 
 namespace gf {
 
@@ -26,16 +26,16 @@ bool OpenGL_Context::init(BaseWindow *window) {
 	return false;
   }
 
-  // Create the window and store this window as window pointer
+  // create the window and store this window as window pointer
   // so that we can use it in callback functions
   auto glWindow = glfwCreateWindow(
-	  window->Width,
-	  window->Height,
-	  window->Title.c_str(),
+	  window->mWidth,
+	  window->mHeight,
+	  window->mTitle.c_str(),
 	  nullptr,
 	  nullptr);
   setupWindowIcon(glWindow);
-  window->set_native_window(glWindow);
+  window->setNativeWindow(glWindow);
 
   if (!glWindow) {
 	GF_CORE_ERROR("Error: GLFW Window couldn't be created.");
@@ -44,22 +44,22 @@ bool OpenGL_Context::init(BaseWindow *window) {
 
   glfwSetWindowUserPointer(glWindow, window);
   //Keyboard input handling.
-  glfwSetKeyCallback(glWindow, on_key_callback);
+  glfwSetKeyCallback(glWindow, onKeyCallback);
   //Mouse input handling.
-  glfwSetMouseButtonCallback(glWindow, on_mouse_button_callback);
-  glfwSetScrollCallback(glWindow, on_scroll_callback);
-  glfwSetDropCallback(glWindow,on_drop_file_callback);
+  glfwSetMouseButtonCallback(glWindow, onMouseButtonCallback);
+  glfwSetScrollCallback(glWindow, onScrollCallback);
+  glfwSetDropCallback(glWindow, onDropFileCallback);
   //Game controller input handling.
-  glfwSetJoystickCallback(on_joystick_callback);
+  glfwSetJoystickCallback(onJoystickCallback);
   //Window change handling.
-  glfwSetWindowSizeCallback(glWindow, on_window_size_callback);
-  glfwSetWindowCloseCallback(glWindow, on_window_close_callback);
+  glfwSetWindowSizeCallback(glWindow, onWindowSizeCallback);
+  glfwSetWindowCloseCallback(glWindow, onWindowCloseCallback);
   glfwMakeContextCurrent(glWindow);
 
   GLenum err = glewInit();
   if (GLEW_OK!=err) {
 	/* Problem: glewInit failed, something is seriously wrong. */
-	GF_CORE_ERROR("Error: {}", glewGetErrorString(err));
+	GF_CORE_ERROR("GLEW init error: {}", glewGetErrorString(err));
 	return false;
   }
 
@@ -67,19 +67,19 @@ bool OpenGL_Context::init(BaseWindow *window) {
   return true;
 }
 
-void OpenGL_Context::pre_render() {
-  glViewport(0, 0, mWindow->Width, mWindow->Height);
+void OpenGL_Context::preRender() {
+  glViewport(0, 0, mWindow->mWidth, mWindow->mHeight);
   glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenGL_Context::post_render() {
+void OpenGL_Context::postRender() {
   glfwPollEvents();
-  glfwSwapBuffers((GLFWwindow *)mWindow->get_native_window());
+  glfwSwapBuffers((GLFWwindow *)mWindow->getNativeWindow());
 }
 
 void OpenGL_Context::end() {
-  glfwDestroyWindow((GLFWwindow *)mWindow->get_native_window());
+  glfwDestroyWindow((GLFWwindow *)mWindow->getNativeWindow());
   glfwTerminate();
 }
 

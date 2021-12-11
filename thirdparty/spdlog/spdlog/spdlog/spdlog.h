@@ -24,7 +24,7 @@ namespace spdlog {
 
 using default_factory = synchronous_factory;
 
-// Create and register a logger with a templated sink type
+// create and register a logger with a templated sink type
 // The logger's level, formatter and flush level will be set according the
 // global settings.
 //
@@ -79,7 +79,7 @@ SPDLOG_API bool should_log(level::level_enum lvl);
 // Set global flush level
 SPDLOG_API void flush_on(level::level_enum log_level);
 
-// Start/Restart a periodic flusher thread
+// start/Restart a periodic flusher thread
 // Warning: Use only if all your loggers are thread safe!
 SPDLOG_API void flush_every(std::chrono::seconds interval);
 

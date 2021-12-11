@@ -4,7 +4,7 @@
 
 int main(void)
 {
-  gf::Log::Init();
+  gf::Log::init();
   auto app = std::make_unique<gf::Application>("3D Body");
   app->loop();
 

@@ -6,7 +6,7 @@
 
 namespace gf{
 
-unsigned int Shader::get_compiled_shader(unsigned int shader_type, const std::string& shader_source)
+unsigned int Shader::getCompiledShader(unsigned int shader_type, const std::string& shader_source)
 {
   unsigned int shader_id = glCreateShader(shader_type);
 
@@ -42,8 +42,8 @@ bool Shader::load(const std::string& vertexshader_file, const std::string& fragm
 
   mProgramId = glCreateProgram();
 
-  unsigned int vs = get_compiled_shader(GL_VERTEX_SHADER, f_vs);
-  unsigned int fs = get_compiled_shader(GL_FRAGMENT_SHADER, f_fs);
+  unsigned int vs = getCompiledShader(GL_VERTEX_SHADER, f_vs);
+  unsigned int fs = getCompiledShader(GL_FRAGMENT_SHADER, f_fs);
 
   glAttachShader(mProgramId, vs);
   glAttachShader(mProgramId, fs);
@@ -67,39 +67,39 @@ void Shader::unload()
   glDeleteProgram(mProgramId);
 }
 
-void Shader::set_mat4(const glm::mat4& mat4, const std::string& name)
+void Shader::setMat4(const glm::mat4& mat4, const std::string& name)
 {
-  GLint myLoc = glGetUniformLocation(get_program_id(), name.c_str());
+  GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniformMatrix4fv(myLoc, 1, GL_FALSE, glm::value_ptr(mat4));
 }
 
-void Shader::set_i1(int v, const std::string& name)
+void Shader::setI1(int v, const std::string& name)
 {
-  GLint myLoc = glGetUniformLocation(get_program_id(), name.c_str());
+  GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniform1i(myLoc, v);
 }
 
-void Shader::set_f1(float v, const std::string& name)
+void Shader::setF1(float v, const std::string& name)
 {
-  GLint myLoc = glGetUniformLocation(get_program_id(), name.c_str());
+  GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniform1f(myLoc, v);
 }
 
-void Shader::set_f3(float a, float b, float c, const std::string& name)
+void Shader::setF3(float a, float b, float c, const std::string& name)
 {
-  GLint myLoc = glGetUniformLocation(get_program_id(), name.c_str());
+  GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniform3f(myLoc, a, b, c);
 }
 
-void Shader::set_vec3(const glm::vec3& vec3, const std::string& name)
+void Shader::setVec3(const glm::vec3& vec3, const std::string& name)
 {
-  GLint myLoc = glGetUniformLocation(get_program_id(), name.c_str());
-  glProgramUniform3fv(get_program_id(), myLoc, 1, glm::value_ptr(vec3));
+  GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
+  glProgramUniform3fv(getProgramId(), myLoc, 1, glm::value_ptr(vec3));
 }
 
-void Shader::set_vec4(const glm::vec4& vec4, const std::string& name)
+void Shader::setVec4(const glm::vec4& vec4, const std::string& name)
 {
-  GLint myLoc = glGetUniformLocation(get_program_id(), name.c_str());
-  glProgramUniform4fv(get_program_id(), myLoc, 1, glm::value_ptr(vec4));
+  GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
+  glProgramUniform4fv(getProgramId(), myLoc, 1, glm::value_ptr(vec4));
 }
 }

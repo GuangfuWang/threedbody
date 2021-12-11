@@ -128,7 +128,7 @@ struct stbrp_rect {
 
 STBRP_DEF void stbrp_init_target(stbrp_context *context, int width, int height, stbrp_node *nodes, int num_nodes);
 // Initialize a rectangle packer to:
-//    pack a rectangle that is 'width' by 'height' in dimensions
+//    pack a rectangle that is 'mWidth' by 'mHeight' in dimensions
 //    using temporary storage provided by the array 'nodes', which is 'num_nodes' long
 //
 // You must call this function every time you start packing into a new target.
@@ -138,7 +138,7 @@ STBRP_DEF void stbrp_init_target(stbrp_context *context, int width, int height, 
 // the call (or calls) finish.
 //
 // Note: to guarantee best results, either:
-//       1. make sure 'num_nodes' >= 'width'
+//       1. make sure 'num_nodes' >= 'mWidth'
 //   or  2. call stbrp_allow_out_of_mem() defined below with 'allow_out_of_mem = 1'
 //
 // If you don't do either of the above things, widths will be quantized to multiples
@@ -184,7 +184,7 @@ struct stbrp_context {
     int num_nodes;
     stbrp_node *active_head;
     stbrp_node *free_head;
-    stbrp_node extra[2]; // we allocate two extra nodes so optimal user-node-count is 'width' not 'width+2'
+    stbrp_node extra[2]; // we allocate two extra nodes so optimal user-node-count is 'mWidth' not 'mWidth+2'
 };
 
 #ifdef __cplusplus
@@ -245,9 +245,9 @@ STBRP_DEF void stbrp_setup_allow_out_of_mem(stbrp_context *context, int allow_ou
         // if it's not ok to run out of memory, then quantize the widths
         // so that num_nodes is always enough nodes.
         //
-        // I.e. num_nodes * align >= width
-        //                  align >= width / num_nodes
-        //                  align = ceil(width/num_nodes)
+        // I.e. num_nodes * align >= mWidth
+        //                  align >= mWidth / num_nodes
+        //                  align = ceil(mWidth/num_nodes)
 
         context->align = (context->width + context->num_nodes - 1) / context->num_nodes;
     }
@@ -271,7 +271,7 @@ STBRP_DEF void stbrp_init_target(stbrp_context *context, int width, int height, 
     context->num_nodes = num_nodes;
     stbrp_setup_allow_out_of_mem(context, 0);
 
-    // node 0 is the full width, node 1 is the sentinel (lets us not store width explicitly)
+    // node 0 is the full mWidth, node 1 is the sentinel (lets us not store mWidth explicitly)
     context->extra[0].x = 0;
     context->extra[0].y = 0;
     context->extra[0].next = &context->extra[1];
@@ -493,7 +493,7 @@ static stbrp__findresult stbrp__skyline_pack_rectangle(stbrp_context *context, i
 
 #ifdef _DEBUG
     cur = context->active_head;
-    while (cur->x < context->width) {
+    while (cur->x < context->mWidth) {
        STBRP_ASSERT(cur->x < cur->next->x);
        cur = cur->next;
     }

@@ -4,10 +4,10 @@
 
 namespace gf {
 
-bool ThreeDBodyWindow::init(int width, int height, const std::string &title) {
-  Width  = width;
-  Height = height;
-  Title  = title;
+bool ThreeDBodyWindow::init(int width, int height, const string &title) {
+  this->mWidth  = width;
+  this->mHeight = height;
+  this->mTitle  = title;
 
   mRenderCtx->init(this);
 
@@ -19,8 +19,8 @@ bool ThreeDBodyWindow::init(int width, int height, const std::string &title) {
 
   mPropertyPanel = std::make_unique<Property_Panel>();
 
-  mPropertyPanel->set_mesh_load_callback(
-	  [this](std::string filepath) { mSceneView->load_mesh(filepath); });
+  mPropertyPanel->setMeshLoadCallback(
+	  [this](std::string filepath) { mSceneView->loadMesh(filepath); });
 
   return mIsRunning;
 }
@@ -31,38 +31,38 @@ ThreeDBodyWindow::~ThreeDBodyWindow() {
   mRenderCtx->end();
 }
 
-void ThreeDBodyWindow::on_resize(int width, int height) {
-  Width  = width;
-  Height = height;
+void ThreeDBodyWindow::onResize(int width, int height) {
+  this->mWidth  = width;
+  this->mHeight = height;
 
-  mSceneView->resize(Width, Height);
+  mSceneView->resize(width, height);
   render();
 }
 
-void ThreeDBodyWindow::on_scroll(double delta) {
-  mSceneView->on_mouse_wheel(delta);
+void ThreeDBodyWindow::onScroll(double delta) {
+  mSceneView->onMouseWheel(delta);
 }
 
-void ThreeDBodyWindow::on_mouse_button(unsigned char code) {
+void ThreeDBodyWindow::onMouseButton(unsigned char code) {
 
 }
 
-void ThreeDBodyWindow::on_key(int key, int scancode, int action, int mods) {
+void ThreeDBodyWindow::onKey(int key, int scancode, int action, int mods) {
   if (action==GLFW_PRESS) {
 
   }
 }
 
-void ThreeDBodyWindow::on_close() {
+void ThreeDBodyWindow::onClose() {
   mIsRunning = false;
 }
 
 void ThreeDBodyWindow::render() {
   // Clear the view
-  mRenderCtx->pre_render();
+  mRenderCtx->preRender();
 
   // Initialize UI components
-  mUICtx->pre_render();
+  mUICtx->preRender();
 
   // render scene to framebuffer and add it to scene view
   mSceneView->render();
@@ -72,33 +72,33 @@ void ThreeDBodyWindow::render() {
   mPropertyPanel->render(mSceneView.get());
 
   // Render the UI
-  mUICtx->post_render();
+  mUICtx->postRender();
 
   // Render end, swap buffers
-  mRenderCtx->post_render();
+  mRenderCtx->postRender();
 
-  //handle_input();
+  //handleInput();
 }
 
-void ThreeDBodyWindow::handle_input() {
+void ThreeDBodyWindow::handleInput() {
   // TODO: move this and Camera to scene UI component?
 
   if (glfwGetKey(mWindow, GLFW_KEY_W)==GLFW_PRESS) {
-	mSceneView->on_mouse_wheel(-0.4f);
+	mSceneView->onMouseWheel(-0.4f);
   }
 
   if (glfwGetKey(mWindow, GLFW_KEY_S)==GLFW_PRESS) {
-	mSceneView->on_mouse_wheel(0.4f);
+	mSceneView->onMouseWheel(0.4f);
   }
 
   if (glfwGetKey(mWindow, GLFW_KEY_F)==GLFW_PRESS) {
-	mSceneView->reset_view();
+	mSceneView->resetView();
   }
 
   double x, y;
   glfwGetCursorPos(mWindow, &x, &y);
 
-  mSceneView->on_mouse_move(x, y, MouseInput::GetPressedButton(mWindow));
+  mSceneView->onMouseMove(x, y, MouseInput::getPressedButton(mWindow));
 }
 
 }

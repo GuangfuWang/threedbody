@@ -294,7 +294,7 @@ class file {
     RDONLY = FMT_POSIX(O_RDONLY),  // Open for reading only.
     WRONLY = FMT_POSIX(O_WRONLY),  // Open for writing only.
     RDWR = FMT_POSIX(O_RDWR),      // Open for reading and writing.
-    CREATE = FMT_POSIX(O_CREAT),   // Create if the file doesn't exist.
+    CREATE = FMT_POSIX(O_CREAT),   // create if the file doesn't exist.
     APPEND = FMT_POSIX(O_APPEND),  // Open in append mode.
     TRUNC = FMT_POSIX(O_TRUNC)     // Truncate the content of the file.
   };

@@ -509,7 +509,7 @@ inline auto compute_width(basic_string_view<Char> s) -> size_t {
   return s.size();
 }
 
-// Computes approximate display width of a UTF-8 string.
+// Computes approximate display mWidth of a UTF-8 string.
 FMT_CONSTEXPR inline size_t compute_width(string_view s) {
   size_t num_code_points = 0;
   // It is not a lambda for compatibility with C++14.
@@ -1273,7 +1273,7 @@ FMT_NOINLINE FMT_CONSTEXPR auto fill(OutputIt it, size_t n,
 
 // Writes the output of f, padded according to format specifications in specs.
 // size: output size in code units.
-// width: output display width in (terminal) column positions.
+// mWidth: output display mWidth in (terminal) column positions.
 template <align::type align = align::left, typename OutputIt, typename Char,
           typename F>
 FMT_CONSTEXPR auto write_padded(OutputIt out,
@@ -1374,7 +1374,7 @@ FMT_CONSTEXPR FMT_INLINE auto write_int(OutputIt out, int num_digits,
                                         unsigned prefix,
                                         const basic_format_specs<Char>& specs,
                                         W write_digits) -> OutputIt {
-  // Slightly faster check for specs.width == 0 && specs.precision == -1.
+  // Slightly faster check for specs.mWidth == 0 && specs.precision == -1.
   if ((specs.width | (specs.precision + 1)) == 0) {
     auto it = reserve(out, to_unsigned(num_digits) + (prefix >> 24));
     if (prefix != 0) {
@@ -1558,7 +1558,7 @@ FMT_CONSTEXPR auto write(OutputIt out, basic_string_view<Char> s,
   if (specs.precision >= 0 && to_unsigned(specs.precision) < size)
     size = code_point_index(s, to_unsigned(specs.precision));
   auto width =
-      specs.width != 0 ? compute_width(basic_string_view<Char>(data, size)) : 0;
+		   specs.width != 0 ? compute_width(basic_string_view<Char>(data, size)) : 0;
   return write_padded(out, specs, size, width,
                       [=](reserve_iterator<OutputIt> it) {
                         return copy_str<Char>(data, data + size, it);
@@ -1712,7 +1712,7 @@ auto write_float(OutputIt out, const DecimalFP& fp,
       return write_exponent<Char>(output_exp, it);
     };
     return specs.width > 0 ? write_padded<align::right>(out, specs, size, write)
-                           : base_iterator(out, write(reserve(out, size)));
+							: base_iterator(out, write(reserve(out, size)));
   }
 
   int exp = fp.exponent + significand_size;
@@ -2018,13 +2018,13 @@ template <typename ErrorHandler> class width_checker {
 
   template <typename T, FMT_ENABLE_IF(is_integer<T>::value)>
   FMT_CONSTEXPR auto operator()(T value) -> unsigned long long {
-    if (is_negative(value)) handler_.on_error("negative width");
+    if (is_negative(value)) handler_.on_error("negative mWidth");
     return static_cast<unsigned long long>(value);
   }
 
   template <typename T, FMT_ENABLE_IF(!is_integer<T>::value)>
   FMT_CONSTEXPR auto operator()(T) -> unsigned long long {
-    handler_.on_error("width is not integer");
+    handler_.on_error("mWidth is not integer");
     return 0;
   }
 

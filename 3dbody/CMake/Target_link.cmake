@@ -11,7 +11,7 @@ macro(target_deps_link)
             ${PROJECT_SOURCE_DIR}/thirdparty/Assimp/libassimp.a)
 
     if (${CMAKE_HOST_WIN32})
-        target_link_libraries(${PROJECT_NAME} PUBLIC -lopengl32 -limm32 -lz)
+        target_link_libraries(${PROJECT_NAME} PUBLIC -lopengl32 -limm32 -lz -lole32 -luuid)
 
     elseif (${CMAKE_HOST_UNIX})
         target_link_libraries(${PROJECT_NAME} PUBLIC

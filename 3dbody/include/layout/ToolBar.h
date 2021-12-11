@@ -19,65 +19,65 @@ enum TOOL_BAR_TYPE {
 class ToolBar {
  public:
   static void
-  create_tool_bar(const TOOL_BAR_TYPE &tool_bar_type) {
+  createToolBar(const TOOL_BAR_TYPE &tool_bar_type) {
 	if (tool_bar_type & TOOL_BAR_TYPE::DEFAULT) {
-	  create_default_tool_bar();
+	  createDefaultToolBar();
 	} else if (tool_bar_type & TOOL_BAR_TYPE::SLAM) {
-	  create_slam_tool_bar();
+	  createSlamToolBar();
 	} else if (tool_bar_type & TOOL_BAR_TYPE::SHAPE_ANALYSIS) {
-	  create_shape_analysis_tool_bar();
+	  createShapeAnalysisToolBar();
 	} else if (tool_bar_type & TOOL_BAR_TYPE::FLUID_SIMULATION) {
-	  create_fluid_simulation_tool_bar();
+	  createFluidSimulationToolBar();
 	} else if (tool_bar_type & TOOL_BAR_TYPE::MOLECULAR_SIMULATION) {
-	  create_molecular_simulation_tool_bar();
+	  createMolecularSimulationToolBar();
 	} else if (tool_bar_type & TOOL_BAR_TYPE::MODEL_EDIT) {
-	  create_model_edit_tool_bar();
+	  createModelEditToolBar();
 	} else if (tool_bar_type & TOOL_BAR_TYPE::MBD_DESIGN) {
-	  create_mbd_design_tool_bar();
+	  createMbdDesignToolBar();
 	} else if (tool_bar_type & TOOL_BAR_TYPE::MODEL_DYNAMICS) {
-	  create_model_dynamics_tool_bar();
+	  createModelDynamicsToolBar();
 	} else if (tool_bar_type & TOOL_BAR_TYPE::PLACE_HOLDER) {
-	  create_place_holder_tool_bar();
+	  createPlaceHolderToolBar();
 	} else {
-	  create_default_tool_bar();
+	  createDefaultToolBar();
 	}
   }
 
  private:
 
-  static void create_default_tool_bar() {
+  static void createDefaultToolBar() {
 
   }
 
-  static void create_slam_tool_bar() {
+  static void createSlamToolBar() {
 	//TODO: implement this.
   }
 
-  static void create_shape_analysis_tool_bar() {
+  static void createShapeAnalysisToolBar() {
 	//TODO: implement this.
   }
 
-  static void create_fluid_simulation_tool_bar() {
+  static void createFluidSimulationToolBar() {
 	//TODO: implement this.
   }
 
-  static void create_molecular_simulation_tool_bar() {
+  static void createMolecularSimulationToolBar() {
 	//TODO: implement this.
   }
 
-  static void create_model_edit_tool_bar() {
+  static void createModelEditToolBar() {
 	//TODO: implement this.
   }
 
-  static void create_mbd_design_tool_bar() {
+  static void createMbdDesignToolBar() {
 	//TODO: implement this.
   }
 
-  static void create_model_dynamics_tool_bar() {
+  static void createModelDynamicsToolBar() {
 	//TODO: implement this.
   }
 
-  static void create_place_holder_tool_bar() {
+  static void createPlaceHolderToolBar() {
 	//TODO: implement this.
   }
 

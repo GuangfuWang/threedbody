@@ -100,7 +100,7 @@ using android_sink_mt = android_sink<std::mutex>;
 using android_sink_st = android_sink<details::null_mutex>;
 } // namespace sinks
 
-// Create and register android syslog logger
+// create and register android syslog logger
 
 template<typename Factory = spdlog::synchronous_factory>
 inline std::shared_ptr<logger> android_logger_mt(const std::string &logger_name, const std::string &tag = "spdlog")

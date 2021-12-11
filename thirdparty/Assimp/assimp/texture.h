@@ -132,7 +132,7 @@ struct aiTexel {
  * zero-based index of the texture in the aiScene::mTextures array).
  */
 struct aiTexture {
-    /** Width of the texture, in pixels
+    /** mWidth of the texture, in pixels
      *
      * If mHeight is zero the texture is compressed in a format
      * like JPEG. In this case mWidth specifies the size of the
@@ -140,7 +140,7 @@ struct aiTexture {
      */
     unsigned int mWidth;
 
-    /** Height of the texture, in pixels
+    /** mHeight of the texture, in pixels
      *
      * If this value is zero, pcData points to an compressed texture
      * in any format (e.g. JPEG).

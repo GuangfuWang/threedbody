@@ -374,7 +374,7 @@ ASSIMP_API void aiGetMemoryRequirements(
 
 
 // --------------------------------------------------------------------------------
-/** Create an empty property store. Property stores are used to collect import
+/** create an empty property store. Property stores are used to collect import
  *  settings.
  * @return New property store. Property stores need to be manually destroyed using
  *   the #aiReleasePropertyStore API function.

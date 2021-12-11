@@ -55,7 +55,7 @@
 //  2018-05-25: OpenGL: Removed unnecessary backup/restore of GL_ELEMENT_ARRAY_BUFFER_BINDING since this is part of the VAO state.
 //  2018-05-14: OpenGL: Making the call to glBindSampler() optional so 3.2 context won't fail if the function is a NULL pointer.
 //  2018-03-06: OpenGL: Added const char* glsl_version parameter to ImGui_ImplOpenGL3_Init() so user can override the GLSL version e.g. "#version 150".
-//  2018-02-23: OpenGL: Create the VAO in the render function so the setup can more easily be used with multiple shared GL context.
+//  2018-02-23: OpenGL: create the VAO in the render function so the setup can more easily be used with multiple shared GL context.
 //  2018-02-16: Misc: Obsoleted the io.RenderDrawListsFn callback and exposed ImGui_ImplSdlGL3_RenderDrawData() in the .h file so you can call it yourself.
 //  2018-01-07: OpenGL: Changed GLSL Shader version from 330 to 150.
 //  2017-09-01: OpenGL: Save and restore current bound sampler. Save and restore current polygon mode.
@@ -350,7 +350,7 @@ ImGui_ImplOpenGL3_SetupRenderState(ImDrawData *draw_data, int fb_width, int fb_h
     glBindVertexArray(vertex_array_object);
 #endif
 
-    // Bind vertex/index buffers and setup attributes for ImDrawVert
+    // bind vertex/index buffers and setup attributes for ImDrawVert
     glBindBuffer(GL_ARRAY_BUFFER, bd->VboHandle);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bd->ElementsHandle);
     glEnableVertexAttribArray(bd->AttribLocationVtxPos);
@@ -468,7 +468,7 @@ void ImGui_ImplOpenGL3_RenderDrawData(ImDrawData *draw_data) {
                 glScissor((int) clip_min.x, (int) (fb_height - clip_max.y), (int) (clip_max.x - clip_min.x),
                           (int) (clip_max.y - clip_min.y));
 
-                // Bind texture, Draw
+                // bind texture, Draw
                 glBindTexture(GL_TEXTURE_2D, (GLuint) (intptr_t) pcmd->GetTexID());
 #ifdef IMGUI_IMPL_OPENGL_MAY_HAVE_VTX_OFFSET
                 if (bd->GlVersion >= 320)
@@ -735,7 +735,7 @@ bool ImGui_ImplOpenGL3_CreateDeviceObjects() {
         fragment_shader = fragment_shader_glsl_130;
     }
 
-    // Create shaders
+    // create shaders
     const GLchar *vertex_shader_with_version[2] = {bd->GlslVersionString, vertex_shader};
     GLuint vert_handle = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vert_handle, 2, vertex_shader_with_version, NULL);
@@ -766,7 +766,7 @@ bool ImGui_ImplOpenGL3_CreateDeviceObjects() {
     bd->AttribLocationVtxUV = (GLuint) glGetAttribLocation(bd->ShaderHandle, "UV");
     bd->AttribLocationVtxColor = (GLuint) glGetAttribLocation(bd->ShaderHandle, "Color");
 
-    // Create buffers
+    // create buffers
     glGenBuffers(1, &bd->VboHandle);
     glGenBuffers(1, &bd->ElementsHandle);
 

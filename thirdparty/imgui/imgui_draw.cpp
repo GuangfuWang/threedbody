@@ -743,7 +743,7 @@ void ImDrawList::AddPolyline(const ImVec2* points, const int points_count, ImU32
     const float fractional_thickness = thickness - integer_thickness;
 
     // Do we want to draw this line using a texture?
-    // - For now, only draw integer-width lines using textures to avoid issues with the way scaling occurs, could be improved.
+    // - For now, only draw integer-mWidth lines using textures to avoid issues with the way scaling occurs, could be improved.
     // - If AA_SIZE is not 1.0f we cannot use the texture path.
     const bool use_texture = (Flags & ImDrawListFlags_AntiAliasedLinesUseTex) && (integer_thickness < IM_DRAWLIST_TEX_LINES_WIDTH_MAX) && (fractional_thickness <= 0.00001f) && (AA_SIZE == 1.0f);
 
@@ -772,13 +772,13 @@ void ImDrawList::AddPolyline(const ImVec2* points, const int points_count, ImU32
     if (!closed)
       temp_normals[points_count - 1] = temp_normals[points_count - 2];
 
-    // If we are drawing a one-pixel-wide line without a texture, or a textured line of any width, we only need 2 or 3 vertices per point
+    // If we are drawing a one-pixel-wide line without a texture, or a textured line of any mWidth, we only need 2 or 3 vertices per point
     if (use_texture || !thick_line)
     {
       // [PATH 1] Texture-based lines (thick or non-thick)
       // [PATH 2] Non texture-based lines (non-thick)
 
-      // The width of the geometry we need to draw - this is essentially <thickness> pixels for the line itself, plus "one pixel" for AA.
+      // The mWidth of the geometry we need to draw - this is essentially <thickness> pixels for the line itself, plus "one pixel" for AA.
       // - In the texture-based path, we don't use AA_SIZE here because the +1 is tied to the generated texture
       //   (see ImFontAtlasBuildRenderLinesTexData() function), and so alternate values won't work without changes to that code.
       // - In the non texture-based paths, we would allow AA_SIZE to potentially be != 1.0f with a patch (e.g. fringe_scale patch to
@@ -2080,7 +2080,7 @@ ImFont* ImFontAtlas::AddFont(const ImFontConfig* font_cfg)
   IM_ASSERT(font_cfg->FontData != NULL && font_cfg->FontDataSize > 0);
   IM_ASSERT(font_cfg->SizePixels > 0.0f);
 
-  // Create new font
+  // create new font
   if (!font_cfg->MergeMode)
     Fonts.push_back(IM_NEW(ImFont));
   else
@@ -2486,9 +2486,9 @@ static bool ImFontAtlasBuildWithStbTruetype(ImFontAtlas* atlas)
     }
   }
 
-  // We need a width for the skyline algorithm, any width!
-  // The exact width doesn't really matter much, but some API/GPU have texture size limitations and increasing width can decrease height.
-  // User can override TexDesiredWidth and TexGlyphPadding if they wish, otherwise we use a simple heuristic to select the width based on expected surface.
+  // We need a mWidth for the skyline algorithm, any mWidth!
+  // The exact mWidth doesn't really matter much, but some API/GPU have texture size limitations and increasing mWidth can decrease mHeight.
+  // User can override TexDesiredWidth and TexGlyphPadding if they wish, otherwise we use a simple heuristic to select the mWidth based on expected surface.
   const int surface_sqrt = (int)ImSqrt((float)total_surface) + 1;
   atlas->TexHeight = 0;
   if (atlas->TexDesiredWidth > 0)
@@ -2496,7 +2496,7 @@ static bool ImFontAtlasBuildWithStbTruetype(ImFontAtlas* atlas)
   else
     atlas->TexWidth = (surface_sqrt >= 4096 * 0.7f) ? 4096 : (surface_sqrt >= 2048 * 0.7f) ? 2048 : (surface_sqrt >= 1024 * 0.7f) ? 1024 : 512;
 
-  // 5. Start packing
+  // 5. start packing
   // Pack our extra data rectangles first, so it will be on the upper-left corner of our texture (UV will have small values).
   const int TEX_HEIGHT_MAX = 1024 * 32;
   stbtt_pack_context spc = {};
@@ -2512,7 +2512,7 @@ static bool ImFontAtlasBuildWithStbTruetype(ImFontAtlas* atlas)
 
     stbrp_pack_rects((stbrp_context*)spc.pack_info, src_tmp.Rects, src_tmp.GlyphsCount);
 
-    // Extend texture height and mark missing glyphs as non-packed so we won't render them.
+    // Extend texture mHeight and mark missing glyphs as non-packed so we won't render them.
     // FIXME: We are not handling packing failure here (would happen if we got off TEX_HEIGHT_MAX or if a single if larger than TexWidth?)
     for (int glyph_i = 0; glyph_i < src_tmp.GlyphsCount; glyph_i++)
       if (src_tmp.Rects[glyph_i].was_packed)
@@ -2715,7 +2715,7 @@ static void ImFontAtlasBuildRenderLinesTexData(ImFontAtlas* atlas)
   // This generates a triangular shape in the texture, with the various line widths stacked on top of each other to allow interpolation between them
   ImFontAtlasCustomRect* r = atlas->GetCustomRectByIndex(atlas->PackIdLines);
   IM_ASSERT(r->IsPacked());
-  for (unsigned int n = 0; n < IM_DRAWLIST_TEX_LINES_WIDTH_MAX + 1; n++) // +1 because of the zero-width row
+  for (unsigned int n = 0; n < IM_DRAWLIST_TEX_LINES_WIDTH_MAX + 1; n++) // +1 because of the zero-mWidth row
   {
     // Each line consists of at least two empty pixels at the ends, with a line of solid pixels in the middle
     unsigned int y = n;
@@ -2771,7 +2771,7 @@ void ImFontAtlasBuildInit(ImFontAtlas* atlas)
   }
 
   // Register texture region for thick lines
-  // The +2 here is to give space for the end caps, whilst height +1 is to accommodate the fact we have a zero-width row
+  // The +2 here is to give space for the end caps, whilst mHeight +1 is to accommodate the fact we have a zero-mWidth row
   if (atlas->PackIdLines < 0)
   {
     if (!(atlas->Flags & ImFontAtlasFlags_NoBakedLines))
@@ -2841,7 +2841,7 @@ const ImWchar*  ImFontAtlas::GetGlyphRangesChineseFull()
           0x2000, 0x206F, // General Punctuation
           0x3000, 0x30FF, // CJK Symbols and Punctuations, Hiragana, Katakana
           0x31F0, 0x31FF, // Katakana Phonetic Extensions
-          0xFF00, 0xFFEF, // Half-width characters
+          0xFF00, 0xFFEF, // Half-mWidth characters
           0xFFFD, 0xFFFD, // Invalid
           0x4e00, 0x9FAF, // CJK Ideograms
           0,
@@ -2919,7 +2919,7 @@ const ImWchar*  ImFontAtlas::GetGlyphRangesChineseSimplifiedCommon()
           0x2000, 0x206F, // General Punctuation
           0x3000, 0x30FF, // CJK Symbols and Punctuations, Hiragana, Katakana
           0x31F0, 0x31FF, // Katakana Phonetic Extensions
-          0xFF00, 0xFFEF, // Half-width characters
+          0xFF00, 0xFFEF, // Half-mWidth characters
           0xFFFD, 0xFFFD  // Invalid
       };
   static ImWchar full_ranges[IM_ARRAYSIZE(base_ranges) + IM_ARRAYSIZE(accumulative_offsets_from_0x4E00) * 2 + 1] = { 0 };
@@ -3009,7 +3009,7 @@ const ImWchar*  ImFontAtlas::GetGlyphRangesJapanese()
           0x0020, 0x00FF, // Basic Latin + Latin Supplement
           0x3000, 0x30FF, // CJK Symbols and Punctuations, Hiragana, Katakana
           0x31F0, 0x31FF, // Katakana Phonetic Extensions
-          0xFF00, 0xFFEF, // Half-width characters
+          0xFF00, 0xFFEF, // Half-mWidth characters
           0xFFFD, 0xFFFD  // Invalid
       };
   static ImWchar full_ranges[IM_ARRAYSIZE(base_ranges) + IM_ARRAYSIZE(accumulative_offsets_from_0x4E00)*2 + 1] = { 0 };
@@ -3174,7 +3174,7 @@ void ImFont::BuildLookupTable()
     Used4kPagesMap[page_n >> 3] |= 1 << (page_n & 7);
   }
 
-  // Create a glyph to handle TAB
+  // create a glyph to handle TAB
   // FIXME: Needs proper TAB handling but it needs to be contextualized (or we could arbitrary say that each string starts at "column 0" ?)
   if (FindGlyph((ImWchar)' '))
   {
@@ -3343,11 +3343,11 @@ const char* ImFont::CalcWordWrapPositionA(float scale, const char* text, const c
 
   // List of hardcoded separators: .,;!?'"
 
-  // Skip extra blanks after a line returns (that includes not counting them in width computation)
+  // Skip extra blanks after a line returns (that includes not counting them in mWidth computation)
   // e.g. "Hello    world" --> "Hello" "World"
 
   // Cut words that cannot possibly fit within one line.
-  // e.g.: "The tropical fish" with ~5 characters worth of width --> "The tr" "opical" "fish"
+  // e.g.: "The tropical fish" with ~5 characters worth of mWidth --> "The tr" "opical" "fish"
 
   float line_width = 0.0f;
   float word_width = 0.0f;
@@ -3416,7 +3416,7 @@ const char* ImFont::CalcWordWrapPositionA(float scale, const char* text, const c
       inside_word = (c != '.' && c != ',' && c != ';' && c != '!' && c != '?' && c != '\"');
     }
 
-    // We ignore blank width at the end of the line (they can be skipped)
+    // We ignore blank mWidth at the end of the line (they can be skipped)
     if (line_width + word_width > wrap_width)
     {
       // Words that cannot possibly fit within an entire line will be cut anywhere.
@@ -3454,7 +3454,7 @@ ImVec2 ImFont::CalcTextSizeA(float size, float max_width, float wrap_width, cons
       if (!word_wrap_eol)
       {
         word_wrap_eol = CalcWordWrapPositionA(scale, s, text_end, wrap_width - line_width);
-        if (word_wrap_eol == s) // Wrap_width is too small to fit anything. Force displaying 1 character to minimize the height discontinuity.
+        if (word_wrap_eol == s) // Wrap_width is too small to fit anything. Force displaying 1 character to minimize the mHeight discontinuity.
           word_wrap_eol++;    // +1 may not be a character start point in UTF-8 but it's ok because we use s >= word_wrap_eol below
       }
 
@@ -3606,7 +3606,7 @@ void ImFont::RenderText(ImDrawList* draw_list, float size, ImVec2 pos, ImU32 col
       if (!word_wrap_eol)
       {
         word_wrap_eol = CalcWordWrapPositionA(scale, s, text_end, wrap_width - (x - pos.x));
-        if (word_wrap_eol == s) // Wrap_width is too small to fit anything. Force displaying 1 character to minimize the height discontinuity.
+        if (word_wrap_eol == s) // Wrap_width is too small to fit anything. Force displaying 1 character to minimize the mHeight discontinuity.
           word_wrap_eol++;    // +1 may not be a character start point in UTF-8 but it's ok because we use s >= word_wrap_eol below
       }
 

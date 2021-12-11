@@ -1,0 +1,14 @@
+
+
+#ifndef INC_3DBODY_3DBODY_UTIL_FILEDIALOG_H_
+#define INC_3DBODY_3DBODY_UTIL_FILEDIALOG_H_
+
+namespace gf {
+
+class FileDialog {
+
+};
+
+}
+
+#endif //INC_3DBODY_3DBODY_UTIL_FILEDIALOG_H_

@@ -113,7 +113,7 @@ CODE
  END-USER GUIDE
  ==============
 
- - Double-click on title bar to collapse window.
+ - Double-click on mTitle bar to collapse window.
  - Click upper right corner to close a window, available when 'bool* p_open' is passed to ImGui::Begin().
  - Click and drag on lower right corner to resize window (double-click to auto fit window to its contents).
  - Click and drag on any empty space to move window.
@@ -237,14 +237,14 @@ CODE
 
      // Build and load the texture atlas into a texture
      // (In the examples/ app this is usually done within the ImGui_ImplXXX_Init() function from one of the demo Renderer)
-     int width, height;
+     int mWidth, mHeight;
      unsigned char* pixels = NULL;
-     io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
+     io.Fonts->GetTexDataAsRGBA32(&pixels, &mWidth, &mHeight);
 
      // At this point you've got the texture data and you need to upload that to your graphic system:
      // After we have created the texture, store its pointer/identifier (_in whichever format your engine uses_) in 'io.Fonts->TexID'.
      // This will be passed back to your via the renderer. Basically ImTextureID == void*. Read FAQ for details about ImTextureID.
-     MyTexture* texture = MyEngine::CreateTextureFromMemoryPixels(pixels, width, height, TEXTURE_TYPE_RGBA32)
+     MyTexture* texture = MyEngine::CreateTextureFromMemoryPixels(pixels, mWidth, mHeight, TEXTURE_TYPE_RGBA32)
      io.Fonts->SetTexID((void*)texture);
 
      // Application main loop
@@ -253,8 +253,8 @@ CODE
         // Setup low-level inputs, e.g. on Win32: calling GetKeyboardState(), or write to those fields from your Windows message handlers, etc.
         // (In the examples/ app this is usually done within the ImGui_ImplXXX_NewFrame() function from one of the demo Platform Backends)
         io.DeltaTime = 1.0f/60.0f;              // set the time elapsed since the previous frame (in seconds)
-        io.DisplaySize.x = 1920.0f;             // set the current display width
-        io.DisplaySize.y = 1280.0f;             // set the current display height here
+        io.DisplaySize.x = 1920.0f;             // set the current display mWidth
+        io.DisplaySize.y = 1280.0f;             // set the current display mHeight here
         io.MousePos = my_mouse_pos;             // set the mouse position
         io.MouseDown[0] = my_mouse_buttons[0];  // set the mouse button states
         io.MouseDown[1] = my_mouse_buttons[1];
@@ -602,11 +602,11 @@ CODE
  - 2016/10/15 (1.50) - avoid 'void* user_data' parameter to io.SetClipboardTextFn/io.GetClipboardTextFn pointers. We pass io.ClipboardUserData to it.
  - 2016/09/25 (1.50) - style.WindowTitleAlign is now a ImVec2 (ImGuiAlign enum was removed). set to (0.5f,0.5f) for horizontal+vertical centering, (0.0f,0.0f) for upper-left, etc.
  - 2016/07/30 (1.50) - SameLine(x) with x>0.0f is now relative to left of column/group if any, and not always to left of window. This was sort of always the intent and hopefully, breakage should be minimal.
- - 2016/05/12 (1.49) - title bar (using ImGuiCol_TitleBg/ImGuiCol_TitleBgActive colors) isn't rendered over a window background (ImGuiCol_WindowBg color) anymore.
-                       If your TitleBg/TitleBgActive alpha was 1.0f or you are using the default theme it will not affect you, otherwise if <1.0f you need to tweak your custom theme to readjust for the fact that we don't draw a WindowBg background behind the title bar.
+ - 2016/05/12 (1.49) - mTitle bar (using ImGuiCol_TitleBg/ImGuiCol_TitleBgActive colors) isn't rendered over a window background (ImGuiCol_WindowBg color) anymore.
+                       If your TitleBg/TitleBgActive alpha was 1.0f or you are using the default theme it will not affect you, otherwise if <1.0f you need to tweak your custom theme to readjust for the fact that we don't draw a WindowBg background behind the mTitle bar.
                        This helper function will convert an old TitleBg/TitleBgActive color into a new one with the same visual output, given the OLD color and the OLD WindowBg color:
                        ImVec4 ConvertTitleBgCol(const ImVec4& win_bg_col, const ImVec4& title_bg_col) { float new_a = 1.0f - ((1.0f - win_bg_col.w) * (1.0f - title_bg_col.w)), k = title_bg_col.w / new_a; return ImVec4((win_bg_col.x * win_bg_col.w + title_bg_col.x) * k, (win_bg_col.y * win_bg_col.w + title_bg_col.y) * k, (win_bg_col.z * win_bg_col.w + title_bg_col.z) * k, new_a); }
-                       If this is confusing, pick the RGB value from title bar from an old screenshot and apply this as TitleBg/TitleBgActive. Or you may just create TitleBgActive from a tweaked TitleBg color.
+                       If this is confusing, pick the RGB value from mTitle bar from an old screenshot and apply this as TitleBg/TitleBgActive. Or you may just create TitleBgActive from a tweaked TitleBg color.
  - 2016/05/07 (1.49) - removed confusing set of GetInternalState(), GetInternalStateSize(), SetInternalState() functions. Now using CreateContext(), DestroyContext(), GetCurrentContext(), SetCurrentContext().
  - 2016/05/02 (1.49) - renamed SetNextTreeNodeOpened() to SetNextTreeNodeOpen(), no redirection.
  - 2016/05/01 (1.49) - obsoleted old signature of CollapsingHeader(const char* label, const char* str_id = NULL, bool display_frame = true, bool default_open = false) as extra parameters were badly designed and rarely used. You can replace the "default_open = true" flag in new API with CollapsingHeader(label, ImGuiTreeNodeFlags_DefaultOpen).
@@ -615,7 +615,7 @@ CODE
  - 2016/04/03 (1.48) - renamed ImGuiCol_TooltipBg to ImGuiCol_PopupBg, used by popups/menus and tooltips. popups/menus were previously using ImGuiCol_WindowBg. (ref github issue #337)
  - 2016/03/21 (1.48) - renamed GetWindowFont() to GetFont(), GetWindowFontSize() to GetFontSize(). Kept inline redirection function (will obsolete).
  - 2016/03/02 (1.48) - InputText() completion/history/always callbacks: if you modify the text buffer manually (without using DeleteChars()/InsertChars() helper) you need to maintain the BufTextLen field. added an assert.
- - 2016/01/23 (1.48) - fixed not honoring exact width passed to PushItemWidth(), previously it would add extra FramePadding.x*2 over that width. if you had manual pixel-perfect alignment in place it might affect you.
+ - 2016/01/23 (1.48) - fixed not honoring exact mWidth passed to PushItemWidth(), previously it would add extra FramePadding.x*2 over that mWidth. if you had manual pixel-perfect alignment in place it might affect you.
  - 2015/12/27 (1.48) - fixed ImDrawList::AddRect() which used to render a rectangle 1 px too large on each axis.
  - 2015/12/04 (1.47) - renamed Color() helpers to ValueColor() - dangerously named, rarely used and probably to be made obsolete.
  - 2015/08/29 (1.45) - with the addition of horizontal scrollbar we made various fixes to inconsistencies with dealing with cursor position.
@@ -666,7 +666,7 @@ CODE
  - 2015/01/11 (1.30) - big font/image API change! now loads TTF file. allow for multiple fonts. no need for a PNG loader.
  - 2015/01/11 (1.30) - removed GetDefaultFontData(). uses io.Fonts->GetTextureData*() API to retrieve uncompressed pixels.
                        - old:  const void* png_data; unsigned int png_size; ImGui::GetDefaultFontData(NULL, NULL, &png_data, &png_size); [..Upload texture to GPU..];
-                       - new:  unsigned char* pixels; int width, height; io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height); [..Upload texture to GPU..]; io.Fonts->SetTexID(YourTexIdentifier);
+                       - new:  unsigned char* pixels; int mWidth, mHeight; io.Fonts->GetTexDataAsRGBA32(&pixels, &mWidth, &mHeight); [..Upload texture to GPU..]; io.Fonts->SetTexID(YourTexIdentifier);
                        you now have more flexibility to load multiple TTF fonts and manage the texture buffer for internal needs. It is now recommended that you sample the font texture with bilinear interpolation.
  - 2015/01/11 (1.30) - added texture identifier in ImDrawCmd passed to your render function (we can now render images). make sure to call io.Fonts->SetTexID()
  - 2015/01/11 (1.30) - removed IO.PixelCenterOffset (unnecessary, can be handled in user projection matrix)
@@ -1033,8 +1033,8 @@ ImGuiStyle::ImGuiStyle()
   WindowRounding          = 0.0f;             // Radius of window corners rounding. Set to 0.0f to have rectangular windows. Large values tend to lead to variety of artifacts and are not recommended.
   WindowBorderSize        = 1.0f;             // Thickness of border around windows. Generally set to 0.0f or 1.0f. Other values not well tested.
   WindowMinSize           = ImVec2(32,32);    // Minimum window size
-  WindowTitleAlign        = ImVec2(0.0f,0.5f);// Alignment for title bar text
-  WindowMenuButtonPosition= ImGuiDir_Left;    // Position of the collapsing/docking button in the title bar (left/right). Defaults to ImGuiDir_Left.
+  WindowTitleAlign        = ImVec2(0.0f,0.5f);// Alignment for mTitle bar text
+  WindowMenuButtonPosition= ImGuiDir_Left;    // Position of the collapsing/docking button in the mTitle bar (left/right). Defaults to ImGuiDir_Left.
   ChildRounding           = 0.0f;             // Radius of child window corners rounding. Set to 0.0f to have rectangular child windows
   ChildBorderSize         = 1.0f;             // Thickness of border around child windows. Generally set to 0.0f or 1.0f. Other values not well tested.
   PopupRounding           = 0.0f;             // Radius of popup window corners rounding. Set to 0.0f to have rectangular child windows
@@ -1048,14 +1048,14 @@ ImGuiStyle::ImGuiStyle()
   TouchExtraPadding       = ImVec2(0,0);      // Expand reactive bounding box for touch-based system where touch position is not accurate enough. Unfortunately we don't sort widgets so priority on overlap will always be given to the first widget. So don't grow this too much!
   IndentSpacing           = 21.0f;            // Horizontal spacing when e.g. entering a tree node. Generally == (FontSize + FramePadding.x*2).
   ColumnsMinSpacing       = 6.0f;             // Minimum horizontal spacing between two columns. Preferably > (FramePadding.x + 1).
-  ScrollbarSize           = 14.0f;            // Width of the vertical scrollbar, Height of the horizontal scrollbar
+  ScrollbarSize           = 14.0f;            // mWidth of the vertical scrollbar, mHeight of the horizontal scrollbar
   ScrollbarRounding       = 9.0f;             // Radius of grab corners rounding for scrollbar
-  GrabMinSize             = 10.0f;            // Minimum width/height of a grab box for slider/scrollbar
+  GrabMinSize             = 10.0f;            // Minimum mWidth/mHeight of a grab box for slider/scrollbar
   GrabRounding            = 0.0f;             // Radius of grabs corners rounding. Set to 0.0f to have rectangular slider grabs.
   LogSliderDeadzone       = 4.0f;             // The size in pixels of the dead-zone around zero on logarithmic sliders that cross zero.
   TabRounding             = 4.0f;             // Radius of upper corners of a tab. Set to 0.0f to have rectangular tabs.
   TabBorderSize           = 0.0f;             // Thickness of border around tabs.
-  TabMinWidthForCloseButton = 0.0f;           // Minimum width for close button to appears on an unselected tab when hovered. Set to 0.0f to always show when hovering, set to FLT_MAX to never show close button unless selected.
+  TabMinWidthForCloseButton = 0.0f;           // Minimum mWidth for close button to appears on an unselected tab when hovered. Set to 0.0f to always show when hovering, set to FLT_MAX to never show close button unless selected.
   ColorButtonPosition     = ImGuiDir_Right;   // Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
   ButtonTextAlign         = ImVec2(0.5f,0.5f);// Alignment of button text when button is larger than text.
   SelectableTextAlign     = ImVec2(0.0f,0.0f);// Alignment of selectable text. Defaults to (0.0f, 0.0f) (top-left aligned). It's generally important to keep this left-aligned if you want to lay multiple items on a same line.
@@ -2484,14 +2484,14 @@ bool ImGuiListClipper::Step()
     return true;
   }
 
-  // Step 0: Let you process the first element (regardless of it being visible or not, so we can measure the element height)
+  // Step 0: Let you process the first element (regardless of it being visible or not, so we can measure the element mHeight)
   bool calc_clipping = false;
   if (data->StepNo == 0)
   {
     StartPosY = window->DC.CursorPos.y;
     if (ItemsHeight <= 0.0f)
     {
-      // Submit the first item (or range) so we can measure its height (generally the first range is 0..1)
+      // Submit the first item (or range) so we can measure its mHeight (generally the first range is 0..1)
       data->Ranges.push_front(ImGuiListClipperRange::FromIndices(data->ItemsFrozen, data->ItemsFrozen + 1));
       DisplayStart = ImMax(data->Ranges[0].Min, data->ItemsFrozen);
       DisplayEnd = ImMin(data->Ranges[0].Max, ItemsCount);
@@ -2500,10 +2500,10 @@ bool ImGuiListClipper::Step()
       data->StepNo = 1;
       return true;
     }
-    calc_clipping = true;   // If on the first step with known item height, calculate clipping.
+    calc_clipping = true;   // If on the first step with known item mHeight, calculate clipping.
   }
 
-  // Step 1: Let the clipper infer height from first range
+  // Step 1: Let the clipper infer mHeight from first range
   if (ItemsHeight <= 0.0f)
   {
     IM_ASSERT(data->StepNo == 1);
@@ -2515,8 +2515,8 @@ bool ImGuiListClipper::Step()
     if (affected_by_floating_point_precision)
       ItemsHeight = window->DC.PrevLineSize.y + g.Style.ItemSpacing.y; // FIXME: Technically wouldn't allow multi-line entries.
 
-    IM_ASSERT(ItemsHeight > 0.0f && "Unable to calculate item height! First item hasn't moved the cursor vertically!");
-    calc_clipping = true;   // If item height had to be calculated, calculate clipping afterwards.
+    IM_ASSERT(ItemsHeight > 0.0f && "Unable to calculate item mHeight! First item hasn't moved the cursor vertically!");
+    calc_clipping = true;   // If item mHeight had to be calculated, calculate clipping afterwards.
   }
 
   // Step 0 or 1: Calculate the actual ranges of visible elements.
@@ -2564,7 +2564,7 @@ bool ImGuiListClipper::Step()
     ImGuiListClipper_SortAndFuseRanges(data->Ranges, data->StepNo);
   }
 
-  // Step 0+ (if item height is given in advance) or 1+: Display the next range in line.
+  // Step 0+ (if item mHeight is given in advance) or 1+: Display the next range in line.
   if (data->StepNo < data->Ranges.Size)
   {
     DisplayStart = ImMax(data->Ranges[data->StepNo].Min, already_submitted);
@@ -2754,7 +2754,7 @@ void ImGui::PopStyleVar(int count)
 
 const char* ImGui::GetStyleColorName(ImGuiCol idx)
 {
-  // Create switch-case from enum with regexp: ImGuiCol_{.*}, --> case ImGuiCol_\1: return "\1";
+  // create switch-case from enum with regexp: ImGuiCol_{.*}, --> case ImGuiCol_\1: return "\1";
   switch (idx)
   {
     case ImGuiCol_Text: return "Text";
@@ -2960,8 +2960,8 @@ void ImGui::RenderTextEllipsis(ImDrawList* draw_list, const ImVec2& pos_min, con
     }
     const ImFontGlyph* glyph = font->FindGlyph(ellipsis_char);
 
-    float ellipsis_glyph_width = glyph->X1;                 // Width of the glyph with no padding on either side
-    float ellipsis_total_width = ellipsis_glyph_width;      // Full width of entire ellipsis
+    float ellipsis_glyph_width = glyph->X1;                 // mWidth of the glyph with no padding on either side
+    float ellipsis_total_width = ellipsis_glyph_width;      // Full mWidth of entire ellipsis
 
     if (ellipsis_char_count > 1)
     {
@@ -3368,7 +3368,7 @@ bool ImGui::IsItemHovered(ImGuiHoveredFlags flags)
     if ((g.LastItemData.InFlags & ImGuiItemFlags_Disabled) && !(flags & ImGuiHoveredFlags_AllowWhenDisabled))
       return false;
 
-    // Special handling for calling after Begin() which represent the title bar or tab.
+    // Special handling for calling after Begin() which represent the mTitle bar or tab.
     // When the window is collapsed (SkipItems==true) that last item will never be overwritten so we need to detect the case.
     if ((g.LastItemData.ID == window->ID || g.LastItemData.ID == window->MoveId) && window->WriteAccessed)
       return false;
@@ -3624,7 +3624,7 @@ int ImGui::GetFrameCount()
 
 static ImDrawList* GetViewportDrawList(ImGuiViewportP* viewport, size_t drawlist_no, const char* drawlist_name)
 {
-  // Create the draw list on demand, because they are not frequently used for all viewports
+  // create the draw list on demand, because they are not frequently used for all viewports
   ImGuiContext& g = *GImGui;
   IM_ASSERT(drawlist_no < IM_ARRAYSIZE(viewport->DrawLists));
   ImDrawList* draw_list = viewport->DrawLists[drawlist_no];
@@ -3696,7 +3696,7 @@ void ImGui::StartMouseMovingWindow(ImGuiWindow* window)
     g.MovingWindow = window;
 }
 
-// We use 'undock_floating_node == false' when dragging from title bar to allow moving groups of floating nodes without undocking them.
+// We use 'undock_floating_node == false' when dragging from mTitle bar to allow moving groups of floating nodes without undocking them.
 // - undock_floating_node == true: when dragging from a floating node within a hierarchy, always undock the node.
 // - undock_floating_node == false: when dragging from a floating node within a hierarchy, move root window.
 void ImGui::StartMouseMovingWindowOrNode(ImGuiWindow* window, ImGuiDockNode* node, bool undock_floating_node)
@@ -3788,7 +3788,7 @@ void ImGui::UpdateMouseMovingWindowNewFrame()
   }
 }
 
-// Initiate moving window when clicking on empty space or title bar.
+// Initiate moving window when clicking on empty space or mTitle bar.
 // Handle left-click and right-click focus.
 void ImGui::UpdateMouseMovingWindowEndFrame()
 {
@@ -3813,7 +3813,7 @@ void ImGui::UpdateMouseMovingWindowEndFrame()
     {
       StartMouseMovingWindow(g.HoveredWindow); //-V595
 
-      // Cancel moving if clicked outside of title bar
+      // Cancel moving if clicked outside of mTitle bar
       if (g.IO.ConfigWindowsMoveFromTitleBarOnly)
         if (!(root_window->Flags & ImGuiWindowFlags_NoTitleBar) || root_window->DockIsActive)
           if (!root_window->TitleBarRect().Contains(g.IO.MouseClickedPos[0]))
@@ -4327,7 +4327,7 @@ void ImGui::NewFrame()
   UpdateDebugToolItemPicker();
   UpdateDebugToolStackQueries();
 
-  // Create implicit/fallback window - which we will only render it if the user has added something to it.
+  // create implicit/fallback window - which we will only render it if the user has added something to it.
   // We don't use "Debug" to avoid colliding with user trying to create a "Debug" window with custom flags.
   // This fallback is particularly important as it avoid ImGui:: calls from crashing.
   g.WithinFrameScopeWithImplicitWindow = true;
@@ -4359,7 +4359,7 @@ void ImGui::Initialize(ImGuiContext* context)
   // Add .ini handle for ImGuiTable type
   TableSettingsInstallHandler(context);
 
-  // Create default viewport
+  // create default viewport
   ImGuiViewportP* viewport = IM_NEW(ImGuiViewportP)();
   viewport->ID = IMGUI_VIEWPORT_DEFAULT_ID;
   viewport->Idx = 0;
@@ -5247,7 +5247,7 @@ bool ImGui::IsItemFocused()
   if (g.NavId != g.LastItemData.ID || g.NavId == 0)
     return false;
 
-  // Special handling for the dummy item after Begin() which represent the title bar or tab.
+  // Special handling for the dummy item after Begin() which represent the mTitle bar or tab.
   // When the window is collapsed (SkipItems==true) that last item will never be overwritten so we need to detect the case.
   ImGuiWindow* window = g.CurrentWindow;
   if (g.LastItemData.ID == window->ID && window->WriteAccessed)
@@ -5525,7 +5525,7 @@ static ImGuiWindow* CreateNewWindow(const char* name, ImGuiWindowFlags flags)
   ImGuiContext& g = *GImGui;
   //IMGUI_DEBUG_LOG("CreateNewWindow '%s', flags = 0x%08X\n", name, flags);
 
-  // Create window the first time
+  // create window the first time
   ImGuiWindow* window = IM_NEW(ImGuiWindow)(&g, name);
   window->Flags = flags;
   g.WindowsById.SetVoidPtr(window->ID, window);
@@ -5966,12 +5966,12 @@ void ImGui::RenderWindowDecorations(ImGuiWindow* window, const ImRect& title_bar
   window->SkipItems = false;
 
   // Draw window + handle manual resize
-  // As we highlight the title bar when want_focus is set, multiple reappearing windows will have have their title bar highlighted on their reappearing frame.
+  // As we highlight the mTitle bar when want_focus is set, multiple reappearing windows will have have their mTitle bar highlighted on their reappearing frame.
   const float window_rounding = window->WindowRounding;
   const float window_border_size = window->WindowBorderSize;
   if (window->Collapsed)
   {
-    // Title bar only
+    // mTitle bar only
     float backup_border_size = style.FrameBorderSize;
     g.Style.FrameBorderSize = window->WindowBorderSize;
     ImU32 title_bar_col = GetColorU32((title_bar_is_highlight && !g.NavDisableHighlight) ? ImGuiCol_TitleBgActive : ImGuiCol_TitleBgCollapsed);
@@ -6030,8 +6030,8 @@ void ImGui::RenderWindowDecorations(ImGuiWindow* window, const ImRect& title_bar
     if (window->DockIsActive)
       window->DockNode->IsBgDrawnThisFrame = true;
 
-    // Title bar
-    // (when docked, DockNode are drawing their own title bar. Individual windows however do NOT set the _NoTitleBar flag,
+    // mTitle bar
+    // (when docked, DockNode are drawing their own mTitle bar. Individual windows however do NOT set the _NoTitleBar flag,
     // in order for their pos/size to be matching their undocking state.)
     if (!(flags & ImGuiWindowFlags_NoTitleBar) && !window->DockIsActive)
     {
@@ -6094,7 +6094,7 @@ void ImGui::RenderWindowDecorations(ImGuiWindow* window, const ImRect& title_bar
   }
 }
 
-// Render title text, collapse button, close button
+// Render mTitle text, collapse button, close button
 // When inside a dock node, this is handled in DockNodeCalcTabBarLayout() instead.
 void ImGui::RenderWindowTitleBarContents(ImGuiWindow* window, const ImRect& title_bar_rect, const char* name, bool* p_open)
 {
@@ -6106,7 +6106,7 @@ void ImGui::RenderWindowTitleBarContents(ImGuiWindow* window, const ImRect& titl
   const bool has_collapse_button = !(flags & ImGuiWindowFlags_NoCollapse) && (style.WindowMenuButtonPosition != ImGuiDir_None);
 
   // Close & Collapse button are on the Menu NavLayer and don't default focus (unless there's nothing else on that layer)
-  // FIXME-NAV: Might want (or not?) to set the equivalent of ImGuiButtonFlags_NoNavFocus so that mouse clicks on standard title bar items don't necessarily set nav/keyboard ref?
+  // FIXME-NAV: Might want (or not?) to set the equivalent of ImGuiButtonFlags_NoNavFocus so that mouse clicks on standard mTitle bar items don't necessarily set nav/keyboard ref?
   const ImGuiItemFlags item_flags_backup = g.CurrentItemFlags;
   g.CurrentItemFlags |= ImGuiItemFlags_NoNavDefaultFocus;
   window->DC.NavLayerCurrent = ImGuiNavLayer_Menu;
@@ -6147,13 +6147,13 @@ void ImGui::RenderWindowTitleBarContents(ImGuiWindow* window, const ImRect& titl
   window->DC.NavLayerCurrent = ImGuiNavLayer_Main;
   g.CurrentItemFlags = item_flags_backup;
 
-  // Title bar text (with: horizontal alignment, avoiding collapse/close button, optional "unsaved document" marker)
+  // mTitle bar text (with: horizontal alignment, avoiding collapse/close button, optional "unsaved document" marker)
   // FIXME: Refactor text alignment facilities along with RenderText helpers, this is WAY too much messy code..
   const float marker_size_x = (flags & ImGuiWindowFlags_UnsavedDocument) ? button_sz * 0.80f : 0.0f;
   const ImVec2 text_size = CalcTextSize(name, NULL, true) + ImVec2(marker_size_x, 0.0f);
 
-  // As a nice touch we try to ensure that centered title text doesn't get affected by visibility of Close/Collapse button,
-  // while uncentered title text will still reach edges correctly.
+  // As a nice touch we try to ensure that centered mTitle text doesn't get affected by visibility of Close/Collapse button,
+  // while uncentered mTitle text will still reach edges correctly.
   if (pad_l > style.FramePadding.x)
     pad_l += g.Style.ItemInnerSpacing.x;
   if (pad_r > style.FramePadding.x)
@@ -6408,7 +6408,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
       GcAwakeTransientWindowBuffers(window);
 
     // Update stored window name when it changes (which can _only_ happen with the "###" operator, so the ID would stay unchanged).
-    // The title bar always display the 'name' parameter, so we only update the string storage if it needs to be visible to the end-user elsewhere.
+    // The mTitle bar always display the 'name' parameter, so we only update the string storage if it needs to be visible to the end-user elsewhere.
     bool window_title_visible_elsewhere = false;
     if ((window->Viewport && window->Viewport->Window == window) || (window->DockIsActive))
       window_title_visible_elsewhere = true;
@@ -6481,11 +6481,11 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
     window->DC.MenuBarOffset.x = ImMax(ImMax(window->WindowPadding.x, style.ItemSpacing.x), g.NextWindowData.MenuBarOffsetMinVal.x);
     window->DC.MenuBarOffset.y = g.NextWindowData.MenuBarOffsetMinVal.y;
 
-    // Collapse window by double-clicking on title bar
-    // At this point we don't have a clipping rectangle setup yet, so we can use the title bar area for hit detection and drawing
+    // Collapse window by double-clicking on mTitle bar
+    // At this point we don't have a clipping rectangle setup yet, so we can use the mTitle bar area for hit detection and drawing
     if (!(flags & ImGuiWindowFlags_NoTitleBar) && !(flags & ImGuiWindowFlags_NoCollapse) && !window->DockIsActive)
     {
-      // We don't use a regular button+id to test for double-click on title bar (mostly due to legacy reason, could be fixed), so verify that we don't have items over the title bar.
+      // We don't use a regular button+id to test for double-click on mTitle bar (mostly due to legacy reason, could be fixed), so verify that we don't have items over the mTitle bar.
       ImRect title_bar_rect = window->TitleBarRect();
       if (g.HoveredWindow == window && g.HoveredId == 0 && g.HoveredIdPreviousFrame == 0 && IsMouseHoveringRect(title_bar_rect.Min, title_bar_rect.Max) && g.IO.MouseClickedCount[0] == 2)
         window->WantCollapseToggle = true;
@@ -6524,7 +6524,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
     else if (window->AutoFitFramesX > 0 || window->AutoFitFramesY > 0)
     {
       // Auto-fit may only grow window during the first few frames
-      // We still process initial auto-fit on collapsed windows to get a window width, but otherwise don't honor ImGuiWindowFlags_AlwaysAutoResize when collapsed.
+      // We still process initial auto-fit on collapsed windows to get a window mWidth, but otherwise don't honor ImGuiWindowFlags_AlwaysAutoResize when collapsed.
       if (!window_size_x_set_by_api && window->AutoFitFramesX > 0)
       {
         window->SizeFull.x = window->AutoFitOnlyGrows ? ImMax(window->SizeFull.x, size_auto_fit.x) : size_auto_fit.x;
@@ -6628,7 +6628,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
     else
       window->WindowRounding = (flags & ImGuiWindowFlags_ChildWindow) ? style.ChildRounding : ((flags & ImGuiWindowFlags_Popup) && !(flags & ImGuiWindowFlags_Modal)) ? style.PopupRounding : style.WindowRounding;
 
-    // For windows with title bar or menu bar, we clamp to FrameHeight(FontSize + FramePadding.y * 2.0f) to completely hide artifacts.
+    // For windows with mTitle bar or menu bar, we clamp to FrameHeight(FontSize + FramePadding.y * 2.0f) to completely hide artifacts.
     //if ((window->Flags & ImGuiWindowFlags_MenuBar) || !(window->Flags & ImGuiWindowFlags_NoTitleBar))
     //    window->WindowRounding = ImMin(window->WindowRounding, g.FontSize + style.FramePadding.y * 2.0f);
 
@@ -6731,7 +6731,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
     window->InnerClipRect.Max.y = ImFloor(0.5f + window->InnerRect.Max.y - window->WindowBorderSize);
     window->InnerClipRect.ClipWithFull(host_rect);
 
-    // Default item width. Make it proportional to window size if window manually resizes
+    // Default item mWidth. Make it proportional to window size if window manually resizes
     if (window->Size.x > 0.0f && !(flags & ImGuiWindowFlags_Tooltip) && !(flags & ImGuiWindowFlags_AlwaysAutoResize))
       window->ItemWidthDefault = ImFloor(window->Size.x * 0.65f);
     else
@@ -6776,7 +6776,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
       if (render_decorations_in_parent)
         window->DrawList = parent_window->DrawList;
 
-      // Handle title bar, scrollbar, resize grips and resize borders
+      // Handle mTitle bar, scrollbar, resize grips and resize borders
       const ImGuiWindow* window_to_highlight = g.NavWindowingTarget ? g.NavWindowingTarget : g.NavWindow;
       const bool title_bar_is_highlight = want_focus || (window_to_highlight && (window->RootWindowForTitleBarHighlight == window_to_highlight->RootWindowForTitleBarHighlight || (window->DockNode && window->DockNode == window_to_highlight->DockNode)));
       RenderWindowDecorations(window, title_bar_rect, title_bar_is_highlight, handle_borders_and_resize_grips, resize_grip_count, resize_grip_col, resize_grip_draw_size);
@@ -6875,7 +6875,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
       }
     }
 
-    // Title bar
+    // mTitle bar
     if (!(flags & ImGuiWindowFlags_NoTitleBar) && !window->DockIsActive)
       RenderWindowTitleBarContents(window, ImRect(title_bar_rect.Min.x + window->WindowBorderSize, title_bar_rect.Min.y, title_bar_rect.Max.x - window->WindowBorderSize, title_bar_rect.Max.y), name, p_open);
 
@@ -6907,8 +6907,8 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
             BeginDockableDragDropTarget(window);
     }
 
-    // We fill last item data based on Title Bar/Tab, in order for IsItemHovered() and IsItemActive() to be usable after Begin().
-    // This is useful to allow creating context menus on title bar only, etc.
+    // We fill last item data based on mTitle Bar/Tab, in order for IsItemHovered() and IsItemActive() to be usable after Begin().
+    // This is useful to allow creating context menus on mTitle bar only, etc.
     if (window->DockIsActive)
       SetLastItemData(window->ID, g.CurrentItemFlags, window->DockTabItemStatusFlags, window->DockTabItemRect);
     else
@@ -6955,7 +6955,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
     if (flags & ImGuiWindowFlags_ChildWindow)
     {
       // Child window can be out of sight and have "negative" clip windows.
-      // Mark them as collapsed so commands are skipped earlier (we can't manually collapse them because they have no title bar).
+      // Mark them as collapsed so commands are skipped earlier (we can't manually collapse them because they have no mTitle bar).
       IM_ASSERT((flags& ImGuiWindowFlags_NoTitleBar) != 0 || (window->DockIsActive));
       if (!(flags & ImGuiWindowFlags_AlwaysAutoResize) && window->AutoFitFramesX <= 0 && window->AutoFitFramesY <= 0) // FIXME: Doesn't make sense for ChildWindow??
       {
@@ -8203,9 +8203,9 @@ void ImGui::ItemSize(const ImVec2& size, float text_baseline_y)
   if (window->SkipItems)
     return;
 
-  // We increase the height in this function to accommodate for baseline offset.
+  // We increase the mHeight in this function to accommodate for baseline offset.
   // In theory we should be offsetting the starting position (window->DC.CursorPos), that will be the topic of a larger refactor,
-  // but since ItemSize() is not yet an API that moves the cursor (to handle e.g. wrapping) enlarging the height has the same effect.
+  // but since ItemSize() is not yet an API that moves the cursor (to handle e.g. wrapping) enlarging the mHeight has the same effect.
   const float offset_to_match_baseline_y = (text_baseline_y >= 0) ? ImMax(0.0f, window->DC.CurrLineTextBaseOffset - text_baseline_y) : 0.0f;
   const float line_height = ImMax(window->DC.CurrLineSize.y, size.y + offset_to_match_baseline_y);
 
@@ -8413,7 +8413,7 @@ void ImGui::PushItemWidth(float item_width)
 {
   ImGuiContext& g = *GImGui;
   ImGuiWindow* window = g.CurrentWindow;
-  window->DC.ItemWidthStack.push_back(window->DC.ItemWidth); // Backup current width
+  window->DC.ItemWidthStack.push_back(window->DC.ItemWidth); // Backup current mWidth
   window->DC.ItemWidth = (item_width == 0.0f ? window->ItemWidthDefault : item_width);
   g.NextItemData.Flags &= ~ImGuiNextItemDataFlags_HasWidth;
 }
@@ -8425,7 +8425,7 @@ void ImGui::PushMultiItemsWidths(int components, float w_full)
   const ImGuiStyle& style = g.Style;
   const float w_item_one  = ImMax(1.0f, IM_FLOOR((w_full - (style.ItemInnerSpacing.x) * (components - 1)) / (float)components));
   const float w_item_last = ImMax(1.0f, IM_FLOOR(w_full - (w_item_one + style.ItemInnerSpacing.x) * (components - 1)));
-  window->DC.ItemWidthStack.push_back(window->DC.ItemWidth); // Backup current width
+  window->DC.ItemWidthStack.push_back(window->DC.ItemWidth); // Backup current mWidth
   window->DC.ItemWidthStack.push_back(w_item_last);
   for (int i = 0; i < components - 2; i++)
     window->DC.ItemWidthStack.push_back(w_item_one);
@@ -8440,7 +8440,7 @@ void ImGui::PopItemWidth()
   window->DC.ItemWidthStack.pop_back();
 }
 
-// Calculate default item width given value passed to PushItemWidth() or SetNextItemWidth().
+// Calculate default item mWidth given value passed to PushItemWidth() or SetNextItemWidth().
 // The SetNextItemWidth() data is generally cleared/consumed by ItemAdd() or NextItemData.ClearFlags()
 float ImGui::CalcItemWidth()
 {
@@ -8460,7 +8460,7 @@ float ImGui::CalcItemWidth()
   return w;
 }
 
-// [Internal] Calculate full item size given user provided 'size' parameter and default width/height. Default width is often == CalcItemWidth().
+// [Internal] Calculate full item size given user provided 'size' parameter and default mWidth/mHeight. Default mWidth is often == CalcItemWidth().
 // Those two functions CalcItemWidth vs CalcItemSize are awkwardly named because they are not fully symmetrical.
 // Note that only CalcItemWidth() is publicly exposed.
 // The 4.0f here may be changed to match CalcItemWidth() and/or BeginChild() (right now we have a mismatch which is harmless but undesirable)
@@ -9409,7 +9409,7 @@ ImVec2 ImGui::FindBestWindowPosForPopupEx(const ImVec2& ref_pos, const ImVec2& s
       const float avail_w = (dir == ImGuiDir_Left ? r_avoid.Min.x : r_outer.Max.x) - (dir == ImGuiDir_Right ? r_avoid.Max.x : r_outer.Min.x);
       const float avail_h = (dir == ImGuiDir_Up ? r_avoid.Min.y : r_outer.Max.y) - (dir == ImGuiDir_Down ? r_avoid.Max.y : r_outer.Min.y);
 
-      // If there not enough room on one axis, there's no point in positioning on a side on this axis (e.g. when not enough width, use a top/bottom position to maximize available width)
+      // If there not enough room on one axis, there's no point in positioning on a side on this axis (e.g. when not enough mWidth, use a top/bottom position to maximize available mWidth)
       if (avail_w < size.x && (dir == ImGuiDir_Left || dir == ImGuiDir_Right))
         continue;
       if (avail_h < size.y && (dir == ImGuiDir_Up || dir == ImGuiDir_Down))
@@ -9585,7 +9585,7 @@ static bool ImGui::NavScoreItem(ImGuiNavItemData* result)
 
   // FIXME: Those are not good variables names
   ImRect cand = g.LastItemData.NavRect;   // Current item nav rectangle
-  const ImRect curr = g.NavScoringRect;   // Current modified source rect (NB: we've applied Max.x = Min.x in NavUpdate() to inhibit the effect of having varied item width)
+  const ImRect curr = g.NavScoringRect;   // Current modified source rect (NB: we've applied Max.x = Min.x in NavUpdate() to inhibit the effect of having varied item mWidth)
   g.NavScoringDebugCount++;
 
   // When entering through a NavFlattened border, we consider child window items as fully clipped for scoring
@@ -9730,7 +9730,7 @@ static void ImGui::NavProcessItem()
   const ImRect nav_bb = g.LastItemData.NavRect;
   const ImGuiItemFlags item_flags = g.LastItemData.InFlags;
 
-  // Process Init Request
+  // Process init Request
   if (g.NavInitRequest && g.NavLayer == window->DC.NavLayerCurrent)
   {
     // Even if 'ImGuiItemFlags_NoNavDefaultFocus' is on (typically collapse/close button) we record the first ResultId so they can be used as a fallback
@@ -9828,7 +9828,7 @@ void ImGui::NavProcessItemForTabbingRequest(ImGuiID id)
   }
   else if (g.NavTabbingDir == 0)
   {
-    // Tab Init
+    // Tab init
     if (g.NavTabbingResultFirst.ID == 0)
       NavMoveRequestResolveWithLastItem(&g.NavTabbingResultFirst);
   }
@@ -10064,7 +10064,7 @@ static void ImGui::NavUpdate()
   ImGuiIO& io = g.IO;
 
   io.WantSetMousePos = false;
-  //if (g.NavScoringDebugCount > 0) IMGUI_DEBUG_LOG("NavScoringDebugCount %d for '%s' layer %d (Init:%d, Move:%d)\n", g.NavScoringDebugCount, g.NavWindow ? g.NavWindow->Name : "NULL", g.NavLayer, g.NavInitRequest || g.NavInitResultId != 0, g.NavMoveRequest);
+  //if (g.NavScoringDebugCount > 0) IMGUI_DEBUG_LOG("NavScoringDebugCount %d for '%s' layer %d (init:%d, Move:%d)\n", g.NavScoringDebugCount, g.NavWindow ? g.NavWindow->Name : "NULL", g.NavLayer, g.NavInitRequest || g.NavInitResultId != 0, g.NavMoveRequest);
 
   // Set input source as Gamepad when buttons are pressed (as some features differs when used with Gamepad vs Keyboard)
   // (do it before we map Keyboard input!)
@@ -10726,7 +10726,7 @@ static void ImGui::NavUpdateWindowing()
       g.NavWindowingTargetAnim = NULL;
   }
 
-  // Start CTRL+Tab or Square+L/R window selection
+  // start CTRL+Tab or Square+L/R window selection
   const bool start_windowing_with_gamepad = allow_windowing && !g.NavWindowingTarget && IsNavInputTest(ImGuiNavInput_Menu, ImGuiInputReadMode_Pressed);
   const bool start_windowing_with_keyboard = allow_windowing && !g.NavWindowingTarget && io.KeyCtrl && IsKeyPressedMap(ImGuiKey_Tab);
   if (start_windowing_with_gamepad || start_windowing_with_keyboard)
@@ -11339,7 +11339,7 @@ void ImGui::LogRenderedText(const ImVec2* ref_pos, const char* text, const char*
     LogRenderedText(ref_pos, suffix, suffix + strlen(suffix));
 }
 
-// Start logging/capturing text output
+// start logging/capturing text output
 void ImGui::LogBegin(ImGuiLogType type, int auto_open_depth)
 {
   ImGuiContext& g = *GImGui;
@@ -11376,7 +11376,7 @@ void ImGui::LogToTTY(int auto_open_depth)
 #endif
 }
 
-// Start logging/capturing text output to given file
+// start logging/capturing text output to given file
 void ImGui::LogToFile(int auto_open_depth, const char* filename)
 {
   ImGuiContext& g = *GImGui;
@@ -11401,7 +11401,7 @@ void ImGui::LogToFile(int auto_open_depth, const char* filename)
   g.LogFile = f;
 }
 
-// Start logging/capturing text output to clipboard
+// start logging/capturing text output to clipboard
 void ImGui::LogToClipboard(int auto_open_depth)
 {
   ImGuiContext& g = *GImGui;
@@ -11472,7 +11472,7 @@ void ImGui::LogButtons()
   PopAllowKeyboardFocus();
   PopID();
 
-  // Start logging at the end of the function so that the buttons don't appear in the Log
+  // start logging at the end of the function so that the buttons don't appear in the Log
   if (log_to_tty)
     LogToTTY();
   if (log_to_file)
@@ -12038,7 +12038,7 @@ static void ImGui::UpdateViewportsNewFrame()
     }
   }
 
-  // Create/update main viewport with current platform position.
+  // create/update main viewport with current platform position.
   // FIXME-VIEWPORT: Size is driven by backend/user code for backward-compatibility but we should aim to make this more consistent.
   ImGuiViewportP* main_viewport = g.Viewports[0];
   IM_ASSERT(main_viewport->ID == IMGUI_VIEWPORT_DEFAULT_ID);
@@ -12429,7 +12429,7 @@ static void ImGui::WindowSelectViewport(ImGuiWindow* window)
   window->ViewportOwned = (window == window->Viewport->Window);
   window->ViewportId = window->Viewport->ID;
 
-  // If the OS window has a title bar, hide our imgui title bar
+  // If the OS window has a mTitle bar, hide our imgui mTitle bar
   //if (window->ViewportOwned && !(window->Viewport->Flags & ImGuiViewportFlags_NoDecoration))
   //    window->Flags |= ImGuiWindowFlags_NoTitleBar;
 }
@@ -12490,7 +12490,7 @@ void ImGui::WindowSyncOwnedViewport(ImGuiWindow* window, ImGuiWindow* parent_win
   //    viewport_flags |= ImGuiViewportFlags_TopMost;
 
   // For popups and menus that may be protruding out of their parent viewport, we enable _NoFocusOnClick so that clicking on them
-  // won't steal the OS focus away from their parent window (which may be reflected in OS the title bar decoration).
+  // won't steal the OS focus away from their parent window (which may be reflected in OS the mTitle bar decoration).
   // Setting _NoFocusOnClick would technically prevent us from bringing back to front in case they are being covered by an OS window from a different app,
   // but it shouldn't be much of a problem considering those are already popups that are closed when clicking elsewhere.
   if (is_short_lived_floating_window && !is_modal)
@@ -12531,7 +12531,7 @@ void ImGui::UpdatePlatformWindows()
   if (!(g.ConfigFlagsCurrFrame & ImGuiConfigFlags_ViewportsEnable))
     return;
 
-  // Create/resize/destroy platform windows to match each active viewport.
+  // create/resize/destroy platform windows to match each active viewport.
   // Skip the main viewport (index 0), which is always fully handled by the application!
   for (int i = 1; i < g.Viewports.Size; i++)
   {
@@ -12552,11 +12552,11 @@ void ImGui::UpdatePlatformWindows()
     if (viewport->LastFrameActive < g.FrameCount || viewport->Size.x <= 0 || viewport->Size.y <= 0)
       continue;
 
-    // Create window
+    // create window
     bool is_new_platform_window = (viewport->PlatformWindowCreated == false);
     if (is_new_platform_window)
     {
-      IMGUI_DEBUG_LOG_VIEWPORT("Create Platform Window %08X (%s)\n", viewport->ID, viewport->Window ? viewport->Window->Name : "n/a");
+      IMGUI_DEBUG_LOG_VIEWPORT("create Platform Window %08X (%s)\n", viewport->ID, viewport->Window ? viewport->Window->Name : "n/a");
       g.PlatformIO.Platform_CreateWindow(viewport);
       if (g.PlatformIO.Renderer_CreateWindow != NULL)
         g.PlatformIO.Renderer_CreateWindow(viewport);
@@ -12576,7 +12576,7 @@ void ImGui::UpdatePlatformWindows()
     viewport->LastPlatformPos = viewport->Pos;
     viewport->LastPlatformSize = viewport->LastRendererSize = viewport->Size;
 
-    // Update title bar (if it changed)
+    // Update mTitle bar (if it changed)
     if (ImGuiWindow* window_for_title = GetWindowForTitleDisplay(viewport->Window))
     {
       const char* title_begin = window_for_title->Name;
@@ -13124,7 +13124,7 @@ void ImGui::DockContextNewFrameUpdateDocking(ImGuiContext* ctx)
       DockContextProcessDock(ctx, &dc->Requests[n]);
   dc->Requests.resize(0);
 
-  // Create windows for each automatic docking nodes
+  // create windows for each automatic docking nodes
   // We can have NULL pointers when we delete nodes, but because ID are recycled this should amortize nicely (and our node count will never be very high)
   for (int n = 0; n < dc->Nodes.Data.Size; n++)
     if (ImGuiDockNode* node = (ImGuiDockNode*)dc->Nodes.Data[n].val_p)
@@ -13312,7 +13312,7 @@ static void ImGui::DockContextBuildNodesFromSettings(ImGuiContext* ctx, ImGuiDoc
     node->SplitAxis = (ImGuiAxis)settings->SplitAxis;
     node->SetLocalFlags(settings->Flags & ImGuiDockNodeFlags_SavedFlagsMask_);
 
-    // Bind host window immediately if it already exist (in case of a rebuild)
+    // bind host window immediately if it already exist (in case of a rebuild)
     // This is useful as the RootWindowForTitleBarHighlight links necessary to highlight the currently focused node requires node->HostWindow to be set.
     char host_window_title[20];
     ImGuiDockNode* root_node = DockNodeGetRootNode(node);
@@ -13426,7 +13426,7 @@ void ImGui::DockContextProcessDock(ImGuiContext* ctx, ImGuiDockRequest* req)
   if (node && target_window && node == target_window->DockNodeAsHost)
     IM_ASSERT(node->Windows.Size > 0 || node->IsSplitNode() || node->IsCentralNode());
 
-  // Create new node and add existing window to it
+  // create new node and add existing window to it
   if (node == NULL)
   {
     node = DockContextAddNode(ctx, 0);
@@ -13456,7 +13456,7 @@ void ImGui::DockContextProcessDock(ImGuiContext* ctx, ImGuiDockRequest* req)
 
   if (node != payload_node)
   {
-    // Create tab bar before we call DockNodeMoveWindows (which would attempt to move the old tab-bar, which would lead us to payload tabs wrongly appearing before target tabs!)
+    // create tab bar before we call DockNodeMoveWindows (which would attempt to move the old tab-bar, which would lead us to payload tabs wrongly appearing before target tabs!)
     if (node->Windows.Size > 0 && node->TabBar == NULL)
     {
       DockNodeAddTabBar(node);
@@ -13575,7 +13575,7 @@ void ImGui::DockContextProcessUndockNode(ImGuiContext* ctx, ImGuiDockNode* node)
 
   if (node->IsRootNode() || node->IsCentralNode())
   {
-    // In the case of a root node or central node, the node will have to stay in place. Create a new node to receive the payload.
+    // In the case of a root node or central node, the node will have to stay in place. create a new node to receive the payload.
     ImGuiDockNode* new_node = DockContextAddNode(ctx, 0);
     new_node->Pos = node->Pos;
     new_node->Size = node->Size;
@@ -13757,7 +13757,7 @@ static void ImGui::DockNodeAddWindow(ImGuiDockNode* node, ImGuiWindow* window, b
 
   DockNodeUpdateVisibleFlag(node);
 
-  // Update this without waiting for the next time we Begin() in the window, so our host window will have the proper title bar color on its first frame.
+  // Update this without waiting for the next time we Begin() in the window, so our host window will have the proper mTitle bar color on its first frame.
   if (node->HostWindow)
     UpdateWindowParentAndRootLinks(window, window->Flags | ImGuiWindowFlags_ChildWindow, node->HostWindow);
 }
@@ -14068,7 +14068,7 @@ static void ImGui::DockNodeUpdateForRootNode(ImGuiDockNode* node)
   DockNodeUpdateFlagsAndCollapse(node);
 
   // - Setup central node pointers
-  // - Find if there's only a single visible window in the hierarchy (in which case we need to display a regular title bar -> FIXME-DOCK: that last part is not done yet!)
+  // - Find if there's only a single visible window in the hierarchy (in which case we need to display a regular mTitle bar -> FIXME-DOCK: that last part is not done yet!)
   // Cannot merge this with DockNodeUpdateFlagsAndCollapse() because FirstNodeWithWindows is found after window removal and child collapsing
   ImGuiDockNodeTreeInfo info;
   DockNodeFindInfo(node, &info);
@@ -14216,7 +14216,7 @@ static void ImGui::DockNodeUpdate(ImGuiDockNode* node)
   if (node_flags & ImGuiDockNodeFlags_NoCloseButton)
     node->HasCloseButton = false;
 
-  // Bind or create host window
+  // bind or create host window
   ImGuiWindow* host_window = NULL;
   bool beginned_into_host_window = false;
   if (node->IsDockSpace())
@@ -14294,7 +14294,7 @@ static void ImGui::DockNodeUpdate(ImGuiDockNode* node)
       DockNodeStartMouseMovingWindow(node, node->HostWindow);
   }
 
-  // Update focused node (the one whose title bar is highlight) within a node tree
+  // Update focused node (the one whose mTitle bar is highlight) within a node tree
   if (node->IsSplitNode())
     IM_ASSERT(node->TabBar == NULL);
   if (node->IsRootNode())
@@ -14491,7 +14491,7 @@ static void ImGui::DockNodeUpdateTabBar(ImGuiDockNode* node, ImGuiWindow* host_w
   node->WantCloseAll = false;
   node->WantCloseTabId = 0;
 
-  // Decide if we should use a focused title bar color
+  // Decide if we should use a focused mTitle bar color
   bool is_focused = false;
   ImGuiDockNode* root_node = DockNodeGetRootNode(node);
   if (g.NavWindowingTarget)
@@ -14508,7 +14508,7 @@ static void ImGui::DockNodeUpdateTabBar(ImGuiDockNode* node, ImGuiWindow* host_w
       node->LastFrameFocused = g.FrameCount;
     if (node->VisibleWindow)
     {
-      // Notify root of visible window (used to display title in OS task bar)
+      // Notify root of visible window (used to display mTitle in OS task bar)
       if (is_focused || root_node->VisibleWindow == NULL)
         root_node->VisibleWindow = node->VisibleWindow;
       if (node->TabBar)
@@ -14517,7 +14517,7 @@ static void ImGui::DockNodeUpdateTabBar(ImGuiDockNode* node, ImGuiWindow* host_w
     return;
   }
 
-  // Move ourselves to the Menu layer (so we can be accessed by tapping Alt) + undo SkipItems flag in order to draw over the title bar even if the window is collapsed
+  // Move ourselves to the Menu layer (so we can be accessed by tapping Alt) + undo SkipItems flag in order to draw over the mTitle bar even if the window is collapsed
   bool backup_skip_item = host_window->SkipItems;
   if (!node->IsDockSpace())
   {
@@ -14567,7 +14567,7 @@ static void ImGui::DockNodeUpdateTabBar(ImGuiDockNode* node, ImGuiWindow* host_w
       TabBarAddTab(tab_bar, ImGuiTabItemFlags_Unsorted, window);
   }
 
-  // Title bar
+  // mTitle bar
   if (is_focused)
     node->LastFrameFocused = g.FrameCount;
   ImU32 title_bar_col = GetColorU32(host_window->Collapsed ? ImGuiCol_TitleBgCollapsed : is_focused ? ImGuiCol_TitleBgActive : ImGuiCol_TitleBg);
@@ -14664,7 +14664,7 @@ static void ImGui::DockNodeUpdateTabBar(ImGuiDockNode* node, ImGuiWindow* host_w
   for (int color_n = 0; color_n < ImGuiWindowDockStyleCol_COUNT; color_n++)
     g.Style.Colors[GWindowDockStyleColors[color_n]] = backup_style_cols[color_n];
 
-  // Notify root of visible window (used to display title in OS task bar)
+  // Notify root of visible window (used to display mTitle in OS task bar)
   if (node->VisibleWindow)
     if (is_focused || root_node->VisibleWindow == NULL)
       root_node->VisibleWindow = node->VisibleWindow;
@@ -14696,7 +14696,7 @@ static void ImGui::DockNodeUpdateTabBar(ImGuiDockNode* node, ImGuiWindow* host_w
     }
   }
 
-  // When clicking on the title bar outside of tabs, we still focus the selected tab for that node
+  // When clicking on the mTitle bar outside of tabs, we still focus the selected tab for that node
   // FIXME: TabItem use AllowItemOverlap so we manually perform a more specific test for now (hovered || held)
   ImGuiID title_bar_id = host_window->GetID("#TITLEBAR");
   if (g.HoveredId == 0 || g.HoveredId == title_bar_id || g.ActiveId == title_bar_id)
@@ -14881,7 +14881,7 @@ bool ImGui::DockNodeCalcDropRectsAndTestMousePos(const ImRect& parent, ImGuiDir 
   {
     //hs_w = ImFloor(ImClamp(parent_smaller_axis - hs_for_central_nodes * 4.0f, g.FontSize * 0.5f, g.FontSize * 8.0f));
     //hs_h = ImFloor(hs_w * 0.15f);
-    //off = ImVec2(ImFloor(parent.GetWidth() * 0.5f - GetFrameHeightWithSpacing() * 1.4f - hs_h), ImFloor(parent.GetHeight() * 0.5f - GetFrameHeightWithSpacing() * 1.4f - hs_h));
+    //off = ImVec2(ImFloor(parent.getWidth() * 0.5f - GetFrameHeightWithSpacing() * 1.4f - hs_h), ImFloor(parent.getHeight() * 0.5f - GetFrameHeightWithSpacing() * 1.4f - hs_h));
     hs_w = ImFloor(hs_for_central_nodes * 1.50f);
     hs_h = ImFloor(hs_for_central_nodes * 0.80f);
     off = ImVec2(ImFloor(parent.GetWidth() * 0.5f - hs_h), ImFloor(parent.GetHeight() * 0.5f - hs_h));
@@ -14986,7 +14986,7 @@ static void ImGui::DockNodePreviewDockSetup(ImGuiWindow* host_window, ImGuiDockN
       }
     }
 
-  // When docking without holding Shift, we only allow and preview docking when hovering over a drop rect or over the title bar
+  // When docking without holding Shift, we only allow and preview docking when hovering over a drop rect or over the mTitle bar
   data->IsDropAllowed = (data->SplitDir != ImGuiDir_None) || (data->IsCenterAvailable);
   if (!is_explicit_target && !data->IsSplitDirExplicit && !g.IO.ConfigDockingWithShift)
     data->IsDropAllowed = false;
@@ -15059,7 +15059,7 @@ static void ImGui::DockNodePreviewDockRender(ImGuiWindow* host_window, ImGuiDock
     }
     else if (!(host_window->Flags & ImGuiWindowFlags_DockNodeHost))
     {
-      tab_pos.x += g.Style.ItemInnerSpacing.x + TabItemCalcSize(host_window->Name, host_window->HasCloseButton).x; // Account for slight offset which will be added when changing from title bar to tab bar
+      tab_pos.x += g.Style.ItemInnerSpacing.x + TabItemCalcSize(host_window->Name, host_window->HasCloseButton).x; // Account for slight offset which will be added when changing from mTitle bar to tab bar
     }
 
     // Draw tab shape/label preview (payload may be a loose window or a host window carrying multiple tabbed windows)
@@ -15539,7 +15539,7 @@ void ImGui::SetWindowDock(ImGuiWindow* window, ImGuiID dock_id, ImGuiCond cond)
   window->DockId = dock_id;
 }
 
-// Create an explicit dockspace node within an existing window. Also expose dock node flags and creates a CentralNode by default.
+// create an explicit dockspace node within an existing window. Also expose dock node flags and creates a CentralNode by default.
 // The Central Node is always displayed even when empty and shrink/extend according to the requested size of its neighbors.
 // DockSpace() needs to be submitted _before_ any window they can host. If you use a dockspace, submit it early in your app.
 ImGuiID ImGui::DockSpace(ImGuiID id, const ImVec2& size_arg, ImGuiDockNodeFlags flags, const ImGuiWindowClass* window_class)
@@ -16124,7 +16124,7 @@ static ImGuiDockNode* ImGui::DockContextBindNodeToWindow(ImGuiContext* ctx, ImGu
     return NULL;
   }
 
-  // Create node
+  // create node
   if (node == NULL)
   {
     node = DockContextAddNode(ctx, window->DockId);
@@ -16184,7 +16184,7 @@ void ImGui::BeginDocked(ImGuiWindow* window, bool* p_open)
     }
   }
 
-  // Bind to our dock node
+  // bind to our dock node
   ImGuiDockNode* node = window->DockNode;
   if (node != NULL)
     IM_ASSERT(window->DockId == node->ID);
@@ -16266,7 +16266,7 @@ void ImGui::BeginDocked(ImGuiWindow* window, bool* p_open)
   if (node->IsHiddenTabBar() || node->IsNoTabBar())
     window->Flags |= ImGuiWindowFlags_NoTitleBar;
   else
-    window->Flags &= ~ImGuiWindowFlags_NoTitleBar;      // Clear the NoTitleBar flag in case the user set it: confusingly enough we need a title bar height so we are correctly offset, but it won't be displayed!
+    window->Flags &= ~ImGuiWindowFlags_NoTitleBar;      // Clear the NoTitleBar flag in case the user set it: confusingly enough we need a mTitle bar mHeight so we are correctly offset, but it won't be displayed!
 
   // Save new dock order only if the window has been visible once already
   // This allows multiple windows to be created in the same frame and have their respective dock orders preserved.
@@ -16781,7 +16781,7 @@ void ImGui::DebugRenderViewportThumbnail(ImDrawList* draw_list, ImGuiViewportP* 
     ImRect thumb_r = thumb_window->Rect();
     ImRect title_r = thumb_window->TitleBarRect();
     thumb_r = ImRect(ImFloor(off + thumb_r.Min * scale), ImFloor(off +  thumb_r.Max * scale));
-    title_r = ImRect(ImFloor(off + title_r.Min * scale), ImFloor(off +  ImVec2(title_r.Max.x, title_r.Min.y) * scale) + ImVec2(0,5)); // Exaggerate title bar height
+    title_r = ImRect(ImFloor(off + title_r.Min * scale), ImFloor(off +  ImVec2(title_r.Max.x, title_r.Min.y) * scale) + ImVec2(0,5)); // Exaggerate mTitle bar mHeight
     thumb_r.ClipWithFull(bb);
     title_r.ClipWithFull(bb);
     const bool window_is_focused = (g.NavWindow && thumb_window->RootWindowForTitleBarHighlight == g.NavWindow->RootWindowForTitleBarHighlight);
@@ -17346,7 +17346,7 @@ void ImGui::DebugNodeColumns(ImGuiOldColumns* columns)
 {
   if (!TreeNode((void*)(uintptr_t)columns->ID, "Columns Id: 0x%08X, Count: %d, Flags: 0x%04X", columns->ID, columns->Count, columns->Flags))
     return;
-  BulletText("Width: %.1f (MinX: %.1f, MaxX: %.1f)", columns->OffMaxX - columns->OffMinX, columns->OffMinX, columns->OffMaxX);
+  BulletText("mWidth: %.1f (MinX: %.1f, MaxX: %.1f)", columns->OffMaxX - columns->OffMinX, columns->OffMinX, columns->OffMaxX);
   for (int column_n = 0; column_n < columns->Columns.Size; column_n++)
     BulletText("Column %02d: OffsetNorm %.3f (= %.1f px)", column_n, columns->Columns[column_n].OffsetNorm, GetColumnOffsetFromNorm(columns, columns->Columns[column_n].OffsetNorm));
   TreePop();
@@ -17585,7 +17585,7 @@ void ImGui::DebugNodeFont(ImFont* font)
       "You may oversample them to get some flexibility with scaling. "
       "You can also render at multiple sizes and select which one to use at runtime.\n\n"
       "(Glimmer of hope: the atlas system will be rewritten in the future to make scaling more flexible.)");
-  Text("Ascent: %f, Descent: %f, Height: %f", font->Ascent, font->Descent, font->Ascent - font->Descent);
+  Text("Ascent: %f, Descent: %f, mHeight: %f", font->Ascent, font->Descent, font->Ascent - font->Descent);
   char c_str[5];
   Text("Fallback character: '%s' (U+%04X)", ImTextCharToUtf8(c_str, font->FallbackChar), font->FallbackChar);
   Text("Ellipsis character: '%s' (U+%04X)", ImTextCharToUtf8(c_str, font->EllipsisChar), font->EllipsisChar);
@@ -17704,7 +17704,7 @@ void ImGui::DebugNodeTabBar(ImGuiTabBar* tab_bar, const char* label)
       PushID(tab);
       if (SmallButton("<")) { TabBarQueueReorder(tab_bar, tab, -1); } SameLine(0, 2);
       if (SmallButton(">")) { TabBarQueueReorder(tab_bar, tab, +1); } SameLine();
-      Text("%02d%c Tab 0x%08X '%s' Offset: %.1f, Width: %.1f/%.1f",
+      Text("%02d%c Tab 0x%08X '%s' Offset: %.1f, mWidth: %.1f/%.1f",
            tab_n, (tab->ID == tab_bar->SelectedTabId) ? '*' : ' ', tab->ID, (tab->Window || tab->NameOffset != -1) ? tab_bar->GetTabName(tab) : "???", tab->Offset, tab->Width, tab->ContentWidth);
       PopID();
     }

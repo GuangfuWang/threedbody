@@ -116,7 +116,7 @@ enum KEY_MAP {
 
 };
 
-extern void on_key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+extern void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 }
 

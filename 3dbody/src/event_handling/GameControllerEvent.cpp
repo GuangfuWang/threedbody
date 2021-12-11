@@ -3,7 +3,7 @@
 
 namespace gf{
 
-void on_joystick_callback(int jid, int event) {
+void onJoystickCallback(int jid, int event) {
 
 }
 }

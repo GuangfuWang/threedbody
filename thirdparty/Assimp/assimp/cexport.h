@@ -102,7 +102,7 @@ ASSIMP_API const C_STRUCT aiExportFormatDesc *aiGetExportFormatDescription(size_
 ASSIMP_API void aiReleaseExportFormatDescription(const C_STRUCT aiExportFormatDesc *desc);
 
 // --------------------------------------------------------------------------------
-/** Create a modifiable copy of a scene.
+/** create a modifiable copy of a scene.
  *  This is useful to import files via Assimp, change their topology and
  *  export them again. Since the scene returned by the various importer functions
  *  is const, a modifiable copy is needed.

@@ -7,7 +7,7 @@
 #include "spdlog/spdlog/details/os.h"
 
 //
-// Init levels and patterns from env variables SPDLOG_LEVEL
+// init levels and patterns from env variables SPDLOG_LEVEL
 // Inspired from Rust's "env_logger" crate (https://crates.io/crates/env_logger).
 // Note - fallback to "info" level on unrecognized levels
 //

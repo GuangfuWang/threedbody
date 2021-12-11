@@ -6,11 +6,11 @@
 namespace gf {
 
 void FontTogglePanel::render() {
-  if (!font_loaded){
+  if (!fontLoaded){
 	loadAllFonts();
   }
   bool p;
-  font_size_ = 18.0f;
+  fontSize_ = 18.0f;
   if (ImGui::Begin("Font Toggle", &p, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse)) {
 	ImGui::Text("Font:");
 	ImGui::SameLine();
@@ -19,10 +19,10 @@ void FontTogglePanel::render() {
 	ImGui::ListBoxHeader("");
 	static unsigned char font_current_idx = 0;
 	std::string          select_font;
-	for (int             i                = 0; i < font_list_.size(); i++) {
+	for (int             i                = 0; i < fontList_.size(); i++) {
 	  const bool is_selected = (font_current_idx==i);
-	  if (ImGui::Selectable((const char *)font_list_[i].c_str(), is_selected)) {
-		select_font = font_list_[i];
+	  if (ImGui::Selectable((const char *)fontList_[i].c_str(), is_selected)) {
+		select_font = fontList_[i];
 	  }
 	}
 	ImGui::ListBoxFooter();
@@ -33,7 +33,7 @@ void FontTogglePanel::render() {
 	  font_path /= select_font;
 	  io.FontDefault = io.Fonts->AddFontFromFileTTF(
 		  font_path.string().c_str(),
-		  font_size_);
+		  fontSize_);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Cancel")) {
@@ -44,7 +44,7 @@ void FontTogglePanel::render() {
   }
 }
 void FontTogglePanel::loadAllFonts() {
-	font_list_.reserve(42);
+	fontList_.reserve(42);
 	std::filesystem::path temp=ConfigMap::getInstance()->resource_dir_;
 	temp/="fonts/EN";
 	//todo: not finished.

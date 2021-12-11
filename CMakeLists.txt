@@ -19,13 +19,13 @@ include(${PROJECT_SOURCE_DIR}/thirdparty/imgui/IMGUI.cmake)
 include(${PROJECT_SOURCE_DIR}/thirdparty/GLEW/glew.cmake)
 include(${PROJECT_SOURCE_DIR}/thirdparty/stb_image/stb_image.cmake)
 include(${PROJECT_SOURCE_DIR}/thirdparty/spdlog/spdlog.cmake)
+include(${PROJECT_SOURCE_DIR}/thirdparty/NativeFileDialog/FileDialog.cmake)
 
 
 include(${PROJECT_SOURCE_DIR}/3dbody/util/Util.cmake)
 
-
 include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Target_define.cmake)
-exe_target_define(${OWN_SRC} ${ImGui_src} ${glew_src} ${stb_image_src} ${util_src} ${spdlog_src})
+exe_target_define(${OWN_SRC} ${ImGui_src} ${glew_src} ${stb_image_src} ${util_src} ${spdlog_src} ${FileDialog_SRC})
 
 include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Target_include.cmake)
 target_deps_include(${MINGW_INCLUDE_DIR})

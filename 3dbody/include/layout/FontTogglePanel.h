@@ -18,11 +18,11 @@ class FontTogglePanel {
 
  private:
 
-  std::vector<std::string> font_list_;
+  std::vector<std::string> fontList_;
 
-  bool font_loaded = false;
+  bool fontLoaded = false;
 
-  float font_size_;
+  float fontSize_;
 };
 
 }

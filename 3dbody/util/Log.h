@@ -11,13 +11,12 @@
 #include <spdlog/spdlog/fmt/ostr.h>
 #pragma warning(pop)
 
+#include "def.h"
+
 namespace gf {
 
-template<typename T>
-using Ref = std::shared_ptr<T>;
 template<typename T, typename ... Args>
-constexpr Ref<T> CreateRef(Args&& ... args)
-{
+constexpr Ref<T> createRef(Args &&... args) {
   return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
@@ -27,10 +26,10 @@ constexpr Ref<T> CreateRef(Args&& ... args)
  */
 class Log {
  public:
-  static void Init();
+  static void init();
 
-  static Ref<spdlog::logger> &GetCoreLogger() { return s_CoreLogger; }
-  static Ref<spdlog::logger> &GetClientLogger() { return s_ClientLogger; }
+  static Ref<spdlog::logger> &getCoreLogger() { return s_CoreLogger; }
+  static Ref<spdlog::logger> &getClientLogger() { return s_ClientLogger; }
  private:
   static Ref<spdlog::logger> s_CoreLogger;
   static Ref<spdlog::logger> s_ClientLogger;
@@ -51,22 +50,20 @@ inline OStream &operator<<(OStream &os, glm::qua<T, Q> quaternion) {
   return os << glm::to_string(quaternion);
 }
 
-
 }
 
 // Core Log macros
-#define GF_CORE_TRACE(...)    gf::Log::GetCoreLogger()->trace(__VA_ARGS__)
-#define GF_CORE_INFO(...)     gf::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define GF_CORE_WARN(...)     gf::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define GF_CORE_ERROR(...)    gf::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define GF_CORE_CRITICAL(...) gf::Log::GetCoreLogger()->critical(__VA_ARGS__)
+#define GF_CORE_TRACE(...)    gf::Log::getCoreLogger()->trace(__VA_ARGS__)
+#define GF_CORE_INFO(...)     gf::Log::getCoreLogger()->info(__VA_ARGS__)
+#define GF_CORE_WARN(...)     gf::Log::getCoreLogger()->warn(__VA_ARGS__)
+#define GF_CORE_ERROR(...)    gf::Log::getCoreLogger()->error(__VA_ARGS__)
+#define GF_CORE_CRITICAL(...) gf::Log::getCoreLogger()->critical(__VA_ARGS__)
 
 // Client Log macros
-#define GF_TRACE(...)         gf::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define GF_INFO(...)          gf::Log::GetClientLogger()->info(__VA_ARGS__)
-#define GF_WARN(...)          gf::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define GF_ERROR(...)         gf::Log::GetClientLogger()->error(__VA_ARGS__)
-#define GF_CRITICAL(...)      gf::Log::GetClientLogger()->critical(__VA_ARGS__)
-
+#define GF_TRACE(...)         gf::Log::getClientLogger()->trace(__VA_ARGS__)
+#define GF_INFO(...)          gf::Log::getClientLogger()->info(__VA_ARGS__)
+#define GF_WARN(...)          gf::Log::getClientLogger()->warn(__VA_ARGS__)
+#define GF_ERROR(...)         gf::Log::getClientLogger()->error(__VA_ARGS__)
+#define GF_CRITICAL(...)      gf::Log::getClientLogger()->critical(__VA_ARGS__)
 
 #endif //INC_3DBODY_LOGGER_H

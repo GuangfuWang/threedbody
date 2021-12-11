@@ -763,7 +763,7 @@ enum ImGuiItemFlags_
   ImGuiItemFlags_ButtonRepeat             = 1 << 1,  // false     // Button() will return true multiple times based on io.KeyRepeatDelay and io.KeyRepeatRate settings.
   ImGuiItemFlags_Disabled                 = 1 << 2,  // false     // Disable interactions but doesn't affect visuals. See BeginDisabled()/EndDisabled(). See github.com/ocornut/imgui/issues/211
   ImGuiItemFlags_NoNav                    = 1 << 3,  // false     // Disable keyboard/gamepad directional navigation (FIXME: should merge with _NoTabStop)
-  ImGuiItemFlags_NoNavDefaultFocus        = 1 << 4,  // false     // Disable item being a candidate for default focus (e.g. used by title bar items)
+  ImGuiItemFlags_NoNavDefaultFocus        = 1 << 4,  // false     // Disable item being a candidate for default focus (e.g. used by mTitle bar items)
   ImGuiItemFlags_SelectableDontClosePopup = 1 << 5,  // false     // Disable MenuItem/Selectable() automatically closing their popup window
   ImGuiItemFlags_MixedValue               = 1 << 6,  // false     // [BETA] Represent a mixed/indeterminate value, generally multi-selection where values differ. Currently only supported by Checkbox() (later should support all sorts of widgets)
   ImGuiItemFlags_ReadOnly                 = 1 << 7,  // false     // [ALPHA] Allow hovering interactions but underlying value is not changed.
@@ -846,7 +846,7 @@ enum ImGuiSelectableFlagsPrivate_
   ImGuiSelectableFlags_SelectOnNav            = 1 << 21,  // (WIP) Auto-select when moved into. This is not exposed in public API as to handle multi-select and modifiers we will need user to explicitly control focus scope. May be replaced with a BeginSelection() API.
   ImGuiSelectableFlags_SelectOnClick          = 1 << 22,  // Override button behavior to react on Click (default is Click+Release)
   ImGuiSelectableFlags_SelectOnRelease        = 1 << 23,  // Override button behavior to react on Release (default is Click+Release)
-  ImGuiSelectableFlags_SpanAvailWidth         = 1 << 24,  // Span all avail width even if we declared less for layout purpose. FIXME: We may be able to remove this (added in 6251d379, 2bcafc86 for menus)
+  ImGuiSelectableFlags_SpanAvailWidth         = 1 << 24,  // Span all avail mWidth even if we declared less for layout purpose. FIXME: We may be able to remove this (added in 6251d379, 2bcafc86 for menus)
   ImGuiSelectableFlags_DrawHoveredWhenHeld    = 1 << 25,  // Always show active when held, even is not hovered. This concept could probably be renamed/formalized somehow.
   ImGuiSelectableFlags_SetNavIdOnHover        = 1 << 26,  // Set Nav/Focus ID on mouse hover (used by MenuItem)
   ImGuiSelectableFlags_NoPadWithHalfSpacing   = 1 << 27   // Disable padding each side with ItemSpacing * 0.5f
@@ -1016,7 +1016,7 @@ struct IMGUI_API ImGuiMenuColumns
   ImU16       OffsetLabel;        // Offsets are locked in Update()
   ImU16       OffsetShortcut;
   ImU16       OffsetMark;
-  ImU16       Widths[4];          // Width of:   Icon, Label, Shortcut, Mark  (accumulators for current frame)
+  ImU16       Widths[4];          // mWidth of:   Icon, Label, Shortcut, Mark  (accumulators for current frame)
 
   ImGuiMenuColumns() { memset(this, 0, sizeof(*this)); }
   void        Update(float spacing, bool window_reappearing);
@@ -1292,10 +1292,10 @@ enum ImGuiNavLayer
 
 struct ImGuiNavItemData
 {
-  ImGuiWindow*        Window;         // Init,Move    // Best candidate window (result->ItemWindow->RootWindowForNav == request->Window)
-  ImGuiID             ID;             // Init,Move    // Best candidate item ID
-  ImGuiID             FocusScopeId;   // Init,Move    // Best candidate focus scope ID
-  ImRect              RectRel;        // Init,Move    // Best candidate bounding box in window relative space
+  ImGuiWindow*        Window;         // init,Move    // Best candidate window (result->ItemWindow->RootWindowForNav == request->Window)
+  ImGuiID             ID;             // init,Move    // Best candidate item ID
+  ImGuiID             FocusScopeId;   // init,Move    // Best candidate focus scope ID
+  ImRect              RectRel;        // init,Move    // Best candidate bounding box in window relative space
   ImGuiItemFlags      InFlags;        // ????,Move    // Best candidate item flags
   float               DistBox;        //      Move    // Best candidate box distance to current NavId
   float               DistCenter;     //      Move    // Best candidate center distance to current NavId
@@ -1315,9 +1315,9 @@ enum ImGuiOldColumnFlags_
   ImGuiOldColumnFlags_None                    = 0,
   ImGuiOldColumnFlags_NoBorder                = 1 << 0,   // Disable column dividers
   ImGuiOldColumnFlags_NoResize                = 1 << 1,   // Disable resizing columns when clicking on the dividers
-  ImGuiOldColumnFlags_NoPreserveWidths        = 1 << 2,   // Disable column width preservation when adjusting columns
+  ImGuiOldColumnFlags_NoPreserveWidths        = 1 << 2,   // Disable column mWidth preservation when adjusting columns
   ImGuiOldColumnFlags_NoForceWithinWindow     = 1 << 3,   // Disable forcing columns to fit within window
-  ImGuiOldColumnFlags_GrowParentContentsSize  = 1 << 4    // (WIP) Restore pre-1.51 behavior of extending the parent window contents size but _without affecting the columns width at all_. Will eventually remove.
+  ImGuiOldColumnFlags_GrowParentContentsSize  = 1 << 4    // (WIP) Restore pre-1.51 behavior of extending the parent window contents size but _without affecting the columns mWidth at all_. Will eventually remove.
 
   // Obsolete names (will be removed)
 #ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
@@ -1677,8 +1677,8 @@ struct ImGuiContext
   ImGuiConfigFlags        ConfigFlagsCurrFrame;               // = g.IO.ConfigFlags at the time of NewFrame()
   ImGuiConfigFlags        ConfigFlagsLastFrame;
   ImFont*                 Font;                               // (Shortcut) == FontStack.empty() ? IO.Font : FontStack.back()
-  float                   FontSize;                           // (Shortcut) == FontBaseSize * g.CurrentWindow->FontWindowScale == window->FontSize(). Text height for current window.
-  float                   FontBaseSize;                       // (Shortcut) == IO.FontGlobalScale * Font->Scale * Font->FontSize. Base text height.
+  float                   FontSize;                           // (Shortcut) == FontBaseSize * g.CurrentWindow->FontWindowScale == window->FontSize(). Text mHeight for current window.
+  float                   FontBaseSize;                       // (Shortcut) == IO.FontGlobalScale * Font->Scale * Font->FontSize. Base text mHeight.
   ImDrawListSharedData    DrawListSharedData;
   double                  Time;
   int                     FrameCount;
@@ -1784,18 +1784,18 @@ struct ImGuiContext
   ImGuiID                 NavNextActivateId;                  // Set by ActivateItem(), queued until next frame.
   ImGuiActivateFlags      NavNextActivateFlags;
   ImGuiInputSource        NavInputSource;                     // Keyboard or Gamepad mode? THIS WILL ONLY BE None or NavGamepad or NavKeyboard.
-  ImGuiNavLayer           NavLayer;                           // Layer we are navigating on. For now the system is hard-coded for 0=main contents and 1=menu/title bar, may expose layers later.
+  ImGuiNavLayer           NavLayer;                           // Layer we are navigating on. For now the system is hard-coded for 0=main contents and 1=menu/mTitle bar, may expose layers later.
   bool                    NavIdIsAlive;                       // Nav widget has been seen this frame ~~ NavRectRel is valid
   bool                    NavMousePosDirty;                   // When set we will update mouse position if (io.ConfigFlags & ImGuiConfigFlags_NavEnableSetMousePos) if set (NB: this not enabled by default)
   bool                    NavDisableHighlight;                // When user starts using mouse, we hide gamepad/keyboard highlight (NB: but they are still available, which is why NavDisableHighlight isn't always != NavDisableMouseHover)
   bool                    NavDisableMouseHover;               // When user starts using gamepad/keyboard, we hide mouse hovering highlight until mouse is touched again.
 
-  // Navigation: Init & Move Requests
+  // Navigation: init & Move Requests
   bool                    NavAnyRequest;                      // ~~ NavMoveRequest || NavInitRequest this is to perform early out in ItemAdd()
-  bool                    NavInitRequest;                     // Init request for appearing window to select first item
+  bool                    NavInitRequest;                     // init request for appearing window to select first item
   bool                    NavInitRequestFromMove;
-  ImGuiID                 NavInitResultId;                    // Init request result (first item of the window, or one for which SetItemDefaultFocus() was called)
-  ImRect                  NavInitResultRectRel;               // Init request result rectangle (relative to parent window)
+  ImGuiID                 NavInitResultId;                    // init request result (first item of the window, or one for which SetItemDefaultFocus() was called)
+  ImRect                  NavInitResultRectRel;               // init request result rectangle (relative to parent window)
   bool                    NavMoveSubmitted;                   // Move request submitted, will process result on next NewFrame()
   bool                    NavMoveScoringItems;                // Move request submitted, still scoring incoming items
   bool                    NavMoveForwardToNextFrame;
@@ -2141,7 +2141,7 @@ struct IMGUI_API ImGuiWindowTempData
 
   // Local parameters stacks
   // We store the current settings outside of the vectors to increase memory locality (reduce cache misses). The vectors are rarely modified. Also it allows us to not heap allocate for short-lived windows which are not using those settings.
-  float                   ItemWidth;              // Current item width (>0.0: width in pixels, <0.0: align xx pixels to the right of window).
+  float                   ItemWidth;              // Current item mWidth (>0.0: mWidth in pixels, <0.0: align xx pixels to the right of window).
   float                   TextWrapPos;            // Current text wrap pos.
   ImVector<float>         ItemWidthStack;         // Store item widths to restore (attention: .back() is not == ItemWidth)
   ImVector<float>         TextWrapPosStack;       // Store text wrap pos to restore (attention: .back() is not == TextWrapPos)
@@ -2159,13 +2159,13 @@ struct IMGUI_API ImGuiWindow
   ImVec2                  ViewportPos;                        // We backup the viewport position (since the viewport may disappear or never be created if the window is inactive)
   int                     ViewportAllowPlatformMonitorExtend; // Reset to -1 every frame (index is guaranteed to be valid between NewFrame..EndFrame), only used in the Appearing frame of a tooltip/popup to enforce clamping to a given monitor
   ImVec2                  Pos;                                // Position (always rounded-up to nearest pixel)
-  ImVec2                  Size;                               // Current size (==SizeFull or collapsed title bar size)
+  ImVec2                  Size;                               // Current size (==SizeFull or collapsed mTitle bar size)
   ImVec2                  SizeFull;                           // Size when non collapsed
   ImVec2                  ContentSize;                        // Size of contents/scrollable client area (calculated from the extents reach of the cursor) from previous frame. Does not include window decoration or window padding.
   ImVec2                  ContentSizeIdeal;
   ImVec2                  ContentSizeExplicit;                // Size of contents/scrollable client area explicitly request by the user via SetNextWindowContentSize().
   ImVec2                  WindowPadding;                      // Window padding at the time of Begin().
-  float                   WindowRounding;                     // Window rounding at the time of Begin(). May be clamped lower to avoid rendering artifacts with title bar, menu bar etc.
+  float                   WindowRounding;                     // Window rounding at the time of Begin(). May be clamped lower to avoid rendering artifacts with mTitle bar, menu bar etc.
   float                   WindowBorderSize;                   // Window border size at the time of Begin().
   int                     NameBufLen;                         // Size of buffer storing Name. May be larger than strlen(Name)!
   ImGuiID                 MoveId;                             // == window->GetID("#MOVE")
@@ -2175,13 +2175,13 @@ struct IMGUI_API ImGuiWindow
   ImVec2                  ScrollTarget;                       // target scroll position. stored as cursor position with scrolling canceled out, so the highest point is always 0.0f. (FLT_MAX for no change)
   ImVec2                  ScrollTargetCenterRatio;            // 0.0f = scroll so that target position is at top, 0.5f = scroll so that target position is centered
   ImVec2                  ScrollTargetEdgeSnapDist;           // 0.0f = no snapping, >0.0f snapping threshold
-  ImVec2                  ScrollbarSizes;                     // Size taken by each scrollbars on their smaller axis. Pay attention! ScrollbarSizes.x == width of the vertical scrollbar, ScrollbarSizes.y = height of the horizontal scrollbar.
+  ImVec2                  ScrollbarSizes;                     // Size taken by each scrollbars on their smaller axis. Pay attention! ScrollbarSizes.x == mWidth of the vertical scrollbar, ScrollbarSizes.y = mHeight of the horizontal scrollbar.
   bool                    ScrollbarX, ScrollbarY;             // Are scrollbars visible?
   bool                    ViewportOwned;
   bool                    Active;                             // Set to true on Begin(), unless Collapsed
   bool                    WasActive;
   bool                    WriteAccessed;                      // Set to true when any widget access the current window
-  bool                    Collapsed;                          // Set when collapsing window to become only title-bar
+  bool                    Collapsed;                          // Set when collapsing window to become only mTitle-bar
   bool                    WantCollapseToggle;
   bool                    SkipItems;                          // Set when items can safely be all clipped (e.g. window not visible or collapsed)
   bool                    Appearing;                          // Set during the frame where the window is appearing (or re-appearing)
@@ -2215,7 +2215,7 @@ struct IMGUI_API ImGuiWindow
   // The best way to understand what those rectangles are is to use the 'Metrics->Tools->Show Windows Rectangles' viewer.
   // The main 'OuterRect', omitted as a field, is window->Rect().
   ImRect                  OuterRectClipped;                   // == Window->Rect() just after setup in Begin(). == window->Rect() for root window.
-  ImRect                  InnerRect;                          // Inner rectangle (omit title bar, menu bar, scroll bar)
+  ImRect                  InnerRect;                          // Inner rectangle (omit mTitle bar, menu bar, scroll bar)
   ImRect                  InnerClipRect;                      // == InnerRect shrunk by WindowPadding*0.5f on each side, clipped within viewport or parent clip rect.
   ImRect                  WorkRect;                           // Initially covers the whole scrolling region. Reduced by containers e.g columns/tables when active. Shrunk by WindowPadding*1.0f on each side. This is meant to replace ContentRegionRect over time (from 1.71+ onward).
   ImRect                  ParentWorkRect;                     // Backup of WorkRect before entering a container such as columns/tables. Used by e.g. SpanAllColumns functions to easily access. Stacked containers are responsible for maintaining this. // FIXME-WORKRECT: Could be a stack?
@@ -2305,7 +2305,7 @@ enum ImGuiTabItemFlagsPrivate_
   ImGuiTabItemFlags_NoCloseButton             = 1 << 20,  // Track whether p_open was set or not (we'll need this info on the next frame to recompute ContentWidth during layout)
   ImGuiTabItemFlags_Button                    = 1 << 21,  // Used by TabItemButton, change the tab item behavior to mimic a button
   ImGuiTabItemFlags_Unsorted                  = 1 << 22,  // [Docking] Trailing tabs with the _Unsorted flag will be sorted based on the DockOrder of their Window.
-  ImGuiTabItemFlags_Preview                   = 1 << 23   // [Docking] Display tab shape for docking preview (height is adjusted slightly to compensate for the yet missing tab bar)
+  ImGuiTabItemFlags_Preview                   = 1 << 23   // [Docking] Display tab shape for docking preview (mHeight is adjusted slightly to compensate for the yet missing tab bar)
 };
 
 // Storage for one active tab item (sizeof() 48 bytes)
@@ -2317,8 +2317,8 @@ struct ImGuiTabItem
   int                 LastFrameVisible;
   int                 LastFrameSelected;      // This allows us to infer an ordered list of the last activated tabs with little maintenance
   float               Offset;                 // Position relative to beginning of tab
-  float               Width;                  // Width currently displayed
-  float               ContentWidth;           // Width of label, stored during BeginTabItem() call
+  float               Width;                  // mWidth currently displayed
+  float               ContentWidth;           // mWidth of label, stored during BeginTabItem() call
   ImS32               NameOffset;             // When Window==NULL, offset to name within parent ImGuiTabBar::TabsNames
   ImS16               BeginOrder;             // BeginTabItem() order, used to re-order tabs after toggling ImGuiTabBarFlags_Reorderable
   ImS16               IndexDuringLayout;      // Index only used during TabBarLayout()
@@ -2340,9 +2340,9 @@ struct IMGUI_API ImGuiTabBar
   int                 PrevFrameVisible;
   ImRect              BarRect;
   float               CurrTabsContentsHeight;
-  float               PrevTabsContentsHeight; // Record the height of contents submitted below the tab bar
-  float               WidthAllTabs;           // Actual width of all tabs (locked during layout)
-  float               WidthAllTabsIdeal;      // Ideal width if all tabs were visible and not clipped
+  float               PrevTabsContentsHeight; // Record the mHeight of contents submitted below the tab bar
+  float               WidthAllTabs;           // Actual mWidth of all tabs (locked during layout)
+  float               WidthAllTabsIdeal;      // Ideal mWidth if all tabs were visible and not clipped
   float               ScrollingAnim;
   float               ScrollingTarget;
   float               ScrollingTargetDistToVisibility;
@@ -2392,19 +2392,19 @@ typedef ImU8 ImGuiTableDrawChannelIdx;
 struct ImGuiTableColumn
 {
   ImGuiTableColumnFlags   Flags;                          // Flags after some patching (not directly same as provided by user). See ImGuiTableColumnFlags_
-  float                   WidthGiven;                     // Final/actual width visible == (MaxX - MinX), locked in TableUpdateLayout(). May be > WidthRequest to honor minimum width, may be < WidthRequest to honor shrinking columns down in tight space.
+  float                   WidthGiven;                     // Final/actual mWidth visible == (MaxX - MinX), locked in TableUpdateLayout(). May be > WidthRequest to honor minimum mWidth, may be < WidthRequest to honor shrinking columns down in tight space.
   float                   MinX;                           // Absolute positions
   float                   MaxX;
-  float                   WidthRequest;                   // Master width absolute value when !(Flags & _WidthStretch). When Stretch this is derived every frame from StretchWeight in TableUpdateLayout()
-  float                   WidthAuto;                      // Automatic width
-  float                   StretchWeight;                  // Master width weight when (Flags & _WidthStretch). Often around ~1.0f initially.
-  float                   InitStretchWeightOrWidth;       // Value passed to TableSetupColumn(). For Width it is a content width (_without padding_).
+  float                   WidthRequest;                   // Master mWidth absolute value when !(Flags & _WidthStretch). When Stretch this is derived every frame from StretchWeight in TableUpdateLayout()
+  float                   WidthAuto;                      // Automatic mWidth
+  float                   StretchWeight;                  // Master mWidth weight when (Flags & _WidthStretch). Often around ~1.0f initially.
+  float                   InitStretchWeightOrWidth;       // Value passed to TableSetupColumn(). For mWidth it is a content mWidth (_without padding_).
   ImRect                  ClipRect;                       // Clipping rectangle for the column
   ImGuiID                 UserID;                         // Optional, value passed to TableSetupColumn()
   float                   WorkMinX;                       // Contents region min ~(MinX + CellPaddingX + CellSpacingX1) == cursor start position when entering column
   float                   WorkMaxX;                       // Contents region max ~(MaxX - CellPaddingX - CellSpacingX2)
-  float                   ItemWidth;                      // Current item width for the column, preserved across rows
-  float                   ContentMaxXFrozen;              // Contents maximum position for frozen rows (apart from headers), from which we can infer content width.
+  float                   ItemWidth;                      // Current item mWidth for the column, preserved across rows
+  float                   ContentMaxXFrozen;              // Contents maximum position for frozen rows (apart from headers), from which we can infer content mWidth.
   float                   ContentMaxXUnfrozen;
   float                   ContentMaxXHeadersUsed;         // Contents maximum position for headers rows (regardless of freezing). TableHeader() automatically softclip itself + report ideal desired size, to avoid creating extraneous draw calls
   float                   ContentMaxXHeadersIdeal;
@@ -2478,7 +2478,7 @@ struct IMGUI_API ImGuiTable
   ImS16                       InstanceInteracted;         // Mark which instance (generally 0) of the same ID is being interacted with
   float                       RowPosY1;
   float                       RowPosY2;
-  float                       RowMinHeight;               // Height submitted to TableNextRow()
+  float                       RowMinHeight;               // mHeight submitted to TableNextRow()
   float                       RowTextBaseline;
   float                       RowIndentOffsetX;
   ImGuiTableRowFlags          RowFlags : 16;              // Current row flags, see ImGuiTableRowFlags_
@@ -2496,15 +2496,15 @@ struct IMGUI_API ImGuiTable
   float                       CellPaddingY;
   float                       CellSpacingX1;              // Spacing between non-bordered cells
   float                       CellSpacingX2;
-  float                       LastOuterHeight;            // Outer height from last frame
-  float                       LastFirstRowHeight;         // Height of first row from last frame
+  float                       LastOuterHeight;            // Outer mHeight from last frame
+  float                       LastFirstRowHeight;         // mHeight of first row from last frame
   float                       InnerWidth;                 // User value passed to BeginTable(), see comments at the top of BeginTable() for details.
-  float                       ColumnsGivenWidth;          // Sum of current column width
-  float                       ColumnsAutoFitWidth;        // Sum of ideal column width in order nothing to be clipped, used for auto-fitting and content width submission in outer window
+  float                       ColumnsGivenWidth;          // Sum of current column mWidth
+  float                       ColumnsAutoFitWidth;        // Sum of ideal column mWidth in order nothing to be clipped, used for auto-fitting and content mWidth submission in outer window
   float                       ResizedColumnNextWidth;
-  float                       ResizeLockMinContentsX2;    // Lock minimum contents width while resizing down in order to not create feedback loops. But we allow growing the table.
+  float                       ResizeLockMinContentsX2;    // Lock minimum contents mWidth while resizing down in order to not create feedback loops. But we allow growing the table.
   float                       RefScale;                   // Reference scale to be able to rescale columns on font/dpi changes.
-  ImRect                      OuterRect;                  // Note: for non-scrolling table, OuterRect.Max.y is often FLT_MAX until EndTable(), unless a height has been specified in BeginTable().
+  ImRect                      OuterRect;                  // Note: for non-scrolling table, OuterRect.Max.y is often FLT_MAX until EndTable(), unless a mHeight has been specified in BeginTable().
   ImRect                      InnerRect;                  // InnerRect but without decoration. As with OuterRect, for non-scrolling tables, InnerRect.Max.y is
   ImRect                      WorkRect;
   ImRect                      InnerClipRect;
@@ -2666,7 +2666,7 @@ IMGUI_API void          SetCurrentFont(ImFont* font);
 inline ImFont*          GetDefaultFont() { ImGuiContext& g = *GImGui; return g.IO.FontDefault ? g.IO.FontDefault : g.IO.Fonts->Fonts[0]; }
 inline ImDrawList*      GetForegroundDrawList(ImGuiWindow* window) { return GetForegroundDrawList(window->Viewport); }
 
-// Init
+// init
 IMGUI_API void          Initialize(ImGuiContext* context);
 IMGUI_API void          Shutdown(ImGuiContext* context);    // Since 1.60 this is a _private_ function. You can call DestroyContext() to destroy the context created by CreateContext().
 
@@ -2760,7 +2760,7 @@ inline void FocusableItemUnregister(ImGuiWindow* window)            { IM_ASSERT(
 
 // Logging/Capture
 IMGUI_API void          LogBegin(ImGuiLogType type, int auto_open_depth);           // -> BeginCapture() when we design v2 api, for now stay under the radar by using the old name.
-IMGUI_API void          LogToBuffer(int auto_open_depth = -1);                      // Start logging/capturing to internal buffer
+IMGUI_API void          LogToBuffer(int auto_open_depth = -1);                      // start logging/capturing to internal buffer
 IMGUI_API void          LogRenderedText(const ImVec2* ref_pos, const char* text, const char* text_end = NULL);
 IMGUI_API void          LogSetNextTextDecoration(const char* prefix, const char* suffix);
 
@@ -2871,7 +2871,7 @@ IMGUI_API void          DockBuilderRemoveNodeDockedWindows(ImGuiID node_id, bool
 IMGUI_API void          DockBuilderRemoveNodeChildNodes(ImGuiID node_id);       // Remove all split/hierarchy. All remaining docked windows will be re-docked to the remaining root node (node_id).
 IMGUI_API void          DockBuilderSetNodePos(ImGuiID node_id, ImVec2 pos);
 IMGUI_API void          DockBuilderSetNodeSize(ImGuiID node_id, ImVec2 size);
-IMGUI_API ImGuiID       DockBuilderSplitNode(ImGuiID node_id, ImGuiDir split_dir, float size_ratio_for_node_at_dir, ImGuiID* out_id_at_dir, ImGuiID* out_id_at_opposite_dir); // Create 2 child nodes in this parent node.
+IMGUI_API ImGuiID       DockBuilderSplitNode(ImGuiID node_id, ImGuiDir split_dir, float size_ratio_for_node_at_dir, ImGuiID* out_id_at_dir, ImGuiID* out_id_at_opposite_dir); // create 2 child nodes in this parent node.
 IMGUI_API void          DockBuilderCopyDockSpace(ImGuiID src_dockspace_id, ImGuiID dst_dockspace_id, ImVector<const char*>* in_window_remap_pairs);
 IMGUI_API void          DockBuilderCopyNode(ImGuiID src_node_id, ImGuiID dst_node_id, ImVector<ImGuiID>* out_node_remap_pairs);
 IMGUI_API void          DockBuilderCopyWindowSettings(const char* src_name, const char* dst_name);

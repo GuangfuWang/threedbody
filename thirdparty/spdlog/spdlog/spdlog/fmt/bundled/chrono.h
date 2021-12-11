@@ -1279,7 +1279,7 @@ struct formatter<std::chrono::duration<Rep, Period>, Char> {
     auto specs_copy = specs;
     auto precision_copy = precision;
     auto begin = format_str.begin(), end = format_str.end();
-    // As a possible future optimization, we could avoid extra copying if width
+    // As a possible future optimization, we could avoid extra copying if mWidth
     // is not specified.
     basic_memory_buffer<Char> buf;
     auto out = std::back_inserter(buf);

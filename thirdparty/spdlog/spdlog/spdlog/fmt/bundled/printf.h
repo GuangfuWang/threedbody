@@ -191,7 +191,7 @@ template <typename Char> struct get_cstring {
   const Char* operator()(const Char* s) { return s; }
 };
 
-// Checks if an argument is a valid printf width specifier and sets
+// Checks if an argument is a valid printf mWidth specifier and sets
 // left alignment if it is negative.
 template <typename Char> class printf_width_handler {
  private:
@@ -216,7 +216,7 @@ template <typename Char> class printf_width_handler {
 
   template <typename T, FMT_ENABLE_IF(!std::is_integral<T>::value)>
   unsigned operator()(T) {
-    FMT_THROW(format_error("width is not integer"));
+    FMT_THROW(format_error("mWidth is not integer"));
     return 0;
   }
 };
@@ -332,7 +332,7 @@ int parse_header(const Char*& it, const Char* end,
   int arg_index = -1;
   Char c = *it;
   if (c >= '0' && c <= '9') {
-    // Parse an argument index (if followed by '$') or a width possibly
+    // Parse an argument index (if followed by '$') or a mWidth possibly
     // preceded with '0' flag(s).
     int value = parse_nonnegative_int(it, end, -1);
     if (it != end && *it == '$') {  // value is an argument index
@@ -341,7 +341,7 @@ int parse_header(const Char*& it, const Char* end,
     } else {
       if (c == '0') specs.fill[0] = '0';
       if (value != 0) {
-        // Nonzero value means that we parsed width and don't need to
+        // Nonzero value means that we parsed mWidth and don't need to
         // parse it or flags again, so return now.
         if (value == -1) FMT_THROW(format_error("number is too big"));
         specs.width = value;
@@ -350,7 +350,7 @@ int parse_header(const Char*& it, const Char* end,
     }
   }
   parse_flags(specs, it, end);
-  // Parse width.
+  // Parse mWidth.
   if (it != end) {
     if (*it >= '0' && *it <= '9') {
       specs.width = parse_nonnegative_int(it, end, -1);
@@ -403,7 +403,7 @@ void vprintf(buffer<Char>& buf, basic_string_view<Char> format,
     basic_format_specs<Char> specs;
     specs.align = align::right;
 
-    // Parse argument index, flags and width.
+    // Parse argument index, flags and mWidth.
     int arg_index = parse_header(it, end, specs, get_arg);
     if (arg_index == 0) parse_ctx.on_error("argument not found");
 
