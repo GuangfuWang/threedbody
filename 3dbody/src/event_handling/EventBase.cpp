@@ -13,3 +13,6 @@ void gf::onWindowCloseCallback(GLFWwindow *window)  {
   pWindow->onClose();
 }
 
+void gf::EventDispatcher::dispatch() {
+
+}

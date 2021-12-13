@@ -31,6 +31,46 @@ class MenuBar {
 		if (ImGui::MenuItem("Paste", "CTRL+V")) {}
 		ImGui::EndMenu();
 	  }
+
+	  if (ImGui::BeginMenu("Scripts")) {
+		if (ImGui::MenuItem("Python Script", "CTRL+P")) {}
+		if (ImGui::MenuItem("Shell Script", "CTRL+ALT+S")) {}
+		if (ImGui::MenuItem("Lua Script", "CTRL+L", false, false)) {}  // Disabled item
+		ImGui::Separator();
+		if (ImGui::MenuItem("Fortran 98 Script", "CTRL+F")) {}
+		if (ImGui::MenuItem("MatLab Script", "CTRL+M")) {}
+		ImGui::EndMenu();
+	  }
+
+	  if (ImGui::BeginMenu("Tools")) {
+		if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+		if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+		ImGui::Separator();
+		if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+		if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+		if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+		ImGui::EndMenu();
+	  }
+
+	  if (ImGui::BeginMenu("Windows")) {
+		if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+		if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+		ImGui::Separator();
+		if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+		if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+		if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+		ImGui::EndMenu();
+	  }
+
+	  if (ImGui::BeginMenu("Help")) {
+		if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+		if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+		ImGui::Separator();
+		if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+		if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+		if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+		ImGui::EndMenu();
+	  }
 	  ImGui::EndMenuBar();
 	}
 

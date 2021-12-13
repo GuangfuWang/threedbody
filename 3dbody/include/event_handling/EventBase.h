@@ -1,6 +1,3 @@
-//
-// Created by bigdata-wgf on 2021/12/8.
-//
 
 #ifndef INC_3DBODY_3DBODY_INCLUDE_EVENT_HANDLING_EVENTBASE_H_
 #define INC_3DBODY_3DBODY_INCLUDE_EVENT_HANDLING_EVENTBASE_H_
@@ -29,6 +26,19 @@ enum class EVENT_ACTION {
 class EventHandleBase {
  public:
   virtual void update(Shader *shader) = 0;
+};
+
+
+/**
+ * @brief this class is used for dispatching all events.
+ */
+class EventDispatcher{
+
+ public:
+
+  void dispatch();
+
+
 };
 
 

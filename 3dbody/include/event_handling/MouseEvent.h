@@ -13,6 +13,12 @@ enum MOUSE_INPUT_CODE {
   NONE   = 9
 };
 
+enum MOUSE_ACTION{
+  PRESSED = GLFW_PRESS,
+  RELEASED = GLFW_RELEASE,
+  REPEAT = GLFW_REPEAT
+};
+
 class MouseInput {
  public:
   static MOUSE_INPUT_CODE getPressedButton(GLFWwindow *window) {

@@ -56,6 +56,11 @@ class FileDialog {
 		ConfigMap::getInstance()->input_format_.size());
   }
 
+  //todo: implement save function.
+  bool fileSaveModel() {
+	return true;
+  }
+
   static void fileFilterConverter(const vector<const char *> &in_format, nfdfilteritem_t &out_format) {
 
   }
