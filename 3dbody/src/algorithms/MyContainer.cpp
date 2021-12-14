@@ -10,10 +10,4 @@ unsigned int MyContainer::container_ = 0;
 
 bool MyContainer::noUnregistered = true;
 
-MyContainer *MyContainer::instance_ = nullptr;
-
-MyContainer::MyContainer() {
-///do nothing for singleton.
-}
-
 }

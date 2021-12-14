@@ -39,7 +39,7 @@ class FileDialog {
 	  return FILE_OPEN_CANCEL;
 	} else {
 	  NFD_Quit();
-	  GF_CORE_ERROR("Error when loading specified file format...");
+	  GF_CORE_ERROR("File loader error when loading specified file format...");
 	  load_file = "";
 	  return FILE_OPEN_ERROR;
 	}

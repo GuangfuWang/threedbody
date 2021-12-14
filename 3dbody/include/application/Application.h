@@ -16,7 +16,7 @@ class Application {
   void loop();
 
  private:
-  static Application *sInstance;
+  static Application                    *sInstance;
   std::unique_ptr<gf::ThreeDBodyWindow> mWindow;
 };
 }

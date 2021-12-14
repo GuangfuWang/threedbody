@@ -24,13 +24,14 @@ using std::string;
 
 extern nfdfilteritem_t cvtFilter(const char *each) {
   nfdfilteritem_t res;
-  char            *copy;
-  copy = (char *)malloc(strlen(each) - 1);
-  for (int i = 1; i < strlen(each); i++) {
-	copy[i - 1] = each[i];
-  }
-  res.name = copy;
-  res.spec = copy;
+  string_view     temp = string_view(each).substr(1);
+//  char            *copy;
+//  copy = (char *)malloc(strlen(each) - 1);
+//  for (int i = 1; i < strlen(each); i++) {
+//	copy[i - 1] = each[i];
+//  }
+  res.name = temp.data();
+  res.spec = temp.data();
   return res;
 }
 

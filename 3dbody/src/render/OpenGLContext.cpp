@@ -6,7 +6,7 @@
 
 #include "include/render/OpenGLContext.h"
 
-#include "include/event_handling/EventBase.h"
+#include "include/event_handling/ApplicationEvent.h"
 #include "include/event_handling/MouseEvent.h"
 #include "include/event_handling/KeyEvent.h"
 #include "include/event_handling/GameControllerEvent.h"
@@ -44,7 +44,7 @@ bool OpenGL_Context::init(BaseWindow *window) {
 
   glfwSetWindowUserPointer(glWindow, window);
   //Keyboard input handling.
-  glfwSetKeyCallback(glWindow, onKeyCallback);
+  glfwSetKeyCallback(glWindow, onKeyEventCallBack);
   //Mouse input handling.
   glfwSetMouseButtonCallback(glWindow, onMouseButtonCallback);
   glfwSetScrollCallback(glWindow, onScrollCallback);

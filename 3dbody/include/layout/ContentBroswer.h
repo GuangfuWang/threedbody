@@ -45,7 +45,7 @@ class ContentBrowser {
  public:
   ContentBrowser();
 
-  void render(bool * open = new bool(true));
+  void render(bool *open = new bool(true));
  private:
   fs::path currentDirectory_;
 };

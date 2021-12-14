@@ -24,7 +24,7 @@ macro(target_deps_link)
         ## FIXME: here should consider different versions of linux os.
         ## FIXME: only ubuntu 16.04 is tested under this absolute linking commands.
 
-    elseif(${CMAKE_HOST_APPLE})
+    elseif (${CMAKE_HOST_APPLE})
 
 
     endif ()

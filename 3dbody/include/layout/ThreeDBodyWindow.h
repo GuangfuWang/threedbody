@@ -22,7 +22,7 @@ class ThreeDBodyWindow : public BaseWindow {
  public:
 
   ThreeDBodyWindow() :
-	  mIsRunning(true), mWindow(nullptr),contentBrowserOpen(true) {
+	  mIsRunning(true), mWindow(nullptr), contentBrowserOpen(true) {
 	mUICtx     = std::make_unique<UIContext>();
 	mRenderCtx = std::make_unique<OpenGL_Context>();
   }
@@ -31,9 +31,9 @@ class ThreeDBodyWindow : public BaseWindow {
 
   bool init(int width, int height, const string &title);
 
-  void render();
+  void render() override;
 
-  void handleInput();
+//  void handleInput();
 
   void *getNativeWindow() override { return mWindow; }
 
@@ -41,17 +41,21 @@ class ThreeDBodyWindow : public BaseWindow {
 	mWindow = (GLFWwindow *)window;
   }
 
-  void onScroll(double delta) override;
-
-  void onMouseButton(unsigned char code) override;
-
-  void onKey(int key, int scancode, int action, int mods) override;
-
-  void onResize(int width, int height) override;
-
-  void onClose() override;
-
   bool isRunning() { return mIsRunning; }
+
+  void setRunningStatus(bool run) override {
+	mIsRunning = run;
+  }
+
+  void setWidth(const int &w) override { mWidth = w; }
+
+  void setHeight(const int &h) override { mHeight = h; }
+
+  int getWidth() override { return mWidth; }
+
+  int getHeight() override { return mHeight; }
+
+  SceneView *getSceneView() override { return mSceneView.get(); }
 
  private:
 

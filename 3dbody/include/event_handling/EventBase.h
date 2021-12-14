@@ -6,6 +6,8 @@
 
 namespace gf {
 
+#define EVENT_SOURCE(X) EVENT_SOURCE_TYPE::##X
+
 enum class EVENT_SOURCE_TYPE {
   NONE = 0,
   KEYBOARD,
@@ -16,35 +18,12 @@ enum class EVENT_SOURCE_TYPE {
   PATH_DROP
 };
 
-enum class EVENT_ACTION {
-  NONE = 0,
-  PRESSED,
-  RELEASE,
-  HOVERED
-};
-
-class EventHandleBase {
+class EventHandleInterface {
  public:
+
   virtual void update(Shader *shader) = 0;
-};
-
-
-/**
- * @brief this class is used for dispatching all events.
- */
-class EventDispatcher{
-
- public:
-
-  void dispatch();
-
 
 };
-
-
-extern void onWindowSizeCallback(GLFWwindow *window, int width, int height);
-
-extern void onWindowCloseCallback(GLFWwindow *window);
 
 }
 

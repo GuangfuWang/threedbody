@@ -6,7 +6,7 @@
 namespace gf {
 
 void FontTogglePanel::render() {
-  if (!fontLoaded){
+  if (!fontLoaded) {
 	loadAllFonts();
   }
   bool p;
@@ -44,9 +44,9 @@ void FontTogglePanel::render() {
   }
 }
 void FontTogglePanel::loadAllFonts() {
-	fontList_.reserve(42);
-	std::filesystem::path temp=ConfigMap::getInstance()->resource_dir_;
-	temp/="fonts/EN";
-	//todo: not finished.
+  fontList_.reserve(42);
+  std::filesystem::path temp = ConfigMap::getInstance()->resource_dir_;
+  temp /= "fonts/EN";
+  //todo: not finished.
 }
 }

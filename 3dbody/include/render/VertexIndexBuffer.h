@@ -25,13 +25,11 @@ class VertexIndexBuffer {
   GLuint mIBO;
 };
 
-class OpenGL_VertexIndexBuffer : public VertexIndexBuffer
-{
+class OpenGL_VertexIndexBuffer : public VertexIndexBuffer {
  public:
-  OpenGL_VertexIndexBuffer() : VertexIndexBuffer()
-  {}
+  OpenGL_VertexIndexBuffer() : VertexIndexBuffer() {}
 
-  void createBuffers(const std::vector<VertexHolder>& vertices, const std::vector<unsigned int>& indices) override;
+  void createBuffers(const std::vector<VertexHolder> &vertices, const std::vector<unsigned int> &indices) override;
 
   void deleteBuffers() override;
 

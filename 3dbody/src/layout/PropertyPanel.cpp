@@ -54,9 +54,10 @@ void Property_Panel::render(SceneView *scene_view) {
 	if (ImGui::Button("Open...")) {
 	  string             load_file;
 	  FILE_DIALOG_RESULT res =
-							 mFileDialog->fileLoadModel( load_file);
+							 mFileDialog->fileLoadModel(load_file);
 	  if (res==FILE_OPEN_OK) {
 		GF_CORE_INFO("Openning file: {}", load_file);
+		mMeshLoadCallback(load_file);
 	  } else if (res==FILE_OPEN_CANCEL) {
 		GF_CORE_INFO("Open file cancelled...");
 	  } else

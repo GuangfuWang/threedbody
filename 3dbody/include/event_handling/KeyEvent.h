@@ -95,8 +95,8 @@ enum KEY_MAP {
   KEY_DELETE        = GLFW_KEY_DELETE,
   KEY_BACKSPACE     = GLFW_KEY_BACKSPACE,
   KEY_SEMICOLON     = GLFW_KEY_SEMICOLON,
-  KEY_ENTER   = GLFW_KEY_ENTER,
-  KEY_ENTER_R = GLFW_KEY_KP_ENTER,
+  KEY_ENTER         = GLFW_KEY_ENTER,
+  KEY_ENTER_R       = GLFW_KEY_KP_ENTER,
 
   KEY_F1  = GLFW_KEY_F1,
   KEY_F2  = GLFW_KEY_F2,
@@ -116,7 +116,80 @@ enum KEY_MAP {
 
 };
 
-extern void onKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+enum class KEY_ACTION {
+  KEY_PRESSED  = GLFW_PRESS,
+  KEY_RELEASED = GLFW_RELEASE,
+  KEY_REPEAT   = GLFW_REPEAT,
+
+  ///ERROR CODE.
+  KEY_NONE = INT_MAX
+
+};
+
+enum class KEY_MODIFIER {
+  KEY_MOD_CTRL  = GLFW_MOD_CONTROL,
+  KEY_MOD_ALT   = GLFW_MOD_ALT,
+  KEY_MOD_SHIFT = GLFW_MOD_SHIFT,
+
+  ///Not used in current project actually.
+  KEY_MOD_CAPS_LOCK = GLFW_MOD_CAPS_LOCK,
+  KEY_MOD_SUPER     = GLFW_MOD_SUPER,
+  KEY_MOD_NUM_LOCK  = GLFW_MOD_NUM_LOCK,
+
+  ///error code.
+  KEY_MOD_NONE = INT_MAX
+};
+
+class KeyInput {
+ public:
+
+  static KEY_ACTION getKeyAction(const int &action) {
+	if (action==GLFW_PRESS)return KEY_ACTION::KEY_PRESSED;
+	if (action==GLFW_RELEASE)return KEY_ACTION::KEY_RELEASED;
+	if (action==GLFW_REPEAT) return KEY_ACTION::KEY_REPEAT;
+	return KEY_ACTION::KEY_NONE;
+  }
+
+  static KEY_MODIFIER getKeyModifier(const int &mods) {
+	if (mods==GLFW_MOD_CONTROL)return KEY_MODIFIER::KEY_MOD_CTRL;
+	if (mods==GLFW_MOD_ALT)return KEY_MODIFIER::KEY_MOD_ALT;
+	if (mods==GLFW_MOD_SHIFT)return KEY_MODIFIER::KEY_MOD_SHIFT;
+	if (mods==GLFW_MOD_NUM_LOCK)return KEY_MODIFIER::KEY_MOD_NUM_LOCK;
+	if (mods==GLFW_MOD_CAPS_LOCK)return KEY_MODIFIER::KEY_MOD_CAPS_LOCK;
+	if (mods==GLFW_MOD_SUPER)return KEY_MODIFIER::KEY_MOD_SUPER;
+	return KEY_MODIFIER::KEY_MOD_NONE;
+  }
+
+  static KEY_MAP getKeyMap(const int &key) {
+	return (KEY_MAP)key;
+  }
+
+};
+
+class KeyEventHandling {
+
+ public:
+  virtual void onKeyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods) = 0;
+
+};
+
+/**
+ * @note highly recommend you use singleton if you need implement your own key event handling system.
+ */
+class ThreeDBodyKeyEventHandling final : public KeyEventHandling {
+
+ public:
+  void onKeyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods) override;
+  static KeyEventHandling *getInstance();
+
+ private:
+  ThreeDBodyKeyEventHandling() = default;
+
+ private:
+  static KeyEventHandling *instance_;
+};
+
+extern void onKeyEventCallBack(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 }
 

@@ -19,6 +19,14 @@ enum JOYSTICK_INPUT {
   HAT_LEFT_DOWN  = (HAT_LEFT | HAT_DOWN),
 };
 
+
+/**
+ * please note we did NOT implement a class what's soever, that is because we current will not use game controller.
+ * maybe implement that in future as a feature.
+ * @author Guangfu.
+ * @param jid
+ * @param event
+ */
 extern void onJoystickCallback(int jid, int event);
 
 }

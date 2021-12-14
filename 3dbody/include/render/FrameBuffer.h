@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-namespace gf{
+namespace gf {
 
 class FrameBuffer {
  public:
@@ -28,8 +28,7 @@ class FrameBuffer {
   int32_t  mHeight  = 0;
 };
 
-class OpenGL_FrameBuffer : public FrameBuffer
-{
+class OpenGL_FrameBuffer : public FrameBuffer {
  public:
 
   void createBuffers(int32_t width, int32_t height) override;
@@ -44,6 +43,5 @@ class OpenGL_FrameBuffer : public FrameBuffer
 };
 
 }
-
 
 #endif //INC_3DBODY_3DBODY_INCLUDE_RENDER_FRAMEBUFFER_H_

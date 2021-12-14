@@ -12,7 +12,7 @@ ContentBrowser::ContentBrowser()
 	: currentDirectory_(ConfigMap::getInstance()->root_dir_) {
 }
 
-void ContentBrowser::render(bool * open) {
+void ContentBrowser::render(bool *open) {
   if (!ImGui::Begin("Content Browser", open)) {
 	ImGui::End();
 	return;

@@ -4,40 +4,37 @@
 #include <gl/glew.h>
 #include "include/shader/Shader.h"
 
-namespace gf{
+namespace gf {
 
-unsigned int Shader::getCompiledShader(unsigned int shader_type, const std::string& shader_source)
-{
+unsigned int Shader::getCompiledShader(unsigned int shader_type, const std::string &shader_source) {
   unsigned int shader_id = glCreateShader(shader_type);
 
-  const char* c_source = shader_source.c_str();
+  const char *c_source = shader_source.c_str();
   glShaderSource(shader_id, 1, &c_source, nullptr);
   glCompileShader(shader_id);
 
   GLint result;
   glGetShaderiv(shader_id, GL_COMPILE_STATUS, &result);
 
-  if (result == GL_FALSE)
-  {
-    int length;
-    glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &length);
+  if (result==GL_FALSE) {
+	int length;
+	glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &length);
 
-    GLchar* strInfoLog = new GLchar[length + 1];
-    glGetShaderInfoLog(shader_id, length, &length, strInfoLog);
+	GLchar *strInfoLog = new GLchar[length + 1];
+	glGetShaderInfoLog(shader_id, length, &length, strInfoLog);
 
-    fprintf(stderr, "Compile error in Shader: %s\n", strInfoLog);
-    delete[] strInfoLog;
+	fprintf(stderr, "Compile error in Shader: %s\n", strInfoLog);
+	delete[] strInfoLog;
   }
 
   return shader_id;
 }
 
-bool Shader::load(const std::string& vertexshader_file, const std::string& fragmentshader_file)
-{
-  std::ifstream is_vs(vertexshader_file);
+bool Shader::load(const std::string &vertexshader_file, const std::string &fragmentshader_file) {
+  std::ifstream     is_vs(vertexshader_file);
   const std::string f_vs((std::istreambuf_iterator<char>(is_vs)), std::istreambuf_iterator<char>());
 
-  std::ifstream is_fs(fragmentshader_file);
+  std::ifstream     is_fs(fragmentshader_file);
   const std::string f_fs((std::istreambuf_iterator<char>(is_fs)), std::istreambuf_iterator<char>());
 
   mProgramId = glCreateProgram();
@@ -57,48 +54,40 @@ bool Shader::load(const std::string& vertexshader_file, const std::string& fragm
   return true;
 }
 
-void Shader::use()
-{
+void Shader::use() {
   glUseProgram(mProgramId);
 }
 
-void Shader::unload()
-{
+void Shader::unload() {
   glDeleteProgram(mProgramId);
 }
 
-void Shader::setMat4(const glm::mat4& mat4, const std::string& name)
-{
+void Shader::setMat4(const glm::mat4 &mat4, const std::string &name) {
   GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniformMatrix4fv(myLoc, 1, GL_FALSE, glm::value_ptr(mat4));
 }
 
-void Shader::setI1(int v, const std::string& name)
-{
+void Shader::setI1(int v, const std::string &name) {
   GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniform1i(myLoc, v);
 }
 
-void Shader::setF1(float v, const std::string& name)
-{
+void Shader::setF1(float v, const std::string &name) {
   GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniform1f(myLoc, v);
 }
 
-void Shader::setF3(float a, float b, float c, const std::string& name)
-{
+void Shader::setF3(float a, float b, float c, const std::string &name) {
   GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glUniform3f(myLoc, a, b, c);
 }
 
-void Shader::setVec3(const glm::vec3& vec3, const std::string& name)
-{
+void Shader::setVec3(const glm::vec3 &vec3, const std::string &name) {
   GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glProgramUniform3fv(getProgramId(), myLoc, 1, glm::value_ptr(vec3));
 }
 
-void Shader::setVec4(const glm::vec4& vec4, const std::string& name)
-{
+void Shader::setVec4(const glm::vec4 &vec4, const std::string &name) {
   GLint myLoc = glGetUniformLocation(getProgramId(), name.c_str());
   glProgramUniform4fv(getProgramId(), myLoc, 1, glm::value_ptr(vec4));
 }

@@ -3,6 +3,7 @@
 #define _VIEW_WINDOW_H_
 
 #include "def.h"
+#include "SceneView.h"
 
 namespace gf {
 
@@ -13,19 +14,24 @@ class BaseWindow {
 
   virtual void setNativeWindow(void *window) = 0;
 
-  virtual void onScroll(double delta) = 0;
+  virtual SceneView *getSceneView() = 0;
 
-  virtual void onMouseButton(unsigned char code) = 0;
+  virtual void setRunningStatus(bool run) = 0;
 
-  virtual void onKey(int key, int scancode, int action, int mods) = 0;
+  virtual void setWidth(const int &w) = 0;
 
-  virtual void onResize(int width, int height) = 0;
+  virtual void setHeight(const int &h) = 0;
 
-  virtual void onClose() = 0;
+  virtual void render() = 0;
+
+  virtual int getWidth() = 0;
+
+  virtual int getHeight() = 0;
 
   int    mWidth;
   int    mHeight;
   string mTitle;
+
 };
 
 }

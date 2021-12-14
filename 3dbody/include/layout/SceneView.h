@@ -36,6 +36,12 @@ class SceneView {
 
   Light *getLight() { return mLight.get(); }
 
+  Camera *getCamera() { return mCamera.get(); }
+
+  Shader *getShader() { return mShader.get(); }
+
+  FrameBuffer *getFrameBuffer() { return mFrameBuffer.get(); }
+
   void resize(int32_t width, int32_t height);
 
   void render();
@@ -48,9 +54,9 @@ class SceneView {
 
   Ref<Mesh> getMesh() { return mMesh; }
 
-  void onMouseMove(double x, double y, MOUSE_INPUT_CODE button);
-
-  void onMouseWheel(double delta);
+//  void onMouseMove(double x, double y, MOUSE_BUTTON button);
+//
+//  void onMouseWheel(double delta);
 
   void resetView() {
 	mCamera->reset();

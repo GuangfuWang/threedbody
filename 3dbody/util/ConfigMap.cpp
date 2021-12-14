@@ -1,5 +1,6 @@
 #include "util/ConfigMap.h"
 #include "util/StringHelper.h"
+#include "util/Log.h"
 
 namespace gf {
 
@@ -66,6 +67,8 @@ ConfigMap::ConfigMap() :
 	input_format_.emplace_back(".x3d");
 	input_format_.emplace_back(".xgl");
 	input_format_.emplace_back(".zgl");
+
+	GF_CORE_INFO(input_format_[0]);
   }
   if (output_format_.empty()) {
 	output_format_.reserve(9);
@@ -87,7 +90,7 @@ ConfigMap::ConfigMap() :
 	  filterInputFormat[idx++] = cvtFilter(each);
 	}
   }
-  if(filterOutputFormat==nullptr){
+  if (filterOutputFormat==nullptr) {
 	unsigned int num = output_format_.size();
 	filterOutputFormat = new nfdfilteritem_t[num];
 	int       idx = 0;

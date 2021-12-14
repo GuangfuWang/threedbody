@@ -2,8 +2,7 @@
 #include "include/application/Application.h"
 #include "util/Log.h"
 
-int main(void)
-{
+int main() {
   gf::Log::init();
   auto app = std::make_unique<gf::Application>("3D Body");
   app->loop();

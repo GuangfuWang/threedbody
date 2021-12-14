@@ -9,12 +9,11 @@
 
 namespace gf {
 
-
 /**
  * @brief this class is used to setting all rendering related parameters.
  */
 
-class SceneProperty : public EventHandleBase {
+class SceneProperty : public EventHandleInterface {
 
  public:
   void update(Shader *shader) override;

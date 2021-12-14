@@ -8,7 +8,7 @@
 
 namespace gf {
 
-class Mesh : public EventHandleBase {
+class Mesh : public EventHandleInterface {
 
  public:
 
@@ -25,7 +25,7 @@ class Mesh : public EventHandleBase {
   std::vector<RenderIndexType> getVertexIndices() { return mVertexIndices; }
 
   void update(Shader *shader) override {
-    // pbr color
+	// pbr color
 	shader->setVec3(mColor, "albedo");
 
 	shader->setF1(mRoughness, "roughness");
@@ -34,9 +34,9 @@ class Mesh : public EventHandleBase {
 
   }
 
-  glm::vec3 mColor = {1.0f, 0.0f, 0.0f};
-  float mRoughness = 0.2f;
-  float mMetallic = 0.1f;
+  glm::vec3 mColor     = {1.0f, 0.0f, 0.0f};
+  float     mRoughness = 0.2f;
+  float     mMetallic  = 0.1f;
 
   void init();
 
@@ -56,7 +56,7 @@ class Mesh : public EventHandleBase {
   Ref_Unique<VertexIndexBuffer> mRenderBufferMgr;
 
   // Vertices and indices
-  vector<VertexHolder> mVertices;
+  vector<VertexHolder>    mVertices;
   vector<RenderIndexType> mVertexIndices;
 
 };

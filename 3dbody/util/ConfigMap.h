@@ -17,9 +17,9 @@ inline fs::path getRootDir() {
 
 class ConfigMap {
  public:
-  static ConfigMap *getInstance() ;
-private:
-  ConfigMap() ;
+  static ConfigMap *getInstance();
+ private:
+  ConfigMap();
   ~ConfigMap();
 
   ///TODO: Use config.conf for implementation.
@@ -38,11 +38,11 @@ private:
   std::vector<const char *> input_format_;
   std::vector<const char *> output_format_;
 
-  nfdu8filteritem_t* filterInputFormat;
-  nfdu8filteritem_t* filterOutputFormat;
+  nfdu8filteritem_t *filterInputFormat;
+  nfdu8filteritem_t *filterOutputFormat;
 
  private:
-  static ConfigMap* instance;
+  static ConfigMap *instance;
 };
 
 }

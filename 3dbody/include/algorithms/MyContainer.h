@@ -61,13 +61,6 @@ inline void updateContainer(unsigned int &c) {
 class MyContainer {
  public:
 
-  static MyContainer *getInstance() {
-	if (instance_==nullptr) {
-	  instance_ = new MyContainer();
-	}
-	return instance_;
-  }
-
   static unsigned int getAvailablePositionId() { return count_; }
 
   static unsigned int getTotalRegistered() { return totalRegistered_; }
@@ -157,15 +150,10 @@ class MyContainer {
   }
 
  private:
-  MyContainer();
-
- private:
   static unsigned int count_;
   static unsigned int totalRegistered_;
   static unsigned int container_;
   static bool         noUnregistered;
-
-  static MyContainer *instance_;
 
 };
 
