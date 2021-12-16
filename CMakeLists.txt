@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(3DBODY)
+project(3DBody)
 
 # basic setups for this project.
 include(${PROJECT_SOURCE_DIR}/3dbody/CMake/Setup.cmake)

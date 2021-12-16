@@ -39,7 +39,7 @@ void SceneView::render() {
   ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
   mSize = {viewportPanelSize.x, viewportPanelSize.y};
 
-  mCamera->setAspect(mSize.x,mSize.y);
+  mCamera->setAspect(mSize.x,mSize.y<1?1:mSize.y);
   mCamera->update(mShader.get());
 
   // add rendered texture to ImGUI scene window

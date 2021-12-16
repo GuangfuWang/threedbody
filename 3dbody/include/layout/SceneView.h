@@ -7,6 +7,7 @@
 #include "include/scene/SceneLight.h"
 #include "include/mesh/Mesh.h"
 #include "include/render/FrameBuffer.h"
+#include "util/ConfigMap.h"
 
 namespace gf {
 
@@ -18,8 +19,8 @@ class SceneView {
 	mFrameBuffer = std::make_unique<OpenGL_FrameBuffer>();
 	mFrameBuffer->createBuffers(800, 600);
 	mShader = std::make_unique<Shader>();
-	mShader->load("resources/shaders/vertex_shader/vertex_shader.glsl",
-				  "resources/shaders/fragment_shader/fs_pbr.glsl");
+	mShader->load(ConfigMap::getInstance()->resource_dir_+"/shaders/vertex_shader/vertex_shader.glsl",
+                  ConfigMap::getInstance()->resource_dir_+"/shaders/fragment_shader/fs_pbr.glsl");
 	mLight = std::make_unique<Light>();
 
 	mCamera = std::make_unique<SceneCamera>(

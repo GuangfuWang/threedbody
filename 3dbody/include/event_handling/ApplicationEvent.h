@@ -47,6 +47,7 @@ class ThreeDBodyAppEventHandling : public AppEventHandling {
   static AppEventHandling *instance_;
 };
 
+///TODO: window resize has bugs.
 extern void onWindowSizeCallback(GLFWwindow *window, int width, int height);
 
 extern void onWindowCloseCallback(GLFWwindow *window);
