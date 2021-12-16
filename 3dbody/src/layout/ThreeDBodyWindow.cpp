@@ -32,10 +32,6 @@ ThreeDBodyWindow::~ThreeDBodyWindow() {
 }
 
 //
-//void ThreeDBodyWindow::onScroll(double delta) {
-//  mSceneView->onMouseWheel(delta);
-//}
-//
 //void ThreeDBodyWindow::onMouseButton(unsigned char code) {
 //  double x, y;
 //  glfwGetCursorPos(mWindow, &x, &y);

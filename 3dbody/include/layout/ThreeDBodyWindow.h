@@ -33,8 +33,6 @@ class ThreeDBodyWindow : public BaseWindow {
 
   void render() override;
 
-//  void handleInput();
-
   void *getNativeWindow() override { return mWindow; }
 
   void setNativeWindow(void *window) {

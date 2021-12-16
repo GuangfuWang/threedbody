@@ -5,6 +5,8 @@
 #include <GLFW/glfw3.h>
 #include <climits>
 
+#include "def.h"
+
 namespace gf {
 
 /**
@@ -110,6 +112,18 @@ class MouseEventHandling {
 
   virtual void onDropFileCallback(GLFWwindow *window, int count, const char **paths) = 0;
 
+#ifdef GF_CUSTOM_CURSOR
+  virtual void createCustomCursor(GLFWimage* image,int xHot,int yHot) = 0;
+#endif
+
+ public:
+  double x_;
+  double y_;
+
+#ifdef GF_CUSTOM_CURSOR
+  GLFWcursor* mCursor;
+#endif
+
 };
 
 class ThreeDBodyMouseEventHandling : public MouseEventHandling {
@@ -134,7 +148,7 @@ class ThreeDBodyMouseEventHandling : public MouseEventHandling {
 
 extern void onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
 
-extern void onScrollCallback(GLFWwindow *window, double xoffset, double yoffset);
+extern void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset);
 
 extern void onDropFileCallback(GLFWwindow *window, int count, const char **paths);
 

@@ -3,6 +3,7 @@
 #define INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENEVIEW_H_
 
 #include "def.h"
+#include <imgui.h>
 #include "include/scene/SceneLight.h"
 #include "include/mesh/Mesh.h"
 #include "include/render/FrameBuffer.h"
@@ -21,12 +22,11 @@ class SceneView {
 				  "resources/shaders/fragment_shader/fs_pbr.glsl");
 	mLight = std::make_unique<Light>();
 
-	mCamera = std::make_unique<Camera>(
+	mCamera = std::make_unique<SceneCamera>(
 		glm::vec3(0, 0, 3),
 		45.0f,
-		1.3f,
-		0.1f,
-		100.0f);
+		mSize.x, mSize.y,
+		0.1f, 100.0f);
 
   }
 
@@ -36,7 +36,7 @@ class SceneView {
 
   Light *getLight() { return mLight.get(); }
 
-  Camera *getCamera() { return mCamera.get(); }
+  Camera *getCamera() { return (Camera *)mCamera.get(); }
 
   Shader *getShader() { return mShader.get(); }
 
@@ -59,11 +59,11 @@ class SceneView {
 //  void onMouseWheel(double delta);
 
   void resetView() {
-	mCamera->reset();
+//	mCamera->reset();
   }
 
  private:
-  Ref_Unique<Camera>             mCamera;
+  Ref_Unique<SceneCamera>        mCamera;
   Ref_Unique<OpenGL_FrameBuffer> mFrameBuffer;
   Ref_Unique<Shader>             mShader;
   Ref_Unique<Light>              mLight;

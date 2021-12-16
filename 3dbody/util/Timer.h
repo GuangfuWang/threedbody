@@ -63,7 +63,7 @@ class Timer {
  * sleep a certain amount of time in milli seconds.
  * @param milliSeconds time to be sleep.
  */
-extern void sleep(unsigned int milliSeconds) {
+inline void sleep(unsigned int milliSeconds) {
   std::this_thread::sleep_for(std::chrono::milliseconds(milliSeconds));
 }
 

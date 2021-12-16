@@ -1,6 +1,6 @@
 #include "include/layout/SceneView.h"
 #include "util/Log.h"
-#include "imgui.h"
+
 
 namespace gf {
 
@@ -10,14 +10,6 @@ void SceneView::resize(int32_t width, int32_t height) {
 
   mFrameBuffer->createBuffers((int32_t)mSize.x, (int32_t)mSize.y);
 }
-
-//void SceneView::onMouseMove(double x, double y, MOUSE_BUTTON button) {
-//  mCamera->onMouseMove(x, y, button);
-//}
-//
-//void SceneView::onMouseWheel(double delta) {
-//  mCamera->onMouseWheel(delta);
-//}
 
 void SceneView::loadMesh(const std::string &filepath) {
   if (!mMesh)
@@ -47,7 +39,7 @@ void SceneView::render() {
   ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
   mSize = {viewportPanelSize.x, viewportPanelSize.y};
 
-  mCamera->setAspect(mSize.x/mSize.y);
+  mCamera->setAspect(mSize.x,mSize.y);
   mCamera->update(mShader.get());
 
   // add rendered texture to ImGUI scene window

@@ -12,6 +12,7 @@
 #include <string_view>
 #include <array>
 #include <functional>
+#include <glm/glm.hpp>
 
 namespace gf {
 
@@ -62,6 +63,30 @@ namespace gf {
 #define ALIGNED64 __attribute__((aligned(64)))
 #endif
 
+#ifndef GF_PI
+#define GF_PI 3.1415926f
+#endif
+
+#ifndef Vec
+using Vec = glm::vec3;
+#endif
+
+#ifndef Quaternion
+  using Quaternion = glm::quat;
+#endif
+
+#ifndef Point
+  typedef struct Point{
+	int x,y;
+  }Point_;
+#endif
+
+#ifndef Mat4
+  using Mat4 = glm::mat4;
+#endif
+
+#define UnUsed_Func [[maybe_unused]]
+
 template<typename T>
 using Ref = std::shared_ptr<T>;
 
@@ -92,6 +117,7 @@ using array = std::array<T, N>;
 using FileLoaderFunc = std::function<void(const std::string &)>;
 
 using RenderIndexType = unsigned int;
+
 }
 
 #endif //INC_3DBODY_3DBODY_DEF_H_
