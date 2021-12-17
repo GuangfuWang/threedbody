@@ -23,10 +23,10 @@ class SceneView {
                   ConfigMap::getInstance()->resource_dir_+"/shaders/fragment_shader/fs_pbr.glsl");
 	mLight = std::make_unique<Light>();
 
-	mCamera = std::make_unique<SceneCamera>(
+	mCamera = std::make_unique<MyCamera>(
 		glm::vec3(0, 0, 3),
 		45.0f,
-		mSize.x, mSize.y,
+		1.33f,
 		0.1f, 100.0f);
 
   }
@@ -37,7 +37,7 @@ class SceneView {
 
   Light *getLight() { return mLight.get(); }
 
-  Camera *getCamera() { return (Camera *)mCamera.get(); }
+  MyCamera *getCamera() { return (MyCamera *)mCamera.get(); }
 
   Shader *getShader() { return mShader.get(); }
 
@@ -64,7 +64,7 @@ class SceneView {
   }
 
  private:
-  Ref_Unique<SceneCamera>        mCamera;
+  Ref_Unique<MyCamera>        mCamera;
   Ref_Unique<OpenGL_FrameBuffer> mFrameBuffer;
   Ref_Unique<Shader>             mShader;
   Ref_Unique<Light>              mLight;

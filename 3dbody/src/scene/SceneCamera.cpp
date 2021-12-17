@@ -63,9 +63,12 @@ namespace gf {
             const Vec &sceneMaxBox) {
 
         mCurrentFocus = sceneCenter - mPosition;
-        mSceneCenter  = sceneCenter;
-        mSceneMinBox  = sceneMinBox;
-        mSceneMaxBox  = sceneMaxBox;
+        mPosition.x = sceneCenter.x;
+        mPosition.y = sceneCenter.y;
+        mPosition.z = mPosition.z + std::max(sceneMaxBox.x - sceneMinBox.x, sceneMaxBox.y - sceneMinBox.y);
+        mSceneCenter = sceneCenter;
+        mSceneMinBox = sceneMinBox;
+        mSceneMaxBox = sceneMaxBox;
 
     }
 

@@ -33,7 +33,7 @@ void ThreeDBodyMouseEventHandling::onMouseButtonCallback(GLFWwindow *window, int
 	}
 	if (MouseInput::getMouseAction(action)==MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
 	  auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
-	  pWindow->getSceneView()->getCamera()->onPanMovement(x_, y_);
+	  pWindow->getSceneView()->getCamera()->onPan(x_, y_);
 	  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	}
 	if (MouseInput::getMouseAction(action)==MOUSE_ACTION::MOUSE_ACTION_RELEASED) {
@@ -44,7 +44,7 @@ void ThreeDBodyMouseEventHandling::onMouseButtonCallback(GLFWwindow *window, int
 	  auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
 
 	  //fixme: implement rotational functionality in camera class.
-	  pWindow->getSceneView()->getCamera()->onRotateMovement(x_, y_);
+	  pWindow->getSceneView()->getCamera()->onRotate(x_, y_);
 	  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	}
 	if (MouseInput::getMouseAction(action)==MOUSE_ACTION::MOUSE_ACTION_RELEASED) {
@@ -55,7 +55,7 @@ void ThreeDBodyMouseEventHandling::onMouseButtonCallback(GLFWwindow *window, int
 
 void ThreeDBodyMouseEventHandling::onScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
   auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
-  pWindow->getSceneView()->getCamera()->onZoomMovement(yoffset);
+  pWindow->getSceneView()->getCamera()->onZoom(yoffset);
 }
 
 void ThreeDBodyMouseEventHandling::onDropFileCallback(GLFWwindow *window, int count, const char **paths) {
