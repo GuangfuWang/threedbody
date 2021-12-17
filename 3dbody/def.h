@@ -68,55 +68,59 @@ namespace gf {
 #endif
 
 #ifndef Vec
-using Vec = glm::vec3;
+    using Vec = glm::vec3;
+#endif
+
+#ifndef Vec2f
+    using Vec2f = glm::vec2;
 #endif
 
 #ifndef Quaternion
-  using Quaternion = glm::quat;
+    using Quaternion = glm::quat;
 #endif
 
 #ifndef Point
-  typedef struct Point{
-	int x,y;
-  }Point_;
+    typedef struct Point {
+        int x, y;
+    } Point_;
 #endif
 
 #ifndef Mat4
-  using Mat4 = glm::mat4;
+    using Mat4 = glm::mat4;
 #endif
 
 #define UnUsed_Func [[maybe_unused]]
 
-template<typename T>
-using Ref = std::shared_ptr<T>;
+    template<typename T>
+    using Ref = std::shared_ptr<T>;
 
-template<typename T>
-using Ref_Unique = std::unique_ptr<T>;
+    template<typename T>
+    using Ref_Unique = std::unique_ptr<T>;
 
-namespace fs = std::filesystem;
+    namespace fs = std::filesystem;
 
-using string = std::string;
+    using string = std::string;
 
-template<typename T>
-using vector = std::vector<T>;
+    template<typename T>
+    using vector = std::vector<T>;
 
-template<typename T>
-using list = std::list<T>;
+    template<typename T>
+    using list = std::list<T>;
 
-using string_view = std::string_view;
+    using string_view = std::string_view;
 
-template<typename K, typename V>
-using unorder_map = std::unordered_map<K, V>;
+    template<typename K, typename V>
+    using unorder_map = std::unordered_map<K, V>;
 
-template<typename K, typename V>
-using map = std::map<K, V>;
+    template<typename K, typename V>
+    using map = std::map<K, V>;
 
-template<typename T, unsigned int N>
-using array = std::array<T, N>;
+    template<typename T, unsigned int N>
+    using array = std::array<T, N>;
 
-using FileLoaderFunc = std::function<void(const std::string &)>;
+    using FileLoaderFunc = std::function<void(const std::string &)>;
 
-using RenderIndexType = unsigned int;
+    using RenderIndexType = unsigned int;
 
 }
 

@@ -8,58 +8,61 @@
 
 namespace gf {
 
-class Mesh : public EventHandleInterface {
+    class Mesh : public EventHandleInterface {
 
- public:
+    public:
 
-  Mesh() = default;
+        Mesh() = default;
 
-  virtual ~Mesh();
+        virtual ~Mesh();
 
-  bool load(const std::string &filepath);
+        bool load(const std::string &filepath);
 
-  void addVertex(const VertexHolder &vertex) { mVertices.push_back(vertex); }
+        void addVertex(const VertexHolder &vertex) { mVertices.push_back(vertex); }
 
-  void addVertexIndex(unsigned int vertex_idx) { mVertexIndices.push_back(vertex_idx); }
+        void addVertexIndex(unsigned int vertex_idx) { mVertexIndices.push_back(vertex_idx); }
 
-  std::vector<RenderIndexType> getVertexIndices() { return mVertexIndices; }
+        std::vector<RenderIndexType> getVertexIndices() { return mVertexIndices; }
 
-  void update(Shader *shader) override {
-	// pbr color
-	shader->setVec3(mColor, "albedo");
+        void update(Shader *shader) override {
+            // pbr color
+            shader->setVec3(mColor, "albedo");
 
-	shader->setF1(mRoughness, "roughness");
-	shader->setF1(mMetallic, "metallic");
-	shader->setF1(1.0f, "ao");
+            shader->setF1(mRoughness, "roughness");
+            shader->setF1(mMetallic, "metallic");
+            shader->setF1(1.0f, "ao");
 
-  }
+        }
 
-  glm::vec3 mColor     = {1.0f, 0.0f, 0.0f};
-  float     mRoughness = 0.2f;
-  float     mMetallic  = 0.1f;
+        Vec   mColor      = {1.0f, 0.0f, 0.0f};
+        Vec   sceneCenter = {0.0f, 0.0f, 0.0f};
+        Vec   sceneMinBox = {std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max()};
+        Vec   sceneMaxBox = {std::numeric_limits<float>::min(), std::numeric_limits<float>::min(), std::numeric_limits<float>::min()};
+        float mRoughness  = 0.2f;
+        float mMetallic   = 0.1f;
 
-  void init();
+        void init();
 
-  void createBuffers();
+        void createBuffers();
 
-  void deleteBuffers();
+        void deleteBuffers();
 
-  void render();
+        void render();
 
-  void bind();
+        void bind();
 
-  void unbind();
+        void unbind();
 
- private:
+    private:
 
-  // Buffers manager
-  Ref_Unique<VertexIndexBuffer> mRenderBufferMgr;
+        // Buffers manager
+        Ref_Unique<VertexIndexBuffer> mRenderBufferMgr;
 
-  // Vertices and indices
-  vector<VertexHolder>    mVertices;
-  vector<RenderIndexType> mVertexIndices;
+        // Vertices and indices
+        vector<VertexHolder>    mVertices;
+        vector<RenderIndexType> mVertexIndices;
 
-};
+    };
 
 }
 

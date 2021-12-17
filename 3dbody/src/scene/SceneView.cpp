@@ -40,6 +40,9 @@ void SceneView::render() {
   mSize = {viewportPanelSize.x, viewportPanelSize.y};
 
   mCamera->setAspect(mSize.x,mSize.y<1?1:mSize.y);
+  mCamera->setScenePositionInfo(mMesh->sceneCenter,
+                                mMesh->sceneMinBox,
+                                mMesh->sceneMaxBox);
   mCamera->update(mShader.get());
 
   // add rendered texture to ImGUI scene window

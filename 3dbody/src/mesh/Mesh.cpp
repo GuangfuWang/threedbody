@@ -1,4 +1,3 @@
-
 #include "include/mesh/Mesh.h"
 
 #include <assimp/Importer.hpp>
@@ -6,76 +5,88 @@
 #include <assimp/scene.h>
 
 namespace gf {
-void Mesh::init() {
-  mRenderBufferMgr = std::make_unique<gf::OpenGL_VertexIndexBuffer>();
+    void Mesh::init() {
+        mRenderBufferMgr = std::make_unique<gf::OpenGL_VertexIndexBuffer>();
 
-  createBuffers();
-}
+        createBuffers();
+    }
 
-Mesh::~Mesh() {
-  deleteBuffers();
-}
+    Mesh::~Mesh() {
+        deleteBuffers();
+    }
 
-bool Mesh::load(const std::string &filepath) {
-  const uint32_t cMeshImportFlags =
-					 aiProcess_CalcTangentSpace |
-						 aiProcess_Triangulate |
-						 aiProcess_SortByPType |
-						 aiProcess_GenNormals |
-						 aiProcess_GenUVCoords |
-						 aiProcess_OptimizeMeshes |
-						 aiProcess_ValidateDataStructure;
+    bool Mesh::load(const std::string &filepath) {
+        const uint32_t cMeshImportFlags =
+                               aiProcess_CalcTangentSpace |
+                               aiProcess_Triangulate |
+                               aiProcess_SortByPType |
+                               aiProcess_GenNormals |
+                               aiProcess_GenUVCoords |
+                               aiProcess_OptimizeMeshes |
+                               aiProcess_ValidateDataStructure;
 
-  Assimp::Importer Importer;
+        Assimp::Importer Importer;
 
-  const aiScene *pScene = Importer.ReadFile(filepath.c_str(),
-											cMeshImportFlags);
+        const aiScene *pScene = Importer.ReadFile(filepath.c_str(),
+                                                  cMeshImportFlags);
 
-  if (pScene && pScene->HasMeshes()) {
-	mVertexIndices.clear();
-	mVertices.clear();
+        if (pScene && pScene->HasMeshes()) {
+            mVertexIndices.clear();
+            mVertices.clear();
 
-	auto *mesh = pScene->mMeshes[0];
+            auto          *mesh        = pScene->mMeshes[0];
+            float         one_of_verts = (float) 1 / mesh->mNumVertices;
+            for (uint32_t i            = 0; i < mesh->mNumVertices; i++) {
+                VertexHolder vh;
+                vh.mPos    = {mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z};
+                vh.mNormal = {mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z};
 
-	for (uint32_t i = 0; i < mesh->mNumVertices; i++) {
-	  VertexHolder vh;
-	  vh.mPos    = {mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z};
-	  vh.mNormal = {mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z};
+                addVertex(vh);
 
-	  addVertex(vh);
-	}
+                sceneCenter.x += mesh->mVertices[i].x * one_of_verts;
+                sceneCenter.y += mesh->mVertices[i].y * one_of_verts;
+                sceneCenter.z += mesh->mVertices[i].z * one_of_verts;
 
-	for (size_t i = 0; i < mesh->mNumFaces; i++) {
-	  aiFace face = mesh->mFaces[i];
+                sceneMinBox.x = std::min(mesh->mVertices[i].x,sceneMinBox.x);
+                sceneMinBox.y = std::min(mesh->mVertices[i].y,sceneMinBox.x);
+                sceneMinBox.z = std::min(mesh->mVertices[i].z,sceneMinBox.x);
 
-	  for (size_t j = 0; j < face.mNumIndices; j++)
-		addVertexIndex(face.mIndices[j]);
-	}
+                sceneMaxBox.x = std::max(mesh->mVertices[i].x,sceneMaxBox.x);
+                sceneMaxBox.y = std::max(mesh->mVertices[i].y,sceneMaxBox.x);
+                sceneMaxBox.z = std::max(mesh->mVertices[i].z,sceneMaxBox.x);
+            }
 
-	init();
-	return true;
-  }
-  return false;
-}
+            for (size_t i = 0; i < mesh->mNumFaces; i++) {
+                aiFace face = mesh->mFaces[i];
 
-void Mesh::createBuffers() {
-  mRenderBufferMgr->createBuffers(mVertices, mVertexIndices);
-}
+                for (size_t j = 0; j < face.mNumIndices; j++)
+                    addVertexIndex(face.mIndices[j]);
+            }
 
-void Mesh::deleteBuffers() {
-  mRenderBufferMgr->deleteBuffers();
-}
+            init();
+            return true;
+        }
+        return false;
+    }
 
-void Mesh::bind() {
-  mRenderBufferMgr->bind();
-}
+    void Mesh::createBuffers() {
+        mRenderBufferMgr->createBuffers(mVertices, mVertexIndices);
+    }
 
-void Mesh::unbind() {
-  mRenderBufferMgr->unbind();
-}
+    void Mesh::deleteBuffers() {
+        mRenderBufferMgr->deleteBuffers();
+    }
 
-void Mesh::render() {
-  mRenderBufferMgr->draw((int)mVertexIndices.size());
-}
+    void Mesh::bind() {
+        mRenderBufferMgr->bind();
+    }
+
+    void Mesh::unbind() {
+        mRenderBufferMgr->unbind();
+    }
+
+    void Mesh::render() {
+        mRenderBufferMgr->draw((int) mVertexIndices.size());
+    }
 }
 
