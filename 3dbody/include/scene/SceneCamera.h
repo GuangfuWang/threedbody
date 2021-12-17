@@ -138,7 +138,7 @@ class Camera : public EventHandleInterface {
   uint32_t windowSizeY;
 
   Vec mPosition;
-  Vec mOrientation;
+  Vec mCurrentFocus;
   Vec mUp = {0.0f, 1.0f, 0.0f};
 
   Vec mSceneCenter = {0.0f, 0.0f, 0.0f};
@@ -211,7 +211,7 @@ class SceneCamera final : public Camera {
 	mFOV         = fov_deg;
 	mNear        = near_;
 	mFar         = far_;
-	mOrientation = {0.0f, 0.0f, -1.0f};
+	mCurrentFocus = {0.0f, 0.0f, -1.0f};
 
 	windowSizeX = width;
 	windowSizeY = height;
