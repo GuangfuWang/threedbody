@@ -37,10 +37,10 @@
 
 ## 截图
 1.低粗糙度图片：
-![](C:\Users\buaaw\Pictures\Saved Pictures\Snipaste_2021-12-18_19-36-15.png)
+![](C:\dev\CLionProjects\3dbody\resources\others\Snipaste_2021-12-18_19-36-15.png)
 
 2.高粗糙度图片：
-![](C:\Users\buaaw\Pictures\Saved Pictures\Snipaste_2021-12-18_19-35-19.png)
+![](C:\dev\CLionProjects\3dbody\resources\others\Snipaste_2021-12-18_19-35-19.png)
 
 ## 许可证
 
