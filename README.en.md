@@ -38,10 +38,10 @@ For normal users, we will offer cross-platform installers, will coming soon...
 
 ## Snapshots
 1.low roughness setting：
-![](C:\Users\buaaw\Pictures\Saved Pictures\Snipaste_2021-12-18_19-36-15.png)
+![](./resources/others/Snipaste_2021-12-18_19-36-15.png)
 
 2.High roughness：
-![](C:\Users\buaaw\Pictures\Saved Pictures\Snipaste_2021-12-18_19-35-19.png)
+![](./resources/others/Snipaste_2021-12-18_19-35-19.png)
 
 ## LICENSE
 
