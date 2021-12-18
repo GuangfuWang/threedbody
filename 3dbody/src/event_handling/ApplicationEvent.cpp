@@ -17,7 +17,7 @@ void ThreeDBodyAppEventHandling::onWindowSizeCallback(GLFWwindow *window, int wi
   auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
   pWindow->setWidth(width);
   pWindow->setHeight(height);
-  pWindow->getSceneView()->resize(width, height);
+//  pWindow->getSceneView()->resize(width, height);
   pWindow->render();
 }
 

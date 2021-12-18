@@ -35,6 +35,13 @@
 
 但是对于普通用户而言，本项目也将提供基于多种平台的安装包，用户可根据自己所使用的平台下载相应的安装文件即可，下载地址为：[http://undefined.com](占位符)
 
+## 截图
+1.低粗糙度图片：
+![](C:\Users\buaaw\Pictures\Saved Pictures\Snipaste_2021-12-18_19-36-15.png)
+
+2.高粗糙度图片：
+![](C:\Users\buaaw\Pictures\Saved Pictures\Snipaste_2021-12-18_19-35-19.png)
+
 ## 许可证
 
 本项目使用BSD-2许可证，将始终支持开源精神。

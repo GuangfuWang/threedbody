@@ -4,80 +4,105 @@
 
 namespace gf {
 
-MouseEventHandling *ThreeDBodyMouseEventHandling::instance_ = nullptr;
+    MouseEventHandling *ThreeDBodyMouseEventHandling::instance_ = nullptr;
+    bool ThreeDBodyMouseEventHandling::lButtonPressed = false;
+    bool ThreeDBodyMouseEventHandling::rButtonPressed = false;
 
-void onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
-  ThreeDBodyMouseEventHandling::getInstance()->onMouseButtonCallback(window, button, action, mods);
-}
+    void onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
+//        ThreeDBodyMouseEventHandling::getInstance()->onMouseButtonCallback(window, button, action, mods);
+    }
 
-void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset) {
-  ThreeDBodyMouseEventHandling::getInstance()->onScrollCallback(window, xoffset, yoffset);
-}
+    void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset) {
+        ThreeDBodyMouseEventHandling::getInstance()->onScrollCallback(window, xoffset, yoffset);
+    }
 
-void onDropFileCallback(GLFWwindow *window, int count, const char **paths) {
-  ThreeDBodyMouseEventHandling::getInstance()->onDropFileCallback(window, count, paths);
-}
+    void onDropFileCallback(GLFWwindow *window, int count, const char **paths) {
+        ThreeDBodyMouseEventHandling::getInstance()->onDropFileCallback(window, count, paths);
+    }
 
-void ThreeDBodyMouseEventHandling::onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
-  ///mouse left button used to pan models
-  ///mouse right button used to rotate.
-  ///mouse left button + ALT modifier used to scale whole model objects.
-  ///to scale along certain direction, please use keyboard callback.
-  glfwGetCursorPos(window, &x_, &y_);
-  if (button==GLFW_MOUSE_BUTTON_LEFT) {
-	if (MouseInput::getMouseModifier(mods)==MOUSE_MODIFIER::MOUSE_MOD_ALT
-		&& MouseInput::getMouseAction(action)==MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
+    void onCursorPosCallback(GLFWwindow *win, double xpos, double ypos) {
+        if (glfwGetMouseButton(win,GLFW_MOUSE_BUTTON_LEFT)==GLFW_RELEASE){
+            return;
+        }
+        ThreeDBodyMouseEventHandling::getInstance()->onMouseButtonCallback(win,
+                                                                           GLFW_MOUSE_BUTTON_LEFT,
+                                                                           GLFW_PRESS, GLFW_MOD_SHIFT);
+    }
 
-	  //todo: implement scale functionality.
-	  return;
-	}
-	if (MouseInput::getMouseAction(action)==MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
-	  auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
-	  pWindow->getSceneView()->getCamera()->onPan(x_, y_);
-	  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-	}
-	if (MouseInput::getMouseAction(action)==MOUSE_ACTION::MOUSE_ACTION_RELEASED) {
-	  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	}
-  } else if (button = GLFW_MOUSE_BUTTON_RIGHT) {
-	if (MouseInput::getMouseAction(action)==MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
-	  auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
+    void ThreeDBodyMouseEventHandling::onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
+        ///mouse left button used to pan models
+        ///mouse right button used to rotate.
+        ///mouse left button + ALT modifier used to scale whole model objects.
+        ///to scale along certain direction, please use keyboard callback.
+        glfwGetCursorPos(window, &x_, &y_);
 
-	  //fixme: implement rotational functionality in camera class.
-	  pWindow->getSceneView()->getCamera()->onRotate(x_, y_);
-	  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-	}
-	if (MouseInput::getMouseAction(action)==MOUSE_ACTION::MOUSE_ACTION_RELEASED) {
-	  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	}
-  }
-}
+        if (button == GLFW_MOUSE_BUTTON_LEFT) {
+            if (MouseInput::getMouseModifier(mods) == MOUSE_MODIFIER::MOUSE_MOD_ALT
+                && MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
 
-void ThreeDBodyMouseEventHandling::onScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
-  auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
-  pWindow->getSceneView()->getCamera()->onZoom(yoffset);
-}
+                //todo: implement scale functionality.
+            }
+            if (MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
+                lButtonPressed = true;
+            }
+            else if (MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_RELEASED) {
+                lButtonPressed = false;
+            }
+        }
+        if (button = GLFW_MOUSE_BUTTON_RIGHT) {
+            if (MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
+                rButtonPressed = true;
+            }
+            else if (MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_RELEASED) {
+                rButtonPressed = false;
+            }
+        }
 
-void ThreeDBodyMouseEventHandling::onDropFileCallback(GLFWwindow *window, int count, const char **paths) {
-  for (int i = 0; i < count; i++) {
-	//TODO: here add drop file callback
-  }
-}
+        if (lButtonPressed){
+            auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
+            pWindow->getSceneView()->getCamera()->onPanMovement(x_, y_);
+//            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        }
+//        else{
+//            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+//        }
 
-MouseEventHandling *ThreeDBodyMouseEventHandling::getInstance() {
-  if (instance_==nullptr) {
-	instance_ = new ThreeDBodyMouseEventHandling();
-	instance_->x_ = 0;
-	instance_->y_ = 0;
+        if (rButtonPressed){
+            auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
+            //fixme: implement rotational functionality in camera class.
+            pWindow->getSceneView()->getCamera()->onRotateMovement(x_, y_);
+//            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        }
+//        else {
+//            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+//        }
+    }
+
+    void ThreeDBodyMouseEventHandling::onScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
+        auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
+        pWindow->getSceneView()->getCamera()->onZoomMovement(yoffset);
+    }
+
+    void ThreeDBodyMouseEventHandling::onDropFileCallback(GLFWwindow *window, int count, const char **paths) {
+        for (int i = 0; i < count; i++) {
+            //TODO: here add drop file callback
+        }
+    }
+
+    MouseEventHandling *ThreeDBodyMouseEventHandling::getInstance() {
+        if (instance_ == nullptr) {
+            instance_ = new ThreeDBodyMouseEventHandling();
+            instance_->x_ = 0;
+            instance_->y_ = 0;
 #ifdef GF_CUSTOM_CURSOR
-	///implement your custom cursor setup function by setting images and x and y dimension.
-	///then you can pass to getCreateCustomCursor function of GLFW.
-	///to destroy your custom cursor use getStandardCursor(0).
-	///@see GLFW/glfw3.h
+            ///implement your custom cursor setup function by setting images and x and y dimension.
+            ///then you can pass to getCreateCustomCursor function of GLFW.
+            ///to destroy your custom cursor use getStandardCursor(0).
+            ///@see GLFW/glfw3.h
 #endif
-  }
-  return instance_;
-}
+        }
+        return instance_;
+    }
 
 }
 

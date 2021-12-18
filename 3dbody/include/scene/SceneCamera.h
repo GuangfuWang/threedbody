@@ -140,7 +140,7 @@ namespace gf {
 
         Vec   mPosition          = {0.0f, 0.0f, 0.0f};
         Vec2f mCurrentMonitorPos = {0.0f, 0.0f};
-        Vec   mCurrentFocus      = {0.0f, 0.0f, 0.0f};
+        Vec   mCurrentFocus      = {0.0f, 0.0f, -1.0f};
         Vec   mUp                = {0.0f, 1.0f, 0.0f};
 
         Vec mSceneCenter = {0.0f, 0.0f, 0.0f};
@@ -150,14 +150,15 @@ namespace gf {
         ///@note speed should correspond to scene size.
         float mSensitivity = 0.1f;
         float mPanSpeed    = 0.05f;
-        float mRotateSpeed = 0.2f;
+        float mRotateSpeed = 2.00f;
+        float mZoomSpeed   = 2.00f;
 
         float mAspect;
         float mFOV;
         float mNear;
         float mFar;
 
-        Mat4 mModelMatrix;
+        Mat4 mModelMatrix{1.0f};
         Mat4 mViewMatrix;
         Mat4 mProjection;
 
@@ -193,14 +194,12 @@ namespace gf {
             mFar      = far_;
             mFOV      = fov;
 
-            mAspect = (float) (width / height);
-
             windowSizeX = width;
             windowSizeY = height;
 
+            mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition) ;
+            mViewMatrix = glm::inverse(mViewMatrix);
             setAspect(width, height);
-            mModelMatrix = Mat4(1.0f);
-            mViewMatrix  = Mat4(1.0f);
 
 //	updateViewMatrix();
         }
@@ -222,9 +221,11 @@ namespace gf {
             windowSizeY = height;
 
             mModelMatrix = Mat4(1.0f);
-            mViewMatrix  = Mat4(1.0f);
+
+            mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition) ;
+            mViewMatrix = glm::inverse(mViewMatrix);
             mProjection  = glm::perspective(
-                    glm::radians(mFOV),
+                    mFOV,
                     mAspect, mNear, mFar);
 
         }
@@ -248,6 +249,12 @@ namespace gf {
                 mType = type;
                 setAspect(windowSizeX, windowSizeY);
             }
+        }
+
+        void resize(const unsigned int &w, const unsigned int &h) {
+            windowSizeX = w;
+            windowSizeY = h;
+            setAspect(w,h);
         }
 
 
@@ -349,7 +356,7 @@ namespace gf {
             return mViewMatrix;
         }
 
-        void onZoom(double delta) {
+        void onZoomMovement(double delta) {
             set_distance(delta * 0.5f);
 
             update_view_matrix();
@@ -362,7 +369,7 @@ namespace gf {
         }
 
 
-        void onPan(double x, double y) {
+        void onPanMovement(double x, double y) {
             glm::vec2 pos2d{x, y};
             glm::vec2 delta = (pos2d - mCurrentPos2d) * 0.004f;
 
@@ -374,7 +381,7 @@ namespace gf {
             mCurrentPos2d = pos2d;
         }
 
-        void onRotate(double x, double y) {
+        void onRotateMovement(double x, double y) {
             glm::vec2 pos2d{x, y};
 
             // TODO: Adjust pan speed for distance
@@ -387,6 +394,8 @@ namespace gf {
 
         void update_view_matrix() {
             mPosition = mFocus - get_forward() * mDistance;
+            GF_CORE_INFO("mPostion: x={:.3f},y={:.3f},z={:.3f}",
+                         mPosition.x,mPosition.y,mPosition.z);
 
             glm::quat orientation = get_direction();
             mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition) * glm::toMat4(orientation);

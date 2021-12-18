@@ -1,38 +1,57 @@
 # 3dbody
 
-#### Description
+## Brief Introduction.
 
-{**When you're done, you can delete the content in this README and update the file with details for others getting
-started with your repository**}
+This project is a cross-platform 3d rendering engine, currently in-progress. The features include:
 
-#### Software Architecture
++ <font color=green>Importing 3d model</font>
++ <font color=green>Exporting 3d model</font>
++ <font color=green>Model PBR visualization, corking on camera system now...</font>
++ Model editing
++ Rigid body simulation
++ Fluid simulation
++ Deformation analysis
++ Collision analysis
++ 3d Reconstruction by SLAM
++ PBR rendering
++ Custom rendering
++ Material editing
++ Lighting, including spot-light, flash-light,etc.
++ ###Shape analysis using spectral methods.
++ Other functionalities
 
-Software architecture description
+This project starts on 2021-11-20, currently developing by Guangfu Wang. Others interested are warmly welcomed.
 
-#### Installation
+## Architecture
 
-1. xxxx
-2. xxxx
-3. xxxx
+See mdj file, in case you do not know how to use it, you can use StarUML.
 
-#### Instructions
+## Installation
 
-1. xxxx
-2. xxxx
-3. xxxx
+For developers, you can:
 
-#### Contribution
+1. Download source code from gitee ot github.
+2. Compiling it with cmake building tool.
+3. Installing to whatever path you like.
 
-1. Fork the repository
-2. create Feat_xxx branch
-3. Commit your code
-4. create Pull Request
+For normal users, we will offer cross-platform installers, will coming soon...
 
-#### Gitee Feature
+## Snapshots
+1.low roughness setting：
+![](C:\Users\buaaw\Pictures\Saved Pictures\Snipaste_2021-12-18_19-36-15.png)
 
-1. You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2. Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3. Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4. The most valuable open source project [GVP](https://gitee.com/gvp)
-5. The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6. The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+2.High roughness：
+![](C:\Users\buaaw\Pictures\Saved Pictures\Snipaste_2021-12-18_19-35-19.png)
+
+## LICENSE
+
+This project uses BSD-2 LICENSE and will embrace open-source until my last breath.
+
+## Changelog.
+
++ 2021-11-20：first create this project.
+
+## Contact me
+
+If you have any questions or suggestions, email me at: thuwgf@gmail.com
+

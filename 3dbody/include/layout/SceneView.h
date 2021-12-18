@@ -60,7 +60,7 @@ class SceneView {
 //  void onMouseWheel(double delta);
 
   void resetView() {
-//	mCamera->reset();
+//	mCamera->resize();
   }
 
  private:
