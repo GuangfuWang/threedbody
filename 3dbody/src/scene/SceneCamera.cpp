@@ -69,14 +69,6 @@ namespace gf {
             const Vec &sceneMinBox,
             const Vec &sceneMaxBox) {
 
-//        mPosition.x = sceneCenter.x;
-//        mPosition.y = sceneCenter.y;
-//        mPosition.z = sceneCenter.z;
-//
-//        mCurrentFocus = sceneCenter - mPosition;
-//        mSceneCenter  = sceneCenter;
-//        mSceneMinBox  = sceneMinBox;
-//        mSceneMaxBox  = sceneMaxBox;
         updateViewMatrix();
     }
 
