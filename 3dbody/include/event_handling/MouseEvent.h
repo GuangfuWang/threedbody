@@ -108,6 +108,8 @@ namespace gf {
 
         virtual void onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods) = 0;
 
+        virtual void onCursorPosCallback(GLFWwindow *win, double xpos, double ypos) = 0;
+
         virtual void onScrollCallback(GLFWwindow *window, double xoffset, double yoffset) = 0;
 
         virtual void onDropFileCallback(GLFWwindow *window, int count, const char **paths) = 0;
@@ -132,6 +134,8 @@ namespace gf {
 
         void onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods) override;
 
+        void onCursorPosCallback(GLFWwindow *win, double xpos, double ypos) override;
+
         void onScrollCallback(GLFWwindow *window, double xoffset, double yoffset) override;
 
         void onDropFileCallback(GLFWwindow *window, int count, const char **paths) override;
@@ -145,6 +149,8 @@ namespace gf {
         static MouseEventHandling *instance_;
         static bool               lButtonPressed;
         static bool               rButtonPressed;
+        static bool               lFirstClick;
+        static bool               rFirstClick;
 
     };
 
@@ -154,7 +160,7 @@ namespace gf {
 
     extern void onDropFileCallback(GLFWwindow *window, int count, const char **paths);
 
-    extern void onCursorPosCallback(GLFWwindow* win, double xpos,double ypos);
+    extern void onCursorPosCallback(GLFWwindow *win, double xpos, double ypos);
 
 }
 

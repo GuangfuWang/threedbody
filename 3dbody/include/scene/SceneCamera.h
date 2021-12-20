@@ -197,7 +197,7 @@ namespace gf {
             windowSizeX = width;
             windowSizeY = height;
 
-            mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition) ;
+            mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition);
             mViewMatrix = glm::inverse(mViewMatrix);
             setAspect(width, height);
 
@@ -222,9 +222,9 @@ namespace gf {
 
             mModelMatrix = Mat4(1.0f);
 
-            mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition) ;
+            mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition);
             mViewMatrix = glm::inverse(mViewMatrix);
-            mProjection  = glm::perspective(
+            mProjection = glm::perspective(
                     mFOV,
                     mAspect, mNear, mFar);
 
@@ -254,7 +254,7 @@ namespace gf {
         void resize(const unsigned int &w, const unsigned int &h) {
             windowSizeX = w;
             windowSizeY = h;
-            setAspect(w,h);
+            setAspect(w, h);
         }
 
 
@@ -356,9 +356,13 @@ namespace gf {
             return mViewMatrix;
         }
 
+        void setCurrentCursorPos(const float &x, const float &y) {
+            mCurrentPos2d.x = x;
+            mCurrentPos2d.y = y;
+        }
+
         void onZoomMovement(double delta) {
             set_distance(delta * 0.5f);
-
             update_view_matrix();
         }
 
@@ -369,7 +373,7 @@ namespace gf {
         }
 
 
-        void onPanMovement(double x, double y) {
+        void onRotateMovement(double x, double y) {
             glm::vec2 pos2d{x, y};
             glm::vec2 delta = (pos2d - mCurrentPos2d) * 0.004f;
 
@@ -381,11 +385,11 @@ namespace gf {
             mCurrentPos2d = pos2d;
         }
 
-        void onRotateMovement(double x, double y) {
+        void onPanMovement(double x, double y) {
             glm::vec2 pos2d{x, y};
 
             // TODO: Adjust pan speed for distance
-            glm::vec2 delta = (pos2d - mCurrentPos2d) * 0.003f;
+            glm::vec2 delta = (pos2d - mCurrentPos2d) * 0.0008f;
             mFocus += -get_right() * delta.x * mDistance;
             mFocus += get_up() * delta.y * mDistance;
             update_view_matrix();
@@ -394,8 +398,6 @@ namespace gf {
 
         void update_view_matrix() {
             mPosition = mFocus - get_forward() * mDistance;
-            GF_CORE_INFO("mPostion: x={:.3f},y={:.3f},z={:.3f}",
-                         mPosition.x,mPosition.y,mPosition.z);
 
             glm::quat orientation = get_direction();
             mViewMatrix = glm::translate(glm::mat4(1.0f), mPosition) * glm::toMat4(orientation);

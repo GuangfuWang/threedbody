@@ -1,15 +1,16 @@
 #include "include/event_handling/MouseEvent.h"
 #include "include/layout/BaseWindow.h"
-#include "util/Log.h"
 
 namespace gf {
 
-    MouseEventHandling *ThreeDBodyMouseEventHandling::instance_ = nullptr;
-    bool ThreeDBodyMouseEventHandling::lButtonPressed = false;
-    bool ThreeDBodyMouseEventHandling::rButtonPressed = false;
+    MouseEventHandling *ThreeDBodyMouseEventHandling::instance_     = nullptr;
+    bool               ThreeDBodyMouseEventHandling::lButtonPressed = false;
+    bool               ThreeDBodyMouseEventHandling::rButtonPressed = false;
+    bool               ThreeDBodyMouseEventHandling::lFirstClick    = true;
+    bool               ThreeDBodyMouseEventHandling::rFirstClick    = true;
 
     void onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
-//        ThreeDBodyMouseEventHandling::getInstance()->onMouseButtonCallback(window, button, action, mods);
+        ThreeDBodyMouseEventHandling::getInstance()->onMouseButtonCallback(window, button, action, mods);
     }
 
     void onMouseWheelCallback(GLFWwindow *window, double xoffset, double yoffset) {
@@ -21,61 +22,62 @@ namespace gf {
     }
 
     void onCursorPosCallback(GLFWwindow *win, double xpos, double ypos) {
-        if (glfwGetMouseButton(win,GLFW_MOUSE_BUTTON_LEFT)==GLFW_RELEASE){
-            return;
-        }
-        ThreeDBodyMouseEventHandling::getInstance()->onMouseButtonCallback(win,
-                                                                           GLFW_MOUSE_BUTTON_LEFT,
-                                                                           GLFW_PRESS, GLFW_MOD_SHIFT);
+        ThreeDBodyMouseEventHandling::getInstance()->onCursorPosCallback(win, xpos, ypos);
     }
 
     void ThreeDBodyMouseEventHandling::onMouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
+
+    }
+
+    void ThreeDBodyMouseEventHandling::onCursorPosCallback(GLFWwindow *win, double xpos, double ypos) {
+
         ///mouse left button used to pan models
         ///mouse right button used to rotate.
         ///mouse left button + ALT modifier used to scale whole model objects.
         ///to scale along certain direction, please use keyboard callback.
-        glfwGetCursorPos(window, &x_, &y_);
 
-        if (button == GLFW_MOUSE_BUTTON_LEFT) {
-            if (MouseInput::getMouseModifier(mods) == MOUSE_MODIFIER::MOUSE_MOD_ALT
-                && MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
-
-                //todo: implement scale functionality.
-            }
-            if (MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
-                lButtonPressed = true;
-            }
-            else if (MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_RELEASED) {
-                lButtonPressed = false;
-            }
+        lButtonPressed = !glfwGetMouseButton(win, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE;
+        rButtonPressed = !glfwGetMouseButton(win, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE;
+        if (!lButtonPressed && !rButtonPressed) {
+            return;
         }
-        if (button = GLFW_MOUSE_BUTTON_RIGHT) {
-            if (MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_PRESSED) {
-                rButtonPressed = true;
-            }
-            else if (MouseInput::getMouseAction(action) == MOUSE_ACTION::MOUSE_ACTION_RELEASED) {
-                rButtonPressed = false;
-            }
+        x_ = xpos;
+        y_ = ypos;
+        if (glfwGetMouseButton(win, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+            lButtonPressed = true;
+        } else if (glfwGetMouseButton(win, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+            lButtonPressed = false;
         }
-
-        if (lButtonPressed){
-            auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
-            pWindow->getSceneView()->getCamera()->onPanMovement(x_, y_);
-//            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        if (glfwGetMouseButton(win, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+            rButtonPressed = true;
+        } else if (glfwGetMouseButton(win, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
+            rButtonPressed = false;
         }
-//        else{
-//            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-//        }
-
-        if (rButtonPressed){
-            auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(window));
-            //fixme: implement rotational functionality in camera class.
+        if (lButtonPressed) {
+            auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(win));
+            if (lFirstClick) {
+                pWindow->getSceneView()->getCamera()->setCurrentCursorPos(x_, y_);
+                lFirstClick = false;
+                return;
+            }
             pWindow->getSceneView()->getCamera()->onRotateMovement(x_, y_);
-//            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         }
-//        else {
-//            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-//        }
+
+        if (rButtonPressed) {
+            auto pWindow = static_cast<BaseWindow *>(glfwGetWindowUserPointer(win));
+            if (rFirstClick) {
+                pWindow->getSceneView()->getCamera()->setCurrentCursorPos(x_, y_);
+                rFirstClick = false;
+                return;
+            }
+            pWindow->getSceneView()->getCamera()->onPanMovement(x_, y_);
+        }
+        if (!lButtonPressed) {
+            lFirstClick = true;
+        }
+        if (!rButtonPressed) {
+            rFirstClick = true;
+        }
     }
 
     void ThreeDBodyMouseEventHandling::onScrollCallback(GLFWwindow *window, double xoffset, double yoffset) {
@@ -103,6 +105,7 @@ namespace gf {
         }
         return instance_;
     }
+
 
 }
 
