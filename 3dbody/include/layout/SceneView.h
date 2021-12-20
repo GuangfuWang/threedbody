@@ -11,66 +11,71 @@
 
 namespace gf {
 
-class SceneView {
- public:
-  SceneView() :
-	  mCamera(nullptr), mFrameBuffer(nullptr), mShader(nullptr),
-	  mLight(nullptr), mSize(800, 600) {
-	mFrameBuffer = std::make_unique<OpenGL_FrameBuffer>();
-	mFrameBuffer->createBuffers(800, 600);
-	mShader = std::make_unique<Shader>();
-	mShader->load(ConfigMap::getInstance()->resource_dir_+"/shaders/vertex_shader/vertex_shader.glsl",
-                  ConfigMap::getInstance()->resource_dir_+"/shaders/fragment_shader/fs_pbr.glsl");
-	mLight = std::make_unique<Light>();
+    class SceneView {
+    public:
+        SceneView() :
+                mCamera(nullptr), mFrameBuffer(nullptr), mShader(nullptr),
+                mLight(nullptr), mSize(800, 600) {
+            mFrameBuffer = std::make_unique<OpenGL_AntiAliasingFrameBuffer>();
+            mFrameBuffer->createBuffers(800, 600);
+            mShader = std::make_unique<Shader>();
+            mShader->load(ConfigMap::getInstance()->resource_dir_ + "/shaders/vertex_shader/vertex_shader.glsl",
+                          ConfigMap::getInstance()->resource_dir_ + "/shaders/fragment_shader/fs_pbr.glsl");
+            mLight = std::make_unique<Light>();
 
-	mCamera = std::make_unique<MyCamera>(
-		glm::vec3(0, 0, 3),
-		45.0f,
-		1.33f,
-		0.1f, 100.0f);
+            mCamera = std::make_unique<MyCamera>(
+                    glm::vec3(0, 0, 3),
+                    45.0f,
+                    1.33f,
+                    0.1f, 100.0f);
 
-  }
+        }
 
-  ~SceneView() {
-	mShader->unload();
-  }
+        ~SceneView() {
+            mShader->unload();
+        }
 
-  Light *getLight() { return mLight.get(); }
+        Light *getLight() { return mLight.get(); }
 
-  MyCamera *getCamera() { return (MyCamera *)mCamera.get(); }
+        MyCamera *getCamera() { return (MyCamera *) mCamera.get(); }
 
-  Shader *getShader() { return mShader.get(); }
+        Shader *getShader() { return mShader.get(); }
 
-  FrameBuffer *getFrameBuffer() { return mFrameBuffer.get(); }
+        FrameBuffer *getFrameBuffer() { return mFrameBuffer.get(); }
 
-  void resize(int32_t width, int32_t height);
+        void resize(int32_t width, int32_t height);
 
-  void render();
+        void render();
 
-  void loadMesh(const string &filepath);
+        void loadMesh(const string &filepath);
 
-  void setMesh(Ref<Mesh> mesh) {
-	mMesh = mesh;
-  }
+        void setMesh(Ref<Mesh> mesh) {
+            mMesh = mesh;
+        }
 
-  Ref<Mesh> getMesh() { return mMesh; }
+        Ref<Mesh> getMesh() { return mMesh; }
 
 //  void onMouseMove(double x, double y, MOUSE_BUTTON button);
 //
 //  void onMouseWheel(double delta);
 
-  void resetView() {
+        void resetView() {
 //	mCamera->resize();
-  }
+        }
 
- private:
-  Ref_Unique<MyCamera>        mCamera;
-  Ref_Unique<OpenGL_FrameBuffer> mFrameBuffer;
-  Ref_Unique<Shader>             mShader;
-  Ref_Unique<Light>              mLight;
-  Ref<Mesh>                      mMesh;
-  glm::vec2                      mSize;
-};
+        const ImVec2 getSize(){
+            ImVec2 ret{mSize.x,mSize.y};
+            return ret;
+        }
+
+    private:
+        Ref_Unique<MyCamera>           mCamera;
+        Ref_Unique<OpenGL_AntiAliasingFrameBuffer> mFrameBuffer;
+        Ref_Unique<Shader>             mShader;
+        Ref_Unique<Light>              mLight;
+        Ref<Mesh>                      mMesh;
+        glm::vec2                      mSize;
+    };
 }
 
 #endif //INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENEVIEW_H_

@@ -7,8 +7,6 @@ namespace gf {
     void SceneView::resize(int32_t width, int32_t height) {
         mSize.x = width;
         mSize.y = height;
-//        mCamera->resize(width, height);
-
         mFrameBuffer->createBuffers((int32_t) mSize.x, (int32_t) mSize.y);
     }
 

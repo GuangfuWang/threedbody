@@ -1,5 +1,10 @@
-#include "include/mesh/Mesh.h"
+#ifndef GLEW_STATIC
+#define GLEW_STATIC
+#endif
 
+#include "GL/glew.h"
+
+#include "include/mesh/Mesh.h"
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
