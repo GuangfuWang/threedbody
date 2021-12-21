@@ -50,6 +50,8 @@
 ## 更新日志
 
 + 2021-11-20：first create this project.
++ 2021-12-19: running demo
++ 2021-12-21：add msaa frame buffer and deprecate old one.
 
 ## 联系我
 
