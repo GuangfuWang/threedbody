@@ -10,40 +10,118 @@
 
 namespace gf {
 
-inline fs::path getRootDir() {
-  fs::path curr = fs::current_path().parent_path();
-  return curr;
-}
+    inline fs::path getRootDir() {
+        fs::path curr = fs::current_path().parent_path();
+        return curr;
+    }
 
-class ConfigMap {
- public:
-  static ConfigMap *getInstance();
- private:
-  ConfigMap();
-  ~ConfigMap();
 
-  ///TODO: Use config.conf for implementation.
-  static void loadFormat(std::ifstream &ifs);
+    class BasicInfoMap {
+    public:
+        virtual ~BasicInfoMap() {}
 
- public:
-  ConfigMap(ConfigMap const &) = delete;
-  void operator=(ConfigMap const &) = delete;
+        BasicInfoMap(const BasicInfoMap &) = delete;
 
-  std::string root_dir_;
-  std::string source_code_dir_;
-  std::string resource_dir_;
-  std::string script_dir_;
-  std::string test_dir_;
+        void operator=(const BasicInfoMap &copy) = delete;
 
-  std::vector<const char *> input_format_;
-  std::vector<const char *> output_format_;
+        Ref_Unique<BasicInfoMap> getInstance();
 
-  nfdu8filteritem_t *filterInputFormat;
-  nfdu8filteritem_t *filterOutputFormat;
+    private:
+        BasicInfoMap();
 
- private:
-  static ConfigMap *instance;
-};
+        void init();
+
+    public:
+        string softwareName;
+        string softwareVersion;
+        string authors;
+        string authorsEmail;
+        string contributors;
+        string facilities;
+        string introductionInfo;
+        string officialSites;
+        string wikiSites;
+        string dateOfCreation;
+
+        unsigned int versionMajor;
+        unsigned int versionMinor;
+        unsigned int versionPatch;
+        bool         LTSVersion;
+        bool         openSource;
+
+    private:
+        static BasicInfoMap *instance;
+    };
+
+
+    class ImportExportFormatMap {
+
+    };
+
+
+    class WindowSettingsMap {
+
+    };
+
+
+    class WorkbenchMap {
+
+    };
+
+
+    class LoggingMap {
+
+    };
+
+
+    class MonitoringMap {
+
+    };
+
+    class PanelsMap {
+
+    };
+
+    class DirMap{
+
+    };
+
+    class LanguageMap{
+
+    };
+
+    class ConfigMap {
+    public:
+        static ConfigMap *getInstance();
+
+    private:
+        ConfigMap();
+
+        ~ConfigMap();
+
+        ///TODO: Use config.ini for implementation.
+        static void loadFormat(std::ifstream &ifs);
+
+    public:
+        ConfigMap(ConfigMap const &) = delete;
+
+        void operator=(ConfigMap const &) = delete;
+
+        std::string root_dir_;
+        std::string source_code_dir_;
+        std::string resource_dir_;
+        std::string script_dir_;
+        std::string test_dir_;
+
+        std::vector<const char *> input_format_;
+        std::vector<const char *> output_format_;
+
+        nfdu8filteritem_t *filterInputFormat;
+        nfdu8filteritem_t *filterOutputFormat;
+
+    private:
+        static ConfigMap *instance;
+    };
 
 }
 

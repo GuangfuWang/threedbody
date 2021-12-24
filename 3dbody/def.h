@@ -81,8 +81,21 @@ namespace gf {
 
 #ifndef Point
     typedef struct Point {
-        int x, y;
+        float x, y;
     } Point_;
+#endif
+
+#ifndef Pixel
+    typedef struct Pixel {
+        union {
+            unsigned int u;
+            unsigned int x;
+        };
+        union {
+            unsigned int v;
+            unsigned int y;
+        };
+    } Pixel_;
 #endif
 
 #ifndef Mat4
