@@ -1,5 +1,5 @@
 
-#include "include/layout/ThreeDBodyWindow.h"
+#include "include/layout/MainWindows/ThreeDBodyWindow.h"
 #include "include/scene/SceneCamera.h"
 
 namespace gf {

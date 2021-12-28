@@ -3,7 +3,7 @@
 #define INC_3DBODY_3DBODY_INCLUDE_APPLICATION_APPLICATION_H_
 
 #include <memory>
-#include "include/layout/ThreeDBodyWindow.h"
+#include "include/layout/MainWindows/ThreeDBodyWindow.h"
 
 namespace gf {
 class Application {

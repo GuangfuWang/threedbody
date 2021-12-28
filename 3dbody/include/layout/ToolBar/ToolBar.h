@@ -2,7 +2,7 @@
 #ifndef INC_3DBODY_3DBODY_INCLUDE_LAYOUT_TOOLBAR_H_
 #define INC_3DBODY_3DBODY_INCLUDE_LAYOUT_TOOLBAR_H_
 
-#include "include/layout/Tools.h"
+#include "include/layout/ToolBar/Tools.h"
 
 namespace gf {
 

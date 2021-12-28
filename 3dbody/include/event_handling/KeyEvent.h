@@ -2,7 +2,7 @@
 #define INC_3DBODY_3DBODY_INCLUDE_EVENT_HANDLING_KEY_EVENT_H_
 
 #include <GLFW/glfw3.h>
-#include "include/layout/BaseWindow.h"
+#include "include/layout/MainWindows/BaseWindow.h"
 
 namespace gf {
 

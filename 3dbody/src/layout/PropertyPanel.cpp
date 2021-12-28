@@ -1,4 +1,4 @@
-#include "include/layout/PropertyPanel.h"
+#include "include/layout/WidgetPanels/PropertyPanel.h"
 #include "imgui.h"
 #include "imgui_internal.h"
 

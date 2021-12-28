@@ -1,5 +1,5 @@
 #include <filesystem>
-#include "include/layout/FontTogglePanel.h"
+#include "include/layout/FontAndStyle/FontTogglePanel.h"
 #include "imgui.h"
 #include "util/ConfigMap.h"
 

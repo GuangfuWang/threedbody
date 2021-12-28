@@ -3,7 +3,7 @@
 #ifndef INC_3DBODY_3DBODY_INCLUDE_LAYOUT_THREEDBODYWINDOW_H_
 #define INC_3DBODY_3DBODY_INCLUDE_LAYOUT_THREEDBODYWINDOW_H_
 
-#include "include/layout/BaseWindow.h"
+#include "include/layout/MainWindows/BaseWindow.h"
 #include "include/render/VertexIndexBuffer.h"
 #include "include/mesh/Mesh.h"
 #include "include/shader/Shader.h"
@@ -12,9 +12,9 @@
 
 #include "include/render/UIContext.h"
 #include "include/render/OpenGLContext.h"
-#include "include/layout/SceneView.h"
-#include "include/layout/ContentBroswer.h"
-#include "include/layout/PropertyPanel.h"
+#include "include/layout/ViewPort/SceneView.h"
+#include "include/layout/ContentBroswer/ContentBroswer.h"
+#include "include/layout/WidgetPanels/PropertyPanel.h"
 
 namespace gf {
 

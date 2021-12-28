@@ -1,5 +1,5 @@
 
-#include "include/layout/ContentBroswer.h"
+#include "include/layout/ContentBroswer/ContentBroswer.h"
 #include "util/ConfigMap.h"
 
 #if defined(__GNUC__)

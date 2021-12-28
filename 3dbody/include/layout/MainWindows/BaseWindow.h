@@ -3,7 +3,7 @@
 #define _VIEW_WINDOW_H_
 
 #include "def.h"
-#include "SceneView.h"
+#include "include/layout/ViewPort/SceneView.h"
 
 namespace gf {
 

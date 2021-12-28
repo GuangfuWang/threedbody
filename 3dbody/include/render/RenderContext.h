@@ -3,7 +3,7 @@
 #define INC_3DBODY_3DBODY_INCLUDE_RENDER_RENDERCONTEXT_H_
 
 #include "include/render/VertexIndexBuffer.h"
-#include "include/layout/BaseWindow.h"
+#include "include/layout/MainWindows/BaseWindow.h"
 
 namespace gf {
 

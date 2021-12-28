@@ -3,9 +3,9 @@
 #ifndef INC_3DBODY_3DBODY_INCLUDE_LAYOUT_PRPPERTY_PANEL_H_
 #define INC_3DBODY_3DBODY_INCLUDE_LAYOUT_PRPPERTY_PANEL_H_
 
-#include <imgui.h>
+#include "imgui.h"
 #include "def.h"
-#include "include/layout/SceneView.h"
+#include "include/layout/ViewPort/SceneView.h"
 #include "util/ConfigMap.h"
 #include "util/FileDialog.h"
 
