@@ -17016,7 +17016,7 @@ void ImGui::ShowMetricsWindow(bool* p_open)
     drawlist_count += g.Viewports[viewport_i]->DrawDataBuilder.GetDrawListCount();
   if (TreeNode("DrawLists", "DrawLists (%d)", drawlist_count))
   {
-    Checkbox("Show ImDrawCmd Mesh when hovering", &cfg->ShowDrawCmdMesh);
+    Checkbox("Show ImDrawCmd VanillaMesh when hovering", &cfg->ShowDrawCmdMesh);
     Checkbox("Show ImDrawCmd bounding boxes when hovering", &cfg->ShowDrawCmdBoundingBoxes);
     for (int viewport_i = 0; viewport_i < g.Viewports.Size; viewport_i++)
     {
@@ -17495,7 +17495,7 @@ void ImGui::DebugNodeDrawList(ImGuiWindow* window, ImGuiViewportP* viewport, con
     }
 
     // Display vertex information summary. Hover to get all triangles drawn in wire-frame
-    ImFormatString(buf, IM_ARRAYSIZE(buf), "Mesh: ElemCount: %d, VtxOffset: +%d, IdxOffset: +%d, Area: ~%0.f px", pcmd->ElemCount, pcmd->VtxOffset, pcmd->IdxOffset, total_area);
+    ImFormatString(buf, IM_ARRAYSIZE(buf), "VanillaMesh: ElemCount: %d, VtxOffset: +%d, IdxOffset: +%d, Area: ~%0.f px", pcmd->ElemCount, pcmd->VtxOffset, pcmd->IdxOffset, total_area);
     Selectable(buf);
     if (IsItemHovered() && fg_draw_list)
       DebugNodeDrawCmdShowMeshAndBoundingBox(fg_draw_list, draw_list, pcmd, true, false);
@@ -17530,7 +17530,7 @@ void ImGui::DebugNodeDrawList(ImGuiWindow* window, ImGuiViewportP* viewport, con
   TreePop();
 }
 
-// [DEBUG] Display Mesh/aabb of a ImDrawCmd
+// [DEBUG] Display VanillaMesh/aabb of a ImDrawCmd
 void ImGui::DebugNodeDrawCmdShowMeshAndBoundingBox(ImDrawList* out_draw_list, const ImDrawList* draw_list, const ImDrawCmd* draw_cmd, bool show_mesh, bool show_aabb)
 {
   IM_ASSERT(show_mesh || show_aabb);
@@ -17549,7 +17549,7 @@ void ImGui::DebugNodeDrawCmdShowMeshAndBoundingBox(ImDrawList* out_draw_list, co
     for (int n = 0; n < 3; n++, idx_n++)
       vtxs_rect.Add((triangle[n] = vtx_buffer[idx_buffer ? idx_buffer[idx_n] : idx_n].pos));
     if (show_mesh)
-      out_draw_list->AddPolyline(triangle, 3, IM_COL32(255, 255, 0, 255), ImDrawFlags_Closed, 1.0f); // In yellow: Mesh triangles
+      out_draw_list->AddPolyline(triangle, 3, IM_COL32(255, 255, 0, 255), ImDrawFlags_Closed, 1.0f); // In yellow: VanillaMesh triangles
   }
   // Draw bounding boxes
   if (show_aabb)

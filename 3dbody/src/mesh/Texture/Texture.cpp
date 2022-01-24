@@ -1,10 +1,10 @@
 #ifndef GLEW_STATIC
 #define GLEW_STATIC
 #endif
-#include <GL/glew.h>
-#include <stb_image.h>
+#include "GL/glew.h"
+#include "stb_image.h"
 
-#include "include/mesh/Texture.h"
+#include "include/mesh/Texture/Texture.h"
 #include "util/Log.h"
 
 namespace gf {
@@ -40,7 +40,6 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string &path)
   stbi_set_flip_vertically_on_load(1);
   stbi_uc *data = nullptr;
   {
-	//HZ_PROFILE_SCOPE("stbi_load - OpenGLTexture2D::OpenGLTexture2D(const std::string&)");
 	data = stbi_load(path.c_str(), &width, &height, &channels, 0);
   }
 
@@ -62,7 +61,7 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string &path)
 	mInternalFormat = internalFormat;
 	mDataFormat     = dataFormat;
 
-	//HZ_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
+	GF_CORE_ASSERT(internalFormat & dataFormat, "Texture format not supported!");
 
 	glCreateTextures(GL_TEXTURE_2D, 1, &mRendererID);
 	glTextureStorage2D(mRendererID, 1, internalFormat, mWidth, mHeight);
@@ -85,7 +84,7 @@ OpenGLTexture2D::~OpenGLTexture2D() {
 
 void OpenGLTexture2D::setData(void *data, uint32_t size) {
   uint32_t bpp = mDataFormat==GL_RGBA ? 4 : 3;
-  //HZ_CORE_ASSERT(size == mWidth * mHeight * bpp, "Data must be entire texture!");
+  GF_CORE_ASSERT(size == mWidth * mHeight * bpp, "Data must be entire texture!");
   glTextureSubImage2D(mRendererID, 0, 0, 0, mWidth, mHeight, mDataFormat, GL_UNSIGNED_BYTE, data);
 }
 

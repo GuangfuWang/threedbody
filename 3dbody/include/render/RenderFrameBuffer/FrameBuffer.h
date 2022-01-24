@@ -30,7 +30,8 @@ namespace gf {
         int32_t  mHeight  = 0;
     };
 
-    class GF_DEPRECATED_MSG("Use OpenGL_AntiAliasingFrameBuffer instead!") OpenGL_FrameBuffer : public FrameBuffer {
+    class GF_DEPRECATED_MSG("Use OpenGL_AntiAliasingFrameBuffer instead!")
+            OpenGL_FrameBuffer : public FrameBuffer {
     public:
 
         GF_DEPRECATED void createBuffers(int32_t width, int32_t height) override;

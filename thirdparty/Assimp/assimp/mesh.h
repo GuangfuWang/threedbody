@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---------------------------------------------------------------------------
 */
 
-/** @file Mesh.h
+/** @file VanillaMesh.h
  *  @brief Declares the data structures in which the imported geometry is
     returned by ASSIMP: aiMesh, aiFace and aiBone data structures.
  */
@@ -76,41 +76,41 @@ extern "C" {
 #endif
 
 /** @def AI_MAX_VERTICES
- *  Maximum number of vertices per Mesh.  */
+ *  Maximum number of vertices per VanillaMesh.  */
 
 #ifndef AI_MAX_VERTICES
 #   define AI_MAX_VERTICES 0x7fffffff
 #endif
 
 /** @def AI_MAX_FACES
- *  Maximum number of faces per Mesh. */
+ *  Maximum number of faces per VanillaMesh. */
 
 #ifndef AI_MAX_FACES
 #   define AI_MAX_FACES 0x7fffffff
 #endif
 
 /** @def AI_MAX_NUMBER_OF_COLOR_SETS
- *  Supported number of vertex color sets per Mesh. */
+ *  Supported number of vertex color sets per VanillaMesh. */
 
 #ifndef AI_MAX_NUMBER_OF_COLOR_SETS
 #   define AI_MAX_NUMBER_OF_COLOR_SETS 0x8
 #endif // !! AI_MAX_NUMBER_OF_COLOR_SETS
 
 /** @def AI_MAX_NUMBER_OF_TEXTURECOORDS
- *  Supported number of texture coord sets (UV(W) channels) per Mesh */
+ *  Supported number of texture coord sets (UV(W) channels) per VanillaMesh */
 
 #ifndef AI_MAX_NUMBER_OF_TEXTURECOORDS
 #   define AI_MAX_NUMBER_OF_TEXTURECOORDS 0x8
 #endif // !! AI_MAX_NUMBER_OF_TEXTURECOORDS
 
 // ---------------------------------------------------------------------------
-/** @brief A single face in a Mesh, referring to multiple vertices.
+/** @brief A single face in a VanillaMesh, referring to multiple vertices.
  *
  * If mNumIndices is 3, we call the face 'triangle', for mNumIndices > 3
  * it's called 'polygon' (hey, that's just a definition!).
  * <br>
  * aiMesh::mPrimitiveTypes can be queried to quickly examine which types of
- * primitive are actually present in a Mesh. The #aiProcess_SortByPType flag
+ * primitive are actually present in a VanillaMesh. The #aiProcess_SortByPType flag
  * executes a special post-processing algorithm which splits meshes with
  * *different* primitive types mixed up (e.g. lines and triangles) in several
  * 'clean' submeshes. Furthermore there is a configuration option (
@@ -244,11 +244,11 @@ struct aiVertexWeight {
 
 
 // ---------------------------------------------------------------------------
-/** @brief A single bone of a Mesh.
+/** @brief A single bone of a VanillaMesh.
  *
  *  A bone has a name by which it can be found in the frame hierarchy and by
  *  which it can be addressed by animations. In addition it has a number of
- *  influences on vertices, and a matrix relating the Mesh position to the
+ *  influences on vertices, and a matrix relating the VanillaMesh position to the
  *  position of the bone at the time of binding.
  */
 struct aiBone {
@@ -262,13 +262,13 @@ struct aiBone {
     //! The influence weights of this bone, by vertex index.
     C_STRUCT aiVertexWeight *mWeights;
 
-    /** Matrix that transforms from bone space to Mesh space in bind pose.
+    /** Matrix that transforms from bone space to VanillaMesh space in bind pose.
      *
-     * This matrix describes the position of the Mesh
+     * This matrix describes the position of the VanillaMesh
      * in the local space of this bone when the skeleton was bound.
      * Thus it can be used directly to determine a desired vertex position,
      * given the world-space transform of the bone when animated,
-     * and the position of the vertex in Mesh space.
+     * and the position of the vertex in VanillaMesh space.
      *
      * It is sometimes called an inverse-bind matrix,
      * or inverse bind pose matrix.
@@ -396,20 +396,20 @@ enum aiPrimitiveType {
 /** @brief An AnimMesh is an attachment to an #aiMesh stores per-vertex
  *  animations for a particular frame.
  *
- *  You may think of an #aiAnimMesh as a `patch` for the host Mesh, which
+ *  You may think of an #aiAnimMesh as a `patch` for the host VanillaMesh, which
  *  replaces only certain vertex data streams at a particular time.
- *  Each Mesh stores n attached attached meshes (#aiMesh::mAnimMeshes).
+ *  Each VanillaMesh stores n attached attached meshes (#aiMesh::mAnimMeshes).
  *  The actual relationship between the time line and anim meshes is
- *  established by #aiMeshAnim, which references singular Mesh attachments
+ *  established by #aiMeshAnim, which references singular VanillaMesh attachments
  *  by their ID and binds them to a time offset.
 */
 struct aiAnimMesh {
-    /**Anim Mesh name */
+    /**Anim VanillaMesh name */
     C_STRUCT aiString mName;
 
     /** Replacement for aiMesh::mVertices. If this array is non-NULL,
      *  it *must* contain mNumVertices entries. The corresponding
-     *  array in the host Mesh must be non-NULL as well - animation
+     *  array in the host VanillaMesh must be non-NULL as well - animation
      *  meshes may neither add or nor remove vertex components (if
      *  a replacement array is NULL and the corresponding source
      *  array is not, the source data is taken instead)*/
@@ -472,34 +472,34 @@ struct aiAnimMesh {
         }
     }
 
-    /** Check whether the anim Mesh overrides the vertex positions
-     *  of its host Mesh*/
+    /** Check whether the anim VanillaMesh overrides the vertex positions
+     *  of its host VanillaMesh*/
     bool HasPositions() const {
         return mVertices != nullptr;
     }
 
-    /** Check whether the anim Mesh overrides the vertex normals
-     *  of its host Mesh*/
+    /** Check whether the anim VanillaMesh overrides the vertex normals
+     *  of its host VanillaMesh*/
     bool HasNormals() const {
         return mNormals != nullptr;
     }
 
-    /** Check whether the anim Mesh overrides the vertex tangents
-     *  and bitangents of its host Mesh. As for aiMesh,
+    /** Check whether the anim VanillaMesh overrides the vertex tangents
+     *  and bitangents of its host VanillaMesh. As for aiMesh,
      *  tangents and bitangents always go together. */
     bool HasTangentsAndBitangents() const {
         return mTangents != nullptr;
     }
 
-    /** Check whether the anim Mesh overrides a particular
-     * set of vertex colors on his host Mesh.
+    /** Check whether the anim VanillaMesh overrides a particular
+     * set of vertex colors on his host VanillaMesh.
      *  @param pIndex 0<index<AI_MAX_NUMBER_OF_COLOR_SETS */
     bool HasVertexColors(unsigned int pIndex) const {
         return pIndex >= AI_MAX_NUMBER_OF_COLOR_SETS ? false : mColors[pIndex] != nullptr;
     }
 
-    /** Check whether the anim Mesh overrides a particular
-     * set of texture coordinates on his host Mesh.
+    /** Check whether the anim VanillaMesh overrides a particular
+     * set of texture coordinates on his host VanillaMesh.
      *  @param pIndex 0<index<AI_MAX_NUMBER_OF_TEXTURECOORDS */
     bool HasTextureCoords(unsigned int pIndex) const {
         return pIndex >= AI_MAX_NUMBER_OF_TEXTURECOORDS ? false : mTextureCoords[pIndex] != nullptr;
@@ -509,7 +509,7 @@ struct aiAnimMesh {
 };
 
 // ---------------------------------------------------------------------------
-/** @brief Enumerates the methods of Mesh morphing supported by Assimp.
+/** @brief Enumerates the methods of VanillaMesh morphing supported by Assimp.
  */
 enum aiMorphingMethod {
     /** Interpolation between morph targets */
@@ -530,7 +530,7 @@ enum aiMorphingMethod {
 }; //! enum aiMorphingMethod
 
 // ---------------------------------------------------------------------------
-/** @brief A Mesh represents a geometry or model with a single material.
+/** @brief A VanillaMesh represents a geometry or model with a single material.
 *
 * It usually consists of a number of vertices and a series of primitives/faces
 * referencing the vertices. In addition there might be a series of bones, each
@@ -541,7 +541,7 @@ enum aiMorphingMethod {
 * From C++-programs you can also use the comfort functions Has*() to
 * test for the presence of various data streams.
 *
-* A Mesh uses only a single material which is referenced by a material ID.
+* A VanillaMesh uses only a single material which is referenced by a material ID.
 * @note The mPositions member is usually not optional. However, vertex positions
 * *could* be missing if the #AI_SCENE_FLAGS_INCOMPLETE flag is set in
 * @code
@@ -550,26 +550,26 @@ enum aiMorphingMethod {
 */
 struct aiMesh {
     /** Bitwise combination of the members of the #aiPrimitiveType enum.
-     * This specifies which types of primitives are present in the Mesh.
+     * This specifies which types of primitives are present in the VanillaMesh.
      * The "SortByPrimitiveType"-Step can be used to make sure the
      * output meshes consist of one primitive type each.
      */
     unsigned int mPrimitiveTypes;
 
-    /** The number of vertices in this Mesh.
+    /** The number of vertices in this VanillaMesh.
     * This is also the size of all of the per-vertex data arrays.
     * The maximum value for this member is #AI_MAX_VERTICES.
     */
     unsigned int mNumVertices;
 
-    /** The number of primitives (triangles, polygons, lines) in this  Mesh.
+    /** The number of primitives (triangles, polygons, lines) in this  VanillaMesh.
     * This is also the size of the mFaces array.
     * The maximum value for this member is #AI_MAX_FACES.
     */
     unsigned int mNumFaces;
 
     /** Vertex positions.
-    * This array is always present in a Mesh. The array is
+    * This array is always present in a VanillaMesh. The array is
     * mNumVertices in size.
     */
     C_STRUCT aiVector3D *mVertices;
@@ -577,7 +577,7 @@ struct aiMesh {
     /** Vertex normals.
     * The array contains normalized vectors, NULL if not present.
     * The array is mNumVertices in size. Normals are undefined for
-    * point and line primitives. A Mesh consisting of points and
+    * point and line primitives. A VanillaMesh consisting of points and
     * lines only may not have normal vectors. Meshes with mixed
     * primitive types (i.e. lines and triangles) may have normals,
     * but the normals for vertices that are only referenced by
@@ -599,13 +599,13 @@ struct aiMesh {
     /** Vertex tangents.
     * The tangent of a vertex points in the direction of the positive
     * X texture axis. The array contains normalized vectors, NULL if
-    * not present. The array is mNumVertices in size. A Mesh consisting
+    * not present. The array is mNumVertices in size. A VanillaMesh consisting
     * of points and lines only may not have normal vectors. Meshes with
     * mixed primitive types (i.e. lines and triangles) may have
     * normals, but the normals for vertices that are only referenced by
     * point or line primitives are undefined and set to qNaN.  See
     * the #mNormals member for a detailed discussion of qNaNs.
-    * @note If the Mesh contains tangents, it automatically also
+    * @note If the VanillaMesh contains tangents, it automatically also
     * contains bitangents.
     */
     C_STRUCT aiVector3D *mTangents;
@@ -614,20 +614,20 @@ struct aiMesh {
     * The bitangent of a vertex points in the direction of the positive
     * Y texture axis. The array contains normalized vectors, NULL if not
     * present. The array is mNumVertices in size.
-    * @note If the Mesh contains tangents, it automatically also contains
+    * @note If the VanillaMesh contains tangents, it automatically also contains
     * bitangents.
     */
     C_STRUCT aiVector3D *mBitangents;
 
     /** Vertex color sets.
-    * A Mesh may contain 0 to #AI_MAX_NUMBER_OF_COLOR_SETS vertex
+    * A VanillaMesh may contain 0 to #AI_MAX_NUMBER_OF_COLOR_SETS vertex
     * colors per vertex. NULL if not present. Each array is
     * mNumVertices in size if present.
     */
     C_STRUCT aiColor4D *mColors[AI_MAX_NUMBER_OF_COLOR_SETS];
 
     /** Vertex texture coords, also known as UV channels.
-    * A Mesh may contain 0 to AI_MAX_NUMBER_OF_TEXTURECOORDS per
+    * A VanillaMesh may contain 0 to AI_MAX_NUMBER_OF_TEXTURECOORDS per
     * vertex. NULL if not present. The array is mNumVertices in size.
     */
     C_STRUCT aiVector3D *mTextureCoords[AI_MAX_NUMBER_OF_TEXTURECOORDS];
@@ -641,40 +641,40 @@ struct aiMesh {
     */
     unsigned int mNumUVComponents[AI_MAX_NUMBER_OF_TEXTURECOORDS];
 
-    /** The faces the Mesh is constructed from.
+    /** The faces the VanillaMesh is constructed from.
     * Each face refers to a number of vertices by their indices.
-    * This array is always present in a Mesh, its size is given
+    * This array is always present in a VanillaMesh, its size is given
     * in mNumFaces. If the #AI_SCENE_FLAGS_NON_VERBOSE_FORMAT
     * is NOT set each face references an unique set of vertices.
     */
     C_STRUCT aiFace *mFaces;
 
-    /** The number of bones this Mesh contains.
+    /** The number of bones this VanillaMesh contains.
     * Can be 0, in which case the mBones array is NULL.
     */
     unsigned int mNumBones;
 
-    /** The bones of this Mesh.
+    /** The bones of this VanillaMesh.
     * A bone consists of a name by which it can be found in the
     * frame hierarchy and a set of vertex weights.
     */
     C_STRUCT aiBone **mBones;
 
-    /** The material used by this Mesh.
-     * A Mesh uses only a single material. If an imported model uses
-     * multiple materials, the import splits up the Mesh. Use this value
+    /** The material used by this VanillaMesh.
+     * A VanillaMesh uses only a single material. If an imported model uses
+     * multiple materials, the import splits up the VanillaMesh. Use this value
      * as index into the scene's material list.
      */
     unsigned int mMaterialIndex;
 
-    /** Name of the Mesh. Meshes can be named, but this is not a
+    /** Name of the VanillaMesh. Meshes can be named, but this is not a
      *  requirement and leaving this field empty is totally fine.
-     *  There are mainly three uses for Mesh names:
+     *  There are mainly three uses for VanillaMesh names:
      *   - some formats name nodes and meshes independently.
      *   - importers tend to split meshes up to meet the
-     *      one-material-per-Mesh requirement. Assigning
+     *      one-material-per-VanillaMesh requirement. Assigning
      *      the same (dummy) name to each of the result meshes
-     *      aids the caller at recovering the original Mesh
+     *      aids the caller at recovering the original VanillaMesh
      *      partitioning.
      *   - Vertex animations refer to meshes by their names.
      **/
@@ -684,9 +684,9 @@ struct aiMesh {
     /** The number of attachment meshes. Note! Currently only works with Collada loader. */
     unsigned int mNumAnimMeshes;
 
-    /** Attachment meshes for this Mesh, for vertex-based animation.
+    /** Attachment meshes for this VanillaMesh, for vertex-based animation.
      *  Attachment meshes carry replacement data for some of the
-     *  Mesh'es vertex components (usually positions, normals).
+     *  VanillaMesh'es vertex components (usually positions, normals).
      *  Note! Currently only works with Collada loader.*/
     C_STRUCT aiAnimMesh **mAnimMeshes;
 
@@ -718,7 +718,7 @@ struct aiMesh {
         }
     }
 
-    //! Deletes all storage allocated for the Mesh
+    //! Deletes all storage allocated for the VanillaMesh
     ~aiMesh() {
         delete[] mVertices;
         delete[] mNormals;
@@ -749,24 +749,24 @@ struct aiMesh {
         delete[] mFaces;
     }
 
-    //! Check whether the Mesh contains positions. Provided no special
+    //! Check whether the VanillaMesh contains positions. Provided no special
     //! scene flags are set, this will always be true
     bool HasPositions() const { return mVertices != nullptr && mNumVertices > 0; }
 
-    //! Check whether the Mesh contains faces. If no special scene flags
+    //! Check whether the VanillaMesh contains faces. If no special scene flags
     //! are set this should always return true
     bool HasFaces() const { return mFaces != nullptr && mNumFaces > 0; }
 
-    //! Check whether the Mesh contains normal vectors
+    //! Check whether the VanillaMesh contains normal vectors
     bool HasNormals() const { return mNormals != nullptr && mNumVertices > 0; }
 
-    //! Check whether the Mesh contains tangent and bitangent vectors
+    //! Check whether the VanillaMesh contains tangent and bitangent vectors
     //! It is not possible that it contains tangents and no bitangents
     //! (or the other way round). The existence of one of them
     //! implies that the second is there, too.
     bool HasTangentsAndBitangents() const { return mTangents != nullptr && mBitangents != nullptr && mNumVertices > 0; }
 
-    //! Check whether the Mesh contains a vertex color set
+    //! Check whether the VanillaMesh contains a vertex color set
     //! \param pIndex Index of the vertex color set
     bool HasVertexColors(unsigned int pIndex) const {
         if (pIndex >= AI_MAX_NUMBER_OF_COLOR_SETS) {
@@ -776,7 +776,7 @@ struct aiMesh {
         }
     }
 
-    //! Check whether the Mesh contains a texture coordinate set
+    //! Check whether the VanillaMesh contains a texture coordinate set
     //! \param pIndex Index of the texture coordinates set
     bool HasTextureCoords(unsigned int pIndex) const {
         if (pIndex >= AI_MAX_NUMBER_OF_TEXTURECOORDS) {
@@ -786,7 +786,7 @@ struct aiMesh {
         }
     }
 
-    //! Get the number of UV channels the Mesh contains
+    //! Get the number of UV channels the VanillaMesh contains
     unsigned int GetNumUVChannels() const {
         unsigned int n(0);
         while (n < AI_MAX_NUMBER_OF_TEXTURECOORDS && mTextureCoords[n]) {
@@ -796,7 +796,7 @@ struct aiMesh {
         return n;
     }
 
-    //! Get the number of vertex color channels the Mesh contains
+    //! Get the number of vertex color channels the VanillaMesh contains
     unsigned int GetNumColorChannels() const {
         unsigned int n(0);
         while (n < AI_MAX_NUMBER_OF_COLOR_SETS && mColors[n]) {
@@ -805,7 +805,7 @@ struct aiMesh {
         return n;
     }
 
-    //! Check whether the Mesh contains bones
+    //! Check whether the VanillaMesh contains bones
     bool HasBones() const {
         return mBones != nullptr && mNumBones > 0;
     }

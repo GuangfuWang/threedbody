@@ -120,7 +120,7 @@ struct ASSIMP_API aiNode {
     unsigned int mNumMeshes;
 
     /** The meshes of this node. Each entry is an index into the
-      * Mesh list of the #aiScene.
+      * VanillaMesh list of the #aiScene.
       */
     unsigned int *mMeshes;
 

@@ -101,7 +101,7 @@ namespace gf {
             input_format_.emplace_back(".md5");
             input_format_.emplace_back(".mdc");
             input_format_.emplace_back(".mdl");
-            input_format_.emplace_back(".Mesh");
+            input_format_.emplace_back(".VanillaMesh");
             input_format_.emplace_back(".mot");
             input_format_.emplace_back(".ms3d");
             input_format_.emplace_back(".ndo");

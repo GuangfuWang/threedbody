@@ -3,7 +3,7 @@
 #endif
 
 #include <gl/glew.h>
-#include "include/render/FrameBuffer.h"
+#include "include/render/RenderFrameBuffer/FrameBuffer.h"
 
 namespace gf {
 

@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <stb_image.h>
 
-#include "include/render/OpenGLContext.h"
+#include "include/render/RenderContext/OpenGLContext.h"
 
 #include "include/event_handling/ApplicationEvent.h"
 #include "include/event_handling/MouseEvent.h"

@@ -7,13 +7,13 @@
 
 #include "def.h"
 #include "include/shader/Shader.h"
-#include "include/event_handling/EventBase.h"
+#include "include/event_handling/ModelChangeInterface.h"
 #include "util/Log.h"
 #include "util/Timer.h"
 
 namespace gf {
 
-    class Camera : public EventHandleInterface {
+    class Camera : public ModelChangeInterface {
 
     public:
         enum TYPE {
@@ -296,7 +296,7 @@ namespace gf {
 
     };
 
-    class MyCamera final : public EventHandleInterface {
+    class MyCamera final : public ModelChangeInterface {
     public:
 
         MyCamera(const glm::vec3 &position, float fov, float aspect, float near_, float far_) {

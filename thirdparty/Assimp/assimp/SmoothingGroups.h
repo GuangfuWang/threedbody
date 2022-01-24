@@ -74,7 +74,7 @@ struct FaceWithSmoothingGroup {
 };
 
 // ---------------------------------------------------------------------------
-/** Helper structure representing a Mesh whose faces have smoothing
+/** Helper structure representing a VanillaMesh whose faces have smoothing
     groups assigned. This allows us to reuse the code for normal computations
     from smoothings groups for several loaders (3DS, ASE). All of them
     use face structures which inherit from #FaceWithSmoothingGroup,
@@ -94,7 +94,7 @@ struct MeshWithSmoothingGroups {
 };
 
 // ---------------------------------------------------------------------------
-/** Computes normal vectors for the Mesh
+/** Computes normal vectors for the VanillaMesh
  */
 template<class T>
 void ComputeNormalsWithSmoothingsGroups(MeshWithSmoothingGroups<T> &sMesh);

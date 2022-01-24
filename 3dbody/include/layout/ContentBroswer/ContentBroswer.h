@@ -4,7 +4,7 @@
 
 #include <filesystem>
 #include "imgui.h"
-#include "include/mesh/Texture.h"
+#include "include/mesh/Texture/Texture.h"
 
 namespace gf {
 

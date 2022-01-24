@@ -4,14 +4,14 @@
 #define INC_3DBODY_3DBODY_INCLUDE_LAYOUT_THREEDBODYWINDOW_H_
 
 #include "include/layout/MainWindows/BaseWindow.h"
-#include "include/render/VertexIndexBuffer.h"
-#include "include/mesh/Mesh.h"
+#include "include/render/RenderVertexIndexBuffer/VertexIndexBufferBase.h"
+#include "include/mesh/MeshData/VanillaMesh.h"
 #include "include/shader/Shader.h"
 #include "include/scene/SceneCamera.h"
 #include "include/scene/SceneLight.h"
 
-#include "include/render/UIContext.h"
-#include "include/render/OpenGLContext.h"
+#include "include/render/RenderContext/UIContext.h"
+#include "include/render/RenderContext/OpenGLContext.h"
 #include "include/layout/ViewPort/SceneView.h"
 #include "include/layout/ContentBroswer/ContentBroswer.h"
 #include "include/layout/WidgetPanels/PropertyPanel.h"

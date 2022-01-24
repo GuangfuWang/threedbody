@@ -65,11 +65,11 @@ namespace Assimp {
 
 
         // ----------------------------------------------------------------
-        /** Generates a Mesh from an array of vertex positions.
+        /** Generates a VanillaMesh from an array of vertex positions.
          *
          *  @param positions List of vertex positions
          *  @param numIndices Number of indices per primitive
-         *  @return Output Mesh
+         *  @return Output VanillaMesh
          */
         static aiMesh *MakeMesh(const std::vector<aiVector3D> &positions,
                                 unsigned int numIndices);

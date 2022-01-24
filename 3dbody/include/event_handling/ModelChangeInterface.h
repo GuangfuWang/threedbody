@@ -8,22 +8,20 @@ namespace gf {
 
 #define EVENT_SOURCE(X) EVENT_SOURCE_TYPE::##X
 
-enum class EVENT_SOURCE_TYPE {
-  NONE = 0,
-  KEYBOARD,
-  MOUSE,
-  JOYSTICK,
-  TIME_INPUT,
-  CLIPBOARD,
-  PATH_DROP
-};
+    enum class EVENT_SOURCE_TYPE {
+        NONE = 0,
+        KEYBOARD,
+        MOUSE,
+        JOYSTICK,
+        TIME_INPUT,
+        CLIPBOARD,
+        PATH_DROP
+    };
 
-class EventHandleInterface {
- public:
-
-  virtual void update(Shader *shader) = 0;
-
-};
+    class ModelChangeInterface {
+    public:
+        virtual void update(Shader *shader) = 0;
+    };
 
 }
 

@@ -1,7 +1,3 @@
-//
-// Created by lenovo on 2021/11/19.
-//
-
 #ifndef INC_3DBODY_SCENE_LIGHT_H
 #define INC_3DBODY_SCENE_LIGHT_H
 
@@ -10,7 +6,7 @@
 
 namespace gf {
 
-class Light : public EventHandleInterface {
+class Light : public ModelChangeInterface {
  public:
 
   Light() {

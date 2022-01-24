@@ -64,11 +64,35 @@ namespace gf {
 #endif
 
 #ifndef GF_PI
-#define GF_PI 3.1415926f
+#define GF_PI 3.14159265358979323846f
+#endif
+
+#ifndef GF_ONE_PI
+#define GF_ONE_PI 0.318309886183790671538f
+#endif
+
+#ifndef COLOR_MAX
+#define COLOR_MAX 255
+#endif
+
+#ifndef COLOR_MIN
+#define COLOR_MIN 0
+#endif
+
+#ifndef COLOR_IN_BYTE
+#define COLOR_IN_BYTE(byteColor) ((unsigned char)(byteColor*255))
+#endif
+
+#ifndef MALLOC_BY_TYPE
+#define MALLOC_BY_TYPE(size,type) ((type*)malloc((size)*sizeof(type)))
 #endif
 
 #ifndef Vec
     using Vec = glm::vec3;
+#endif
+
+#ifndef Vec2i
+    using Vec2i = glm::vec<2, int>;
 #endif
 
 #ifndef Vec2f
@@ -123,7 +147,7 @@ namespace gf {
     using string_view = std::string_view;
 
     template<typename K, typename V>
-    using unorder_map = std::unordered_map<K, V>;
+    using unordered_map = std::unordered_map<K, V>;
 
     template<typename K, typename V>
     using map = std::map<K, V>;
@@ -135,6 +159,20 @@ namespace gf {
 
     using RenderIndexType = unsigned int;
 
+    typedef RenderIndexType* IndexBuffer;
+
+    template<typename T>
+    using reference = std::reference_wrapper<T>;
+
+    template<typename T, typename ... Args>
+    constexpr Ref<T> createRef(Args &&... args) {
+        return std::make_shared<T>(std::forward<Args>(args)...);
+    }
+
+    template<typename T, typename ... Args>
+    constexpr Ref_Unique<T> createUniqueRef(Args &&... args) {
+        return std::make_unique<T>(std::forward<Args>(args)...);
+    }
 }
 
 #endif //INC_3DBODY_3DBODY_DEF_H_

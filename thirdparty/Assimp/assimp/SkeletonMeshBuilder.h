@@ -1,4 +1,4 @@
-/** Helper class to construct a dummy Mesh for file formats containing only motion data */
+/** Helper class to construct a dummy VanillaMesh for file formats containing only motion data */
 
 /*
 Open Asset Import Library (assimp)
@@ -61,18 +61,18 @@ namespace Assimp {
 
 // ---------------------------------------------------------------------------
 /**
- * This little helper class constructs a dummy Mesh for a given scene
+ * This little helper class constructs a dummy VanillaMesh for a given scene
  * the resembles the node hierarchy. This is useful for file formats
- * that don't carry any Mesh data but only animation data.
+ * that don't carry any VanillaMesh data but only animation data.
  */
     class ASSIMP_API SkeletonMeshBuilder {
     public:
 
         // -------------------------------------------------------------------
-        /** The constructor processes the given scene and adds a Mesh there.
+        /** The constructor processes the given scene and adds a VanillaMesh there.
          *
-         * Does nothing if the scene already has Mesh data.
-         * @param pScene The scene for which a skeleton Mesh should be constructed.
+         * Does nothing if the scene already has VanillaMesh data.
+         * @param pScene The scene for which a skeleton VanillaMesh should be constructed.
          * @param root The node to start with. NULL is the scene root
          * @param bKnobsOnly Set this to true if you don't want the connectors
          *   between the knobs representing the nodes.
@@ -83,15 +83,15 @@ namespace Assimp {
     protected:
 
         // -------------------------------------------------------------------
-        /** Recursively builds a simple Mesh representation for the given node
+        /** Recursively builds a simple VanillaMesh representation for the given node
          * and also creates a joint for the node that affects this part of
-         * the Mesh.
+         * the VanillaMesh.
          * @param pNode The node to build geometry for.
          */
         void CreateGeometry(const aiNode *pNode);
 
         // -------------------------------------------------------------------
-        /** Creates the Mesh from the internally accumulated stuff and returns it.
+        /** Creates the VanillaMesh from the internally accumulated stuff and returns it.
          */
         aiMesh *CreateMesh();
 
@@ -100,7 +100,7 @@ namespace Assimp {
         aiMaterial *CreateMaterial();
 
     protected:
-        /** space to assemble the Mesh data: points */
+        /** space to assemble the VanillaMesh data: points */
         std::vector<aiVector3D> mVertices;
 
         /** faces */

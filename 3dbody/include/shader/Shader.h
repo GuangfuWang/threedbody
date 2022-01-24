@@ -6,37 +6,37 @@
 
 namespace gf {
 
-class Shader {
+    class Shader {
 
- private:
-  unsigned int mProgramId;
+    private:
+        unsigned int mProgramId;
 
-  unsigned int getCompiledShader(unsigned int shader_type, const std::string &shader_source);
+        unsigned int getCompiledShader(unsigned int shader_type, const std::string &shader_source);
 
- public:
-  Shader() = default;
+    public:
+        Shader() = default;
 
-  // Load a vertex and a fragment Shader from file
-  bool load(const std::string &vertexshader_file, const std::string &fragmentshader_file);
+        bool load(const std::string &vertexshader_file, const std::string &fragmentshader_file);
 
-  // Use the program
-  void use();
+        void use();
 
-  // Delete the program
-  void unload();
+        void unload();
 
-  unsigned int getProgramId() { return mProgramId; }
+        unsigned int getProgramId() { return mProgramId; }
 
-  void setMat4(const glm::mat4 &mat4, const std::string &name);
+        void setMat4(const glm::mat4 &mat4, const std::string &name);
 
-  void setI1(int v, const std::string &name);
-  void setF1(float v, const std::string &name);
-  void setF3(float a, float b, float c, const std::string &name);
+        void setI1(int v, const std::string &name);
 
-  void setVec3(const glm::vec3 &vec3, const std::string &name);
-  void setVec4(const glm::vec4 &vec4, const std::string &name);
+        void setF1(float v, const std::string &name);
 
-};
+        void setF3(float a, float b, float c, const std::string &name);
+
+        void setVec3(const glm::vec3 &vec3, const std::string &name);
+
+        void setVec4(const glm::vec4 &vec4, const std::string &name);
+
+    };
 
 }
 

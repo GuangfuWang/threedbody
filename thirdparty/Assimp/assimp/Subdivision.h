@@ -74,17 +74,17 @@ namespace Assimp {
         static Subdivider *Create(Algorithm algo);
 
         // ---------------------------------------------------------------
-        /** Subdivide a Mesh using the selected algorithm
+        /** Subdivide a VanillaMesh using the selected algorithm
          *
-         *  @param mesh First Mesh to be subdivided. Must be in verbose
+         *  @param mesh First VanillaMesh to be subdivided. Must be in verbose
          *    format.
-         *  @param out Receives the output Mesh, allocated by me.
+         *  @param out Receives the output VanillaMesh, allocated by me.
          *  @param num Number of subdivisions to perform.
-         *  @param discard_input If true is passed, the input Mesh is
+         *  @param discard_input If true is passed, the input VanillaMesh is
          *    deleted after the subdivision is complete. This can
          *    improve performance because it allows the optimization
-         *    to reuse the existing Mesh for intermediate results.
-         *  @pre out!=Mesh*/
+         *    to reuse the existing VanillaMesh for intermediate results.
+         *  @pre out!=VanillaMesh*/
         virtual void Subdivide(aiMesh *mesh,
                                aiMesh *&out, unsigned int num,
                                bool discard_input = false) = 0;

@@ -4,7 +4,7 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/string_cast.hpp"
-
+#include <cassert>
 // This ignores all warnings raised inside External headers
 #pragma warning(push, 0)
 #include <spdlog/spdlog/spdlog.h>
@@ -14,11 +14,6 @@
 #include "def.h"
 
 namespace gf {
-
-template<typename T, typename ... Args>
-constexpr Ref<T> createRef(Args &&... args) {
-  return std::make_shared<T>(std::forward<Args>(args)...);
-}
 
 /**
  * this class is used to output Log information.
@@ -58,6 +53,7 @@ inline OStream &operator<<(OStream &os, glm::qua<T, Q> quaternion) {
 #define GF_CORE_WARN(...)     gf::Log::getCoreLogger()->warn(__VA_ARGS__)
 #define GF_CORE_ERROR(...)    gf::Log::getCoreLogger()->error(__VA_ARGS__)
 #define GF_CORE_CRITICAL(...) gf::Log::getCoreLogger()->critical(__VA_ARGS__)
+#define GF_CORE_ASSERT(EXP,MSG) assert(((void)MSG, EXP))
 
 // Client Log macros
 #define GF_TRACE(...)         gf::Log::getClientLogger()->trace(__VA_ARGS__)

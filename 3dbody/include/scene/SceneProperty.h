@@ -5,7 +5,7 @@
 #ifndef INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENEPROPERTY_H_
 #define INC_3DBODY_3DBODY_INCLUDE_SCENE_SCENEPROPERTY_H_
 
-#include "include/event_handling/EventBase.h"
+#include "include/event_handling/ModelChangeInterface.h"
 
 namespace gf {
 
@@ -13,7 +13,7 @@ namespace gf {
  * @brief this class is used to setting all rendering related parameters.
  */
 
-class SceneProperty : public EventHandleInterface {
+class SceneProperty : public ModelChangeInterface {
 
  public:
   void update(Shader *shader) override;

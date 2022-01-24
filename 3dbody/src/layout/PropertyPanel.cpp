@@ -49,7 +49,7 @@ void Property_Panel::render(SceneView *scene_view) {
   ImGui::SetNextWindowSize(mySize);
   ImGui::Begin("Properties");
   mySize = ImGui::GetContentRegionAvail();
-  if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen)) {
+  if (ImGui::CollapsingHeader("VanillaMesh", ImGuiTreeNodeFlags_DefaultOpen)) {
 
 	if (ImGui::Button("Open...")) {
 	  string             load_file;

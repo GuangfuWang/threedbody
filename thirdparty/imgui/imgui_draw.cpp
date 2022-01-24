@@ -633,7 +633,7 @@ void ImDrawList::PopTextureID()
 // submit the intermediate results. PrimUnreserve() can be used to release unused allocations.
 void ImDrawList::PrimReserve(int idx_count, int vtx_count)
 {
-  // Large Mesh support (when enabled)
+  // Large VanillaMesh support (when enabled)
   IM_ASSERT_PARANOID(idx_count >= 0 && vtx_count >= 0);
   if (sizeof(ImDrawIdx) == 2 && (_VtxCurrentIdx + vtx_count >= (1 << 16)) && (Flags & ImDrawListFlags_AllowVtxOffset))
   {

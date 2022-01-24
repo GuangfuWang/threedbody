@@ -4,7 +4,7 @@
 #include <imgui_impl_opengl3.h>
 
 #include "pch.hpp"
-#include "include/render/UIContext.h"
+#include "include/render/RenderContext/UIContext.h"
 #include "util/ConfigMap.h"
 
 namespace gf {
@@ -97,11 +97,6 @@ void UIContext::setupWindowIcon(GLFWwindow *glWindow) {
 void UIContext::loadFont(ImGuiIO &io) {
   float    fontSize = 18.0f;// *2.0f;
   fs::path p        = fs::path(ConfigMap::getInstance()->resource_dir_);
-//  p/="fonts/EN/JetBrains-Mono/JetBrainsMono-Bold-7.ttf";
-//  io.Fonts->AddFontFromFileTTF(p.string().c_str(), fontSize);
-//  p=p.parent_path();
-//  p/="JetBrainsMono-Regular-2.ttf";
-//  io.FontDefault = io.Fonts->AddFontFromFileTTF(p.string().c_str(), fontSize);
   p /= "fonts/EN/ArialUni/arialuni.ttf";
   io.Fonts->AddFontFromFileTTF(p.string().c_str(),
 							   fontSize,

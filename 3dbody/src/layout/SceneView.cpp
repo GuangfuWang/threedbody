@@ -1,7 +1,6 @@
 #include "include/layout/ViewPort/SceneView.h"
 #include "util/Log.h"
 
-
 namespace gf {
 
     void SceneView::resize(int32_t width, int32_t height) {
@@ -12,7 +11,7 @@ namespace gf {
 
     void SceneView::loadMesh(const std::string &filepath) {
         if (!mMesh)
-            mMesh = std::make_shared<Mesh>();
+            mMesh = createRef<VanillaMesh>();
 
         mMesh->load(filepath);
 
@@ -38,16 +37,8 @@ namespace gf {
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
         mSize = {viewportPanelSize.x, viewportPanelSize.y};
 
-//  mCamera->setAspect(mSize.x,mSize.y<1?1:mSize.y);
-//        if (mMesh) {
-//            mCamera->setScenePositionInfo(mMesh->sceneCenter,
-//                                          mMesh->sceneMinBox,
-//                                          mMesh->sceneMaxBox);
-//        }
-
         mCamera->update(mShader.get());
 
-        // add rendered texture to ImGUI scene window
         uint64_t textureID = mFrameBuffer->getTexture();
         ImGui::Image(reinterpret_cast<void *>(textureID),
                      ImVec2{mSize.x, mSize.y},
